@@ -10,7 +10,7 @@ For students who did not get a hostel seat, it ranks listings with an explainabl
 rent against commute time and cost, makes listing trust visible, and matches compatible roommates without
 exposing private details.
 
-> **Development status:** Phase 1 (project foundation) is complete. See [docs/STATUS.md](docs/STATUS.md)
+> **Development status:** Phase 2 (accounts, login and role-based access) is complete. See [docs/STATUS.md](docs/STATUS.md)
 > for what is proposed, implemented and tested.
 
 ## Tech stack
@@ -81,6 +81,13 @@ npm run dev
 
 Open <http://localhost:3000/status>. All three rows (Frontend, Backend API, Database) should show **UP**.
 
+### Logging in
+
+- **Students and owners:** create an account at <http://localhost:3000/register>.
+- **Administrator:** there is no admin sign-up. On startup the backend creates the admin account from
+  `ADMIN_EMAIL` / `ADMIN_PASSWORD` in your `.env` (password at least 12 characters). Log in with those values.
+  Changing them later does not change an existing account.
+
 How requests flow: the browser only talks to Next.js. Next.js forwards every `/api/*` request to Spring Boot
 (see `frontend/next.config.ts`), and Spring Boot talks to PostgreSQL.
 
@@ -119,3 +126,4 @@ npx tsc --noEmit
 - [Scoring algorithms & listing lifecycle](docs/ALGORITHMS.md)
 - [Project plan, risks & team split](docs/PROJECT-PLAN.md)
 - [Status: completed / pending / known issues](docs/STATUS.md)
+- [Feature backlog: agreed features for later](docs/BACKLOG.md)

@@ -1,8 +1,17 @@
 # CampusNest — Database Design
 
-**Status: Proposed.** Tables are created phase by phase through Flyway migrations in
-`backend/src/main/resources/db/migration` (`V1__…sql`, `V2__…sql`, …). No table exists yet; the first
-migration arrives in Phase 2. This document is updated whenever a migration is added.
+Tables are created phase by phase through Flyway migrations in
+`backend/src/main/resources/db/migration` (`V1__…sql`, `V2__…sql`, …). This document is updated whenever a
+migration is added. **Never edit an applied migration — add a new one.**
+
+| Migration | Tables | Status |
+|---|---|---|
+| `V1__accounts_colleges_profiles.sql` (Phase 2) | `colleges` (VJTI seeded from OpenStreetMap coordinates), `users`, `student_profiles`, `owner_profiles` | Implemented & tested |
+| Phase 3+ | all other tables below | Proposed |
+
+Implemented differences from the proposal: `users` also has `status_reason` (why an admin suspended the
+account); emails are enforced lower-case by a CHECK constraint, so a plain UNIQUE constraint prevents
+case-variant duplicates.
 
 ## 1. Entity relationship diagram
 

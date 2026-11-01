@@ -30,11 +30,13 @@ and explain, and well-separated modules can still be split later if CampusNest e
 
 ```
 com.campusnest
-├── common/          shared: security config, error handling, storage, health
-├── auth/            users, registration, login/logout, current user          (Phase 2)
-├── student/         student profile, preferences                             (Phase 2/4)
+├── common/          shared: security config & filters, error handling, health  (Phase 1–2 ✔)
+├── auth/            user accounts, registration, current user, admin seeding   (Phase 2 ✔)
+├── college/         college reference data                                     (Phase 2 ✔)
+├── student/         student profile ✔, preferences                             (Phase 2/4)
+├── owner/           owner profile ✔                                            (Phase 2)
 ├── listing/         listings, rooms, charges, amenities, images, lifecycle   (Phase 3)
-├── moderation/      admin review, owner verification, reports, audit         (Phase 3/8)
+├── moderation/      admin user management ✔, listing review, verification, reports (Phase 2/3/8)
 ├── discovery/       search, saved listings, enquiries, reviews               (Phase 4/8)
 ├── recommendation/  suitability scoring                                       (Phase 5)
 ├── commute/         distance, routing, fares, comparison                      (Phase 6)
@@ -82,20 +84,40 @@ controllers, so private fields cannot leak by accident.
 
 ## 6. API design (proposed, all under `/api/v1`)
 
+URL rule: each role has its own area — `/student/**` (STUDENT), `/owner/**` (OWNER), `/admin/**` (ADMIN) —
+enforced in `SecurityConfig`. Inside an area, services additionally check that a record belongs to the caller.
+✔ = implemented and tested.
+
 | Group | Endpoints | Role |
 |---|---|---|
-| Health | `GET /health` | public ✔ |
-| Auth | `POST /auth/register`, `POST /auth/login`, `POST /auth/logout`, `GET /auth/me` | public / any |
-| Student | `GET/PUT /students/me/profile`, `GET/PUT /students/me/preferences` | STUDENT |
-| Discovery | `GET /listings?…filters`, `GET /listings/{id}`, `GET /recommendations`, `GET /compare?ids=` | public / STUDENT |
-| Owner | `GET/POST /owner/listings`, `GET/PUT/DELETE /owner/listings/{id}`, `POST /owner/listings/{id}/submit`, `PATCH /owner/listings/{id}/availability`, `POST /owner/listings/{id}/images` | OWNER (own only) |
-| Admin | `GET /admin/listings?status=`, `POST /admin/listings/{id}/approve\|reject\|request-changes\|suspend\|reinstate`, `POST /admin/owners/{id}/verification`, `GET/POST /admin/reports…`, `POST /admin/users/{id}/suspend\|reinstate` | ADMIN |
-| Engagement | `GET/POST/DELETE /saved`, `GET/POST /enquiries`, `POST /enquiries/{id}/messages`, `GET/POST /listings/{id}/reviews`, `POST /reports` | STUDENT / OWNER |
-| Roommates | `GET/PUT /roommates/me`, `GET /roommates/matches`, `POST /roommates/requests`, `PATCH /roommates/requests/{id}` | STUDENT |
+| Health | `GET /health` ✔ | public |
+| Auth | `POST /auth/register` (JSON) ✔, `POST /auth/login` (form: `email`, `password`) ✔, `POST /auth/logout` ✔, `GET /auth/me` ✔, `GET /auth/csrf` ✔ | public / any logged-in |
+| Account | `PUT /users/me` (name, phone) ✔ | any logged-in |
+| Colleges | `GET /colleges` ✔ | public |
+| Student | `GET/PUT /student/profile` ✔, `GET/PUT /student/preferences`, `GET /student/recommendations`, `GET /student/compare?ids=` | STUDENT |
+| Discovery | `GET /listings?…filters`, `GET /listings/{id}` | public |
+| Owner | `GET/PUT /owner/profile` ✔, `GET/POST /owner/listings`, `GET/PUT/DELETE /owner/listings/{id}`, `POST /owner/listings/{id}/submit`, `PATCH /owner/listings/{id}/availability`, `POST /owner/listings/{id}/images` | OWNER (own only) |
+| Admin | `GET /admin/users?role=&page=` ✔, `POST /admin/users/{id}/suspend` ✔ (reason required), `POST /admin/users/{id}/reinstate` ✔, `GET /admin/listings?status=`, `POST /admin/listings/{id}/approve\|reject\|request-changes\|suspend\|reinstate`, `POST /admin/owners/{id}/verification`, `GET/POST /admin/reports…` | ADMIN |
+| Engagement | `GET/POST/DELETE /student/saved`, `GET/POST /student/enquiries`, `GET /owner/enquiries`, `POST /enquiries/{id}/messages`, `GET /listings/{id}/reviews`, `POST /student/reviews`, `POST /reports` | STUDENT / OWNER |
+| Roommates | `GET/PUT /student/roommates/me`, `GET /student/roommates/matches`, `POST /student/roommates/requests`, `PATCH /student/roommates/requests/{id}` | STUDENT |
 
 Conventions: JSON bodies; errors as `{ "error": "CODE", "message": "...", "fields": {...} }`; 400 validation,
-401 not logged in, 403 wrong role/not owner, 404 not found (also used when a record exists but the caller may
-not know it exists), 409 invalid state transition.
+401 not logged in (or account suspended), 403 wrong role / missing CSRF token, 404 not found (also used when a
+record exists but the caller may not know it exists), 409 conflict / invalid state transition, 429 too many
+login attempts.
+
+### How login works (for the viva)
+
+1. The frontend calls `GET /auth/csrf`; Spring sets a readable `XSRF-TOKEN` cookie.
+2. The login form posts `email` + `password` with header `X-XSRF-TOKEN: <cookie value>`.
+3. `LoginRateLimitFilter` refuses the attempt if that email has 5 recent failures.
+4. Spring Security's `UsernamePasswordAuthenticationFilter` loads the account (`AppUserDetailsService`) and
+   checks the password against the BCrypt hash. Suspended accounts are rejected as "disabled".
+5. On success Spring creates a **new** session id (prevents session fixation), stores the user in it, rotates
+   the CSRF token, and `JsonAuthenticationHandlers` returns the user as JSON. The browser only holds the
+   HttpOnly `JSESSIONID` cookie.
+6. On every later request, `ActiveAccountFilter` re-checks that the account is still active, then the URL role
+   rules decide 200 / 401 / 403.
 
 ## 7. External services and their limits
 
