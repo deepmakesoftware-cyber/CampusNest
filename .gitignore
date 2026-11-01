@@ -1,0 +1,17 @@
+# --- Secrets: never commit real environment files ---
+.env
+.env.*
+!.env.example
+
+# --- Uploaded files (listing images) are runtime data, not source code ---
+uploads/
+
+# --- Editors / OS ---
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# --- Logs ---
+*.log

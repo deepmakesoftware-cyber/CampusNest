@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+/* Design tokens. The full CampusNest design system (colours, dark mode) comes in a later phase;
+   until then the app uses a single light theme so text contrast is always correct. */
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}

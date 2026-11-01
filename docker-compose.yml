@@ -1,0 +1,29 @@
+# Runs ONLY the PostgreSQL database for local development.
+# The frontend and backend run natively (npm / mvnw) so they are easy to debug.
+#
+# Start:  docker compose up -d
+# Stop:   docker compose down          (data is kept in the named volume)
+# Reset:  docker compose down -v       (DELETES all local data)
+services:
+  db:
+    image: postgres:18-alpine
+    container_name: campusnest-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      # Bound to 127.0.0.1 so the database is not reachable from other machines on your network.
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      # PostgreSQL 18+ images keep data under /var/lib/postgresql/<version>/docker.
+      - campusnest-db-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  campusnest-db-data:
