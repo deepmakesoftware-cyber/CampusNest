@@ -1,8 +1,28 @@
 # CampusNest — Development Status
 
-Last updated: 2026-11-01 (end of Phase 3)
+Last updated: 2026-11-01 (end of Phase 4)
 
 Legend: **Proposed** (planned) · **Implemented** (code exists) · **Tested** (automated or recorded manual test passes).
+
+## Phase 4 — Student accommodation discovery
+
+| Feature | Status | Evidence |
+|---|---|---|
+| Flyway V3: `saved_listings`, `enquiries`, `enquiry_messages` | Tested | Applied locally and in test containers |
+| Public search: only published listings of active owners; text, max rent, room type, "accommodation for" (gender policy), must-have amenities (owner said YES), free beds only, max distance; sort by distance / rent / freshness; pagination | Tested | `PublicDiscoveryTest` (5 tests, 11 filter assertions) |
+| Straight-line distance to the chosen college (Haversine, labelled "straight-line") | Tested | `GeoDistanceTest` (5), distance assertions in `PublicDiscoveryTest` |
+| Public listing page: no owner email/phone, owner verification status, freshness (fresh ≤ 14 days, aging ≤ 30, stale), sample badge | Tested | `publicDetailNeverExposesOwnerContactDetails` |
+| Listings of suspended owner accounts disappear from search, detail and public photos | Tested | `listingsOfSuspendedOwnersDisappear` |
+| Saved listings (idempotent save/unsave; kept but marked "no longer listed" if suspended) | Tested | `EngagementTest` (3 tests) |
+| Private enquiry threads: one per student+listing, participants only (others incl. admins get 404), opt-in contact sharing per person, 15 new enquiries/day limit | Tested | `EngagementTest` (4 tests) |
+| Demo data seeder (`DEMO_DATA=true`): 12 sample listings around VJTI, 4 sample owners (2 identity-checked), 1 sample student; @example.com accounts; generated "SAMPLE PHOTO" images; varied freshness; goes through the real state machine | Tested (manual) | Startup log + search results checked through the proxy |
+| Frontend: search page (filters, list and map views), public listing page (trust panel, save, message owner with opt-in sharing), saved page, messages inbox and thread, role-aware navigation | Implemented | Lint, type-check, build pass; save + enquiry flow checked through the proxy with demo accounts. **Not yet clicked through in a browser by the AI** |
+
+**Test totals (end of Phase 4):** backend `mvnw test` — 98 tests, 0 failures.
+
+Bugs found and fixed in Phase 4: optional yes/no fields in request bodies were rejected when omitted (Jackson 3
+default) — `shareContact` is now optional and `mandatory` is a clear required field; a message form defined inside
+another component would have lost focus on every keystroke.
 
 ## Phase 3 — Accommodation listing management (FR-3)
 
@@ -62,8 +82,8 @@ Next.js proxy — 27 checks, 0 failures.
 
 ## Pending (next phases)
 
-- **Phase 4:** student search, filters, public listing page, saved listings, enquiries, demo seed data.
-- Phases 5–10 as per [PROJECT-PLAN.md](PROJECT-PLAN.md).
+- **Phase 5:** accommodation preferences and the explainable suitability score.
+- Phases 6–10 as per [PROJECT-PLAN.md](PROJECT-PLAN.md).
 - Features agreed for later (e.g. Google sign-in): [BACKLOG.md](BACKLOG.md).
 
 ## Known issues / technical debt
@@ -83,7 +103,9 @@ Next.js proxy — 27 checks, 0 failures.
 
 | T13 | A material edit sends a published listing back to review, which hides it from students until re-approved | Simple and safe for v1; a later version could keep the approved version live while edits are reviewed |
 | T14 | Photo files are deleted from disk before the database transaction commits; a rollback could leave a DB row without its file | Rare; move deletion to an after-commit hook if it ever happens |
-| T15 | Local dev database contains E2E test accounts and two "E2E Hostel…" test listings | Reset the dev database (`docker compose down -v`) before loading demo seed data in Phase 4 |
 | T16 | OpenStreetMap public tiles: no SLA, light use only | Tile URL is configurable (`NEXT_PUBLIC_MAP_TILE_URL`); coordinates can always be typed manually |
+| T17 | Search filters run in Java over all visible listings (simple, fine for hundreds of listings) | Move filters into the SQL query if listings reach many thousands; API stays the same |
+| T18 | No unread-message counts or notifications for enquiries | Later (would need e-mail or push; must stay free) |
 
 Resolved in Phase 2: T1 (generated default password log), T6 (Flyway "no migrations" warning).
+Resolved 2026-11-01: T15 (E2E test accounts and listings removed from the local dev database; admin kept).

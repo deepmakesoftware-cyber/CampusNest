@@ -128,6 +128,27 @@ public abstract class ListingTestSupport extends ApiTestSupport {
         return id;
     }
 
+    /**
+     * Publishes a listing whose title contains a unique token, so a test can find exactly its own listing with
+     * the search text filter (?q=token) even though other tests' listings share the database.
+     */
+    protected long publishedWithToken(MockHttpSession owner, MockHttpSession admin, String token,
+            java.util.function.Consumer<Map<String, Object>> customise) throws Exception {
+        long id = createDraft(owner);
+        Map<String, Object> listing = completeListing();
+        listing.put("title", "Listing " + token);
+        customise.accept(listing);
+        putListing(owner, id, listing).andExpect(status().isOk());
+        uploadImage(owner, id, pngBytes(), "room.png").andExpect(status().isCreated());
+        mockMvc.perform(post(OWNER_LISTINGS + "/" + id + "/submit").with(csrf()).session(owner)).andExpect(status().isOk());
+        mockMvc.perform(post(ADMIN_LISTINGS + "/" + id + "/approve").with(csrf()).session(admin)).andExpect(status().isOk());
+        return id;
+    }
+
+    protected static String token() {
+        return "t" + java.util.UUID.randomUUID().toString().replace("-", "").substring(0, 12);
+    }
+
     protected ResultActions adminAction(MockHttpSession admin, long id, String action, String reason) throws Exception {
         var request = post(ADMIN_LISTINGS + "/" + id + "/" + action).with(csrf()).session(admin);
         if (reason != null) {

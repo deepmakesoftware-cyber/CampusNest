@@ -15,11 +15,11 @@ export default function HomeActions() {
   }
   return (
     <div className="flex flex-wrap gap-3">
-      <Link href="/register" className="rounded-md bg-teal-700 px-4 py-2 font-medium text-white hover:bg-teal-800">
-        Create a free account
+      <Link href="/listings" className="rounded-md bg-teal-700 px-4 py-2 font-medium text-white hover:bg-teal-800">
+        Browse accommodation
       </Link>
-      <Link href="/login" className="rounded-md border border-slate-300 bg-white px-4 py-2 font-medium text-slate-800 hover:bg-slate-50">
-        Log in
+      <Link href="/register" className="rounded-md border border-slate-300 bg-white px-4 py-2 font-medium text-slate-800 hover:bg-slate-50">
+        Create a free account
       </Link>
     </div>
   );

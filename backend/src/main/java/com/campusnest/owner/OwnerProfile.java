@@ -63,6 +63,13 @@ public class OwnerProfile {
         this.businessName = (businessName == null || businessName.isBlank()) ? null : businessName.trim();
     }
 
+    /** Recorded when an administrator has checked the owner's identity (admin flow in Phase 8; demo data now). */
+    public void markVerified(UserAccount admin, Instant when) {
+        this.verificationStatus = VerificationStatus.VERIFIED;
+        this.verifiedBy = admin;
+        this.verifiedAt = when;
+    }
+
     public Long getUserId() {
         return userId;
     }

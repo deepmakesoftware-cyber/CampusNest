@@ -12,16 +12,15 @@ import {
   formatDateTime,
   formatRupees,
 } from "@/lib/listingLabels";
-import type { ListingDetail, StatusChangeView } from "@/lib/types";
+import type { ListingContent, StatusChangeView } from "@/lib/types";
 
-// Read-only presentation of a listing. Used by the admin review page now, and by the student
-// listing page in Phase 4.
+// Read-only presentation of a listing, shared by the owner, admin review and public listing pages.
 
-export default function ListingDetailsView({ listing }: { listing: ListingDetail }) {
+export default function ListingDetailsView({ listing, hideTitle = false }: { listing: ListingContent; hideTitle?: boolean }) {
   return (
     <div className="space-y-6">
       <section>
-        <h2 className="text-xl font-semibold text-slate-900">{listing.title}</h2>
+        {!hideTitle && <h2 className="text-xl font-semibold text-slate-900">{listing.title}</h2>}
         <p className="mt-1 text-sm text-slate-600">
           {PROPERTY_TYPE_LABELS[listing.propertyType]} · {GENDER_POLICY_LABELS[listing.genderPolicy]}
           {listing.sampleData && <span className="ml-2 rounded bg-purple-50 px-1.5 py-0.5 text-xs text-purple-800">Sample listing</span>}

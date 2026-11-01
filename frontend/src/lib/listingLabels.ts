@@ -67,6 +67,18 @@ export const STATUS_BADGE_CLASSES: Record<ListingStatus, string> = {
   REJECTED: "bg-red-50 text-red-800",
 };
 
+export const FRESHNESS_LABELS: Record<import("./types").Freshness, string> = {
+  FRESH: "Availability confirmed recently",
+  AGING: "Availability confirmed 2–4 weeks ago",
+  STALE: "Availability may be out of date",
+};
+
+export const FRESHNESS_CLASSES: Record<import("./types").Freshness, string> = {
+  FRESH: "text-green-700",
+  AGING: "text-amber-700",
+  STALE: "text-red-700",
+};
+
 const rupees = new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 });
 
 export function formatRupees(amount: number): string {

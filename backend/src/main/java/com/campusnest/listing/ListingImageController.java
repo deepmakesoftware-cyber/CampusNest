@@ -39,7 +39,7 @@ public class ListingImageController {
         Listing listing = image.getListing();
         ListingStatus status = listing.getStatus();
 
-        boolean isPublic = status.isPublished();
+        boolean isPublic = PublicListingService.isVisible(listing);
         boolean isOwner = me != null && listing.getOwner().getId().equals(me.getId());
         boolean isReviewingAdmin = me != null && me.getRole() == Role.ADMIN && status != ListingStatus.DRAFT;
         if (!isPublic && !isOwner && !isReviewingAdmin) {

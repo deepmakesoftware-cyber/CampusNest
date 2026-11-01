@@ -50,9 +50,21 @@ export default function StudentHome() {
         </section>
       )}
 
+      <section className="grid gap-3 sm:grid-cols-3">
+        {[
+          { href: "/listings", title: "Find accommodation", text: "Search reviewed listings near your college" },
+          { href: "/student/saved", title: "Saved listings", text: "Places you bookmarked" },
+          { href: "/messages", title: "Messages", text: "Your conversations with owners" },
+        ].map((card) => (
+          <Link key={card.href} href={card.href} className="rounded-lg border border-slate-200 bg-white p-4 hover:border-teal-600">
+            <span className="font-medium text-slate-900">{card.title}</span>
+            <span className="mt-1 block text-sm text-slate-600">{card.text}</span>
+          </Link>
+        ))}
+      </section>
+
       <ComingSoon
         items={[
-          { phase: "Phase 4", title: "Search accommodation", description: "browse verified listings near your college" },
           { phase: "Phase 5", title: "Ranked recommendations", description: "suitability scores with a full explanation" },
           { phase: "Phase 6", title: "Cost vs commute", description: "compare rent, travel time and transport cost" },
           { phase: "Phase 7", title: "Roommate matching", description: "find compatible roommates, privately" },

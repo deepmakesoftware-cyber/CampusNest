@@ -174,6 +174,83 @@ export type OwnerInfo = {
 
 export type AdminListingDetail = { listing: ListingDetail; owner: OwnerInfo };
 
+/** The listing fields every read-only listing view needs (shared by owner, admin and public pages). */
+export type ListingContent = Pick<
+  ListingDetail,
+  | "title" | "description" | "propertyType" | "genderPolicy" | "addressLine" | "locality" | "city" | "pincode"
+  | "latitude" | "longitude" | "lastConfirmedAt" | "sampleData" | "rooms" | "charges" | "amenities" | "images"
+>;
+
+// ---------------- Public discovery (PublicListingDtos.java) ----------------
+
+export type Freshness = "FRESH" | "AGING" | "STALE";
+export type SortOrder = "RENT_ASC" | "DISTANCE_ASC" | "RECENTLY_CONFIRMED";
+
+export type ListingCard = {
+  id: number;
+  title: string;
+  locality: string | null;
+  propertyType: PropertyType;
+  genderPolicy: GenderPolicy;
+  fromRent: number;
+  roomTypes: RoomType[];
+  bedsAvailable: number;
+  latitude: number;
+  longitude: number;
+  distanceKm: number | null;
+  coverImageUrl: string | null;
+  freshness: Freshness;
+  lastConfirmedAt: string | null;
+  ownerVerification: VerificationStatus;
+  sampleData: boolean;
+};
+
+export type PublicListingDetail = ListingContent & {
+  id: number;
+  status: ListingStatus;
+  publishedAt: string | null;
+  freshness: Freshness;
+  owner: { displayName: string; ownerType: OwnerType | null; businessName: string | null; verificationStatus: VerificationStatus };
+};
+
+// ---------------- Engagement (engagement package) ----------------
+
+export type SavedListingView = {
+  listingId: number;
+  title: string;
+  locality: string | null;
+  available: boolean;
+  status: ListingStatus | null;
+  savedAt: string;
+};
+
+export type MessageView = { id: number; fromMe: boolean; senderName: string; body: string; at: string };
+
+export type EnquiryView = {
+  id: number;
+  listingId: number;
+  listingTitle: string;
+  listingLocality: string | null;
+  myRole: "STUDENT" | "OWNER";
+  otherName: string;
+  otherEmail: string | null;
+  otherPhone: string | null;
+  iShareContact: boolean;
+  messages: MessageView[];
+  lastMessageAt: string;
+};
+
+export type EnquirySummary = {
+  id: number;
+  listingId: number;
+  listingTitle: string;
+  otherName: string;
+  lastMessage: string;
+  waitingForMyReply: boolean;
+  messageCount: number;
+  lastMessageAt: string;
+};
+
 export const ROLE_LABELS: Record<Role, string> = {
   STUDENT: "Student",
   OWNER: "Property owner",

@@ -96,12 +96,14 @@ enforced in `SecurityConfig`. Inside an area, services additionally check that a
 | Account | `PUT /users/me` (name, phone) ✔ | any logged-in |
 | Colleges | `GET /colleges` ✔ | public |
 | Student | `GET/PUT /student/profile` ✔, `GET/PUT /student/preferences`, `GET /student/recommendations`, `GET /student/compare?ids=` | STUDENT |
-| Discovery | `GET /listings?…filters`, `GET /listings/{id}` | public |
+| Discovery | `GET /listings?q=&maxRent=&roomType=&suitableFor=&amenities=&availableOnly=&collegeId=&maxDistanceKm=&sort=&page=` ✔, `GET /listings/{id}` ✔ (published only, no owner contact) | public |
+| Saved | `GET /student/saved` ✔, `PUT/DELETE /student/saved/{listingId}` ✔ (idempotent) | STUDENT |
+| Enquiries | `POST /student/enquiries` ✔ (start or continue; optional `shareContact`), `GET /student/enquiries` ✔, `GET /owner/enquiries` ✔, `GET /enquiries/{id}` ✔, `POST /enquiries/{id}/messages` ✔ | participants only |
 | Amenities | `GET /amenities` ✔ | public |
 | Listing photos | `GET /listing-images/{id}` ✔ (public only if the listing is published; owner always; admin except drafts) | public / checked per photo |
 | Owner | `GET/PUT /owner/profile` ✔, `GET/POST /owner/listings` ✔, `GET/PUT/DELETE /owner/listings/{id}` ✔ (delete = drafts only), `POST /owner/listings/{id}/submit` ✔, `PATCH /owner/listings/{id}/availability` ✔, `POST /owner/listings/{id}/images` ✔ (multipart `file`), `DELETE /owner/listings/{id}/images/{imageId}` ✔ | OWNER (own only) |
 | Admin | `GET /admin/users?role=&page=` ✔, `POST /admin/users/{id}/suspend` ✔ (reason required), `POST /admin/users/{id}/reinstate` ✔, `GET /admin/listings?status=&page=` ✔, `GET /admin/listings/{id}` ✔, `POST /admin/listings/{id}/approve` ✔, `…/request-changes` ✔, `…/reject` ✔, `…/suspend` ✔ (reason required for these three), `…/reinstate` ✔, `POST /admin/owners/{id}/verification`, `GET/POST /admin/reports…` | ADMIN |
-| Engagement | `GET/POST/DELETE /student/saved`, `GET/POST /student/enquiries`, `GET /owner/enquiries`, `POST /enquiries/{id}/messages`, `GET /listings/{id}/reviews`, `POST /student/reviews`, `POST /reports` | STUDENT / OWNER |
+| Reviews & reports | `GET /listings/{id}/reviews`, `POST /student/reviews`, `POST /reports` | STUDENT / OWNER |
 | Roommates | `GET/PUT /student/roommates/me`, `GET /student/roommates/matches`, `POST /student/roommates/requests`, `PATCH /student/roommates/requests/{id}` | STUDENT |
 
 Conventions: JSON bodies; errors as `{ "error": "CODE", "message": "...", "fields": {...} }`; 400 validation,

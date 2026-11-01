@@ -10,7 +10,8 @@ For students who did not get a hostel seat, it ranks listings with an explainabl
 rent against commute time and cost, makes listing trust visible, and matches compatible roommates without
 exposing private details.
 
-> **Development status:** Phase 2 (accounts, login and role-based access) is complete. See [docs/STATUS.md](docs/STATUS.md)
+> **Development status:** Phase 4 (accounts, listings with admin review, student search, saved listings and
+> private enquiries) is complete. See [docs/STATUS.md](docs/STATUS.md)
 > for what is proposed, implemented and tested.
 
 ## Tech stack
@@ -87,6 +88,18 @@ Open <http://localhost:3000/status>. All three rows (Frontend, Backend API, Data
 - **Administrator:** there is no admin sign-up. On startup the backend creates the admin account from
   `ADMIN_EMAIL` / `ADMIN_PASSWORD` in your `.env` (password at least 12 characters). Log in with those values.
   Changing them later does not change an existing account.
+
+### Demo data (for presentations)
+
+Set `DEMO_DATA=true` and a `DEMO_PASSWORD` (12+ characters) in `.env`, then restart the backend. It creates, once:
+
+- 12 **sample listings** around VJTI (Matunga, Dadar, Sion, … Thane), each marked "Sample listing" with a
+  generated "SAMPLE PHOTO" image. Rents are illustrative, not market data.
+- 4 sample owners: `owner.ramesh@example.com`, `owner.sunita@example.com` (identity checked),
+  `owner.imran@example.com`, `owner.prakash@example.com`
+- 1 sample student: `student.asha@example.com` (VJTI, MCA year 1)
+
+All sample accounts use `DEMO_PASSWORD`. Never put real people's details in demo data.
 
 How requests flow: the browser only talks to Next.js. Next.js forwards every `/api/*` request to Spring Boot
 (see `frontend/next.config.ts`), and Spring Boot talks to PostgreSQL.

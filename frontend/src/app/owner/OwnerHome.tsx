@@ -121,7 +121,6 @@ export default function OwnerHome() {
 
       <ComingSoon
         items={[
-          { phase: "Phase 4", title: "Student enquiries", description: "reply to students interested in your listing" },
           { phase: "Phase 8", title: "Owner verification requests", description: "get the “identity checked” badge" },
         ]}
       />

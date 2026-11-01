@@ -74,7 +74,8 @@ public final class ListingDtos {
             @Size(max = 100) String description,
             @NotNull @Min(0) @Max(1_000_000) Integer amount,
             @NotNull ChargeFrequency frequency,
-            boolean mandatory) {
+            // Boolean + @NotNull: a missing value gives a clear validation error instead of "malformed request"
+            @NotNull Boolean mandatory) {
     }
 
     public record AmenityAnswer(@NotNull Long amenityId, @NotNull Boolean available) {
