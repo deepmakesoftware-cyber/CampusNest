@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Suspense } from "react";
+import { CompareBar } from "@/components/CompareControls";
 import SiteHeader from "@/components/SiteHeader";
 import { AuthProvider } from "@/lib/auth";
 import "./globals.css";
@@ -29,6 +31,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <AuthProvider>
           <SiteHeader />
           <div className="flex flex-1 flex-col">{children}</div>
+          {/* reads the current URL, which Cache Components requires inside <Suspense> */}
+          <Suspense fallback={null}>
+            <CompareBar />
+          </Suspense>
         </AuthProvider>
       </body>
     </html>

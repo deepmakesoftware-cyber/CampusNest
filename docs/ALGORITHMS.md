@@ -174,6 +174,31 @@ paying."*
 
 ## 4. Cost-versus-commute (FR-4)
 
+**Status: Implemented and tested (Phase 6).** Code: `commute/CommuteService.java`, `CommuteModel.java`,
+`FareCalculator.java`, `recommendation/ComparisonService.java`. Tests: `FareCalculatorTest`, `CommuteModelTest`,
+`ComparisonApiTest`.
+
+### 4.1 What is implemented
+
+| Mode | Time estimate (assumption) | Monthly cost estimate | Source of cost |
+|---|---|---|---|
+| Walk | road km (straight × 1.3) at 4.5 km/h | ₹0 | — |
+| Auto-rickshaw | road km at 18 km/h + 5 min waiting | (₹27 for first 1.5 km + ₹18.22/km) × 2 trips × college days | MMRTA tariff effective 1 Sep 2026 (reported by Time Out Mumbai citing Mid-Day) |
+| BEST bus (non-AC) | road km at 13 km/h + 10 min waiting; **assumes a direct route exists** | slab fare (₹10 ≤ 5 km, ₹15 ≤ 10, ₹20 ≤ 15, ₹30 ≤ 20, ₹35 ≤ 25) × trips | BEST revision of 9 May 2025 (Free Press Journal) |
+| Local train | walk to nearest station + 8 min wait + rail (straight line between stations × 1.2 at 30 km/h) + walk from the station nearest the college. Not offered if same station, rail < 2 km, or walk to station > 25 min | monthly pass from admin-entered fare slabs | **None entered**: no current official table could be verified on 2026-11-01, so pass cost shows "not available" |
+
+- Stations: 59 Mumbai suburban stations from OpenStreetMap (© OpenStreetMap contributors, ODbL), extracted
+  2026-11-01. Line labels in OSM are not reliable, so the model ignores lines (no transfer logic) — a known
+  simplification.
+- Fare rules live in `fare_rules`, each with source and "applies from" date; admins add/remove them at
+  `/admin/fares`. CampusNest never invents a fare: no rule → "not available".
+- **Suggested mode** for the overall total: among available modes within the student's commute limit, the cheapest
+  with a known cost (ties → faster); if none is within the limit, the fastest. The student can switch the mode.
+- **Overall monthly cost** = rent of the compared room + compulsory monthly charges + travel cost of the chosen mode,
+  shown only when all parts are known; otherwise "Incomplete — <reason>".
+- The suitability score's commute part now uses the same estimates: the student's chosen mode if available, else
+  the fastest practical option (walking only if ≤ 30 min; bus never auto-picked because routes are unknown).
+
 - Compare up to 4 listings: rent, disclosed recurring charges, estimated transport cost, estimated time,
   distance, estimated overall monthly cost.
 - **Transport cost** = fare per trip × trips per month (default 2 × 22 college days; student-editable).

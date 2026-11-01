@@ -44,7 +44,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/api/v1/health", "/api/v1/colleges", "/api/v1/amenities",
-                                "/api/v1/auth/csrf").permitAll()
+                                "/api/v1/fare-rules", "/api/v1/auth/csrf").permitAll()
                         // Photo access is decided per image in ListingImageController (public only if published).
                         .requestMatchers(HttpMethod.GET, "/api/v1/listing-images/**").permitAll()
                         // Published listings are public (the service only ever returns published ones).

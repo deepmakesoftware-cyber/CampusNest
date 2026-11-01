@@ -96,7 +96,8 @@ enforced in `SecurityConfig`. Inside an area, services additionally check that a
 | Auth | `POST /auth/register` (JSON) ✔, `POST /auth/login` (form: `email`, `password`) ✔, `POST /auth/logout` ✔, `GET /auth/me` ✔, `GET /auth/csrf` ✔ | public / any logged-in |
 | Account | `PUT /users/me` (name, phone) ✔ | any logged-in |
 | Colleges | `GET /colleges` ✔ | public |
-| Student | `GET/PUT /student/profile` ✔, `GET/PUT /student/preferences` ✔ (GET = 204 if not set), `GET /student/recommendations` ✔ (409 `COLLEGE_REQUIRED` / `PREFERENCES_REQUIRED`), `GET /student/recommendations/listings/{id}` ✔ (breakdown or exclusion reasons), `GET /student/compare?ids=` | STUDENT |
+| Student | `GET/PUT /student/profile` ✔, `GET/PUT /student/preferences` ✔ (GET = 204 if not set), `GET /student/recommendations` ✔ (409 `COLLEGE_REQUIRED` / `PREFERENCES_REQUIRED`), `GET /student/recommendations/listings/{id}` ✔ (breakdown or exclusion reasons), `GET /student/compare?ids=1,2,3&daysPerMonth=22` ✔ (2–4 listings) | STUDENT |
+| Fare rules | `GET /fare-rules` ✔ (public, with sources), `POST /admin/fare-rules` ✔ (source + date required), `DELETE /admin/fare-rules/{id}` ✔ | public / ADMIN |
 | Discovery | `GET /listings?q=&maxRent=&roomType=&suitableFor=&amenities=&availableOnly=&collegeId=&maxDistanceKm=&sort=&page=` ✔, `GET /listings/{id}` ✔ (published only, no owner contact) | public |
 | Saved | `GET /student/saved` ✔, `PUT/DELETE /student/saved/{listingId}` ✔ (idempotent) | STUDENT |
 | Enquiries | `POST /student/enquiries` ✔ (start or continue; optional `shareContact`), `GET /student/enquiries` ✔, `GET /owner/enquiries` ✔, `GET /enquiries/{id}` ✔, `POST /enquiries/{id}/messages` ✔ | participants only |
@@ -130,7 +131,8 @@ login attempts.
 | Service | Use | Constraint (to re-verify against current policy before Phase 6) | Fallback |
 |---|---|---|---|
 | OpenStreetMap tiles | Map display | Attribution required; low-volume use only; no bulk downloading | Map hidden; text address still shown |
-| OSRM public demo server | Road/walk time | Demo use only, rate-limited, no uptime guarantee | Straight-line × detour factor, labelled "approximate" |
+| OSRM public demo server | Road/walk time | **Not used** in v1: estimates use straight-line × 1.3 so the app never depends on it | — |
+| OpenStreetMap Overpass API | One-off extract of 59 suburban stations (2026-11-01), stored in migration V5 | Light use only; data ODbL (attribution shown on the comparison page) | Data is stored locally; no runtime calls |
 | Nominatim | (Optional) address search | ~1 request/s, identifying User-Agent, no autocomplete | Owner drops a pin on the map instead |
 
 No service requires payment, an API key or a credit card. The application runs fully without any of them.

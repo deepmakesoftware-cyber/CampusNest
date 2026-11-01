@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState, type FormEvent } from "react";
+import { CompareToggle } from "@/components/CompareControls";
 import ListingsMap from "@/components/ListingsMap";
 import { FreshnessNote, OwnerCheckedBadge, SampleBadge } from "@/components/TrustBadges";
 import { FormMessage } from "@/components/form";
@@ -240,9 +241,12 @@ function ResultCard({ listing: l }: { listing: ListingCard }) {
           <div className="flex aspect-[4/3] items-center justify-center bg-slate-100 text-sm text-slate-500">No photo</div>
         )}
         <div className="space-y-1 p-3">
-          <div className="flex flex-wrap gap-1">
-            {l.sampleData && <SampleBadge />}
-            <OwnerCheckedBadge status={l.ownerVerification} />
+          <div className="flex flex-wrap items-center justify-between gap-1">
+            <div className="flex flex-wrap gap-1">
+              {l.sampleData && <SampleBadge />}
+              <OwnerCheckedBadge status={l.ownerVerification} />
+            </div>
+            <CompareToggle listingId={l.id} />
           </div>
           <h2 className="font-semibold text-slate-900">{l.title}</h2>
           <p className="text-sm text-slate-600">

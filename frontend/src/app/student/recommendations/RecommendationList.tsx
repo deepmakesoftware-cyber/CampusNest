@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { CompareToggle } from "@/components/CompareControls";
 import ScoreBreakdown, { ScoreBadge } from "@/components/ScoreBreakdown";
 import { OwnerCheckedBadge, SampleBadge } from "@/components/TrustBadges";
 import { FormMessage } from "@/components/form";
@@ -96,6 +97,7 @@ export default function RecommendationList() {
                       <Link href={`/listings/${item.listingId}`} className="font-semibold text-slate-900 hover:underline">{item.title}</Link>
                       {item.sampleData && <SampleBadge />}
                       <OwnerCheckedBadge status={item.ownerVerification} />
+                      <CompareToggle listingId={item.listingId} />
                     </div>
                     <p className="text-sm text-slate-600">
                       {item.locality} · {PROPERTY_TYPE_LABELS[item.propertyType]} · {GENDER_POLICY_LABELS[item.genderPolicy]}

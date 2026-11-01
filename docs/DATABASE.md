@@ -10,7 +10,11 @@ migration is added. **Never edit an applied migration — add a new one.**
 | `V2__listings.sql` (Phase 3) | `amenities` (15 seeded, 8 core), `listings`, `room_options`, `listing_charges`, `listing_amenities`, `listing_images`, `listing_status_history` | Implemented & tested |
 | `V3__saved_listings_and_enquiries.sql` (Phase 4) | `saved_listings`, `enquiries` (with `student_shares_contact` / `owner_shares_contact`), `enquiry_messages` | Implemented & tested |
 | `V4__student_preferences.sql` (Phase 5) | `student_preferences` (max budget, max commute, travel mode, ranked room types and amenity lists as comma-separated codes) | Implemented & tested |
-| Phase 6+ | all other tables below | Proposed |
+| `V5__commute_stations_and_fares.sql` (Phase 6) | `stations` (59 rows from OpenStreetMap, ODbL), `fare_rules` (auto-rickshaw tariff + 5 BEST slabs, each with source and date; no train fares) | Implemented & tested |
+| Phase 7+ | all other tables below | Proposed |
+
+Phase 6 difference from the proposal: commute estimates are computed on request from stations + fare rules rather
+than stored in a `commute_estimates` table (they are cheap to compute and would go stale when fares change).
 
 Phase 3 differences from the proposal:
 - Money and counts are `INTEGER` (whole rupees), not decimals.

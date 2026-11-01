@@ -1,8 +1,26 @@
 # CampusNest — Development Status
 
-Last updated: 2026-11-01 (end of Phase 5)
+Last updated: 2026-11-01 (end of Phase 6)
 
 Legend: **Proposed** (planned) · **Implemented** (code exists) · **Tested** (automated or recorded manual test passes).
+
+## Phase 6 — Commute and cost comparison (FR-4)
+
+| Feature | Status | Evidence |
+|---|---|---|
+| Flyway V5: 59 stations (OpenStreetMap), fare rules with sources (auto-rickshaw MMRTA Sep 2026; BEST May 2025); no train fares (none verifiable) | Tested | Applied locally and in test containers |
+| Fare calculation from stored rules only (metered auto, bus slabs, train pass slabs); empty → "not available" | Tested | `FareCalculatorTest` (5) |
+| Per-mode time estimates incl. local train via nearest stations; train not offered for same station / < 2 km rail / > 25 min walk | Tested | `CommuteModelTest` (6) |
+| Comparison of 2–4 listings: rent, compulsory/optional/one-time charges, deposit, distance, each mode's time + monthly cost, suggested mode, overall monthly total only when complete | Tested | `ComparisonApiTest` (4) incl. hand-checked auto fare × 44 trips |
+| Fare rules public; admins add (source + date mandatory, shape validated) and remove | Tested | `fareRulesArePublicAndOnlyAdminsCanChangeThem` |
+| Suitability score now uses the per-mode estimates (train for long distances) | Tested | Recommendation tests unchanged and passing; demo check (Thane → local train 78 min) |
+| Frontend: "+ Compare" on search, recommendations and listing pages; shortlist bar; comparison page (mode switch, college days, cost-vs-commute chart, full table, assumptions, fare sources, OSM attribution); admin fare-rules page | Implemented | Lint, type-check, build pass; demo comparison checked through the proxy |
+
+**Test totals (end of Phase 6):** backend `mvnw test` — 140 tests, 0 failures.
+
+Issues found and fixed in Phase 6: the train model suggested a pointless one-stop hop for places next to the
+college (now requires ≥ 2 km of rail); a layout component reading the URL outside `<Suspense>` broke the production
+build of dynamic pages.
 
 ## Phase 5 — Accommodation Suitability Score (FR-1)
 
@@ -99,8 +117,8 @@ Next.js proxy — 27 checks, 0 failures.
 
 ## Pending (next phases)
 
-- **Phase 6:** commute estimates with local-train stations and fares, cost-versus-commute comparison.
-- Phases 7–10 as per [PROJECT-PLAN.md](PROJECT-PLAN.md).
+- **Phase 7:** roommate matching.
+- Phases 8–10 as per [PROJECT-PLAN.md](PROJECT-PLAN.md).
 - Features agreed for later (e.g. Google sign-in): [BACKLOG.md](BACKLOG.md).
 
 ## Known issues / technical debt
@@ -125,6 +143,9 @@ Next.js proxy — 27 checks, 0 failures.
 | T18 | No unread-message counts or notifications for enquiries | Later (would need e-mail or push; must stay free) |
 | T19 | Suitability weights and commute speed assumptions are documented hypotheses, not validated | Short survey of ~20 VJTI students (planned for documentation phase) |
 | T20 | Recommendations are computed on every request (fine for hundreds of listings) | Cache per student if listings grow large |
+| T21 | **No local-train pass fares entered** — train cost shows "not available" | An admin enters MONTHLY_PASS_SLAB rules from an official source (RailOne app / booking counter) at `/admin/fares` |
+| T22 | Train model ignores lines and transfers; bus model cannot check that a route exists | Needs GTFS/timetable data (not freely available for Mumbai) — documented as estimates |
+| T23 | Auto/bus/train speeds are assumptions | Validate against a few real trips during the student survey |
 
 Resolved in Phase 2: T1 (generated default password log), T6 (Flyway "no migrations" warning).
 Resolved 2026-11-01: T15 (E2E test accounts and listings removed from the local dev database; admin kept).

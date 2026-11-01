@@ -264,6 +264,59 @@ export type Recommendations = {
   generatedAt: string;
 };
 
+// ---------------- Comparison (Phase 6) ----------------
+
+export type CommuteOption = {
+  mode: TravelMode;
+  available: boolean;
+  minutes: number;
+  distanceKm: number;
+  monthlyCost: number | null;
+  costNote: string;
+  method: string | null;
+  unavailableReason: string | null;
+};
+
+export type ComparedListing = {
+  listingId: number;
+  title: string;
+  locality: string | null;
+  sampleData: boolean;
+  roomType: RoomType;
+  monthlyRent: number;
+  securityDeposit: number | null;
+  compulsoryMonthlyCharges: number;
+  optionalMonthlyCharges: number;
+  oneTimeCharges: number;
+  straightLineKm: number;
+  commuteOptions: CommuteOption[];
+  suggestedMode: TravelMode | null;
+  estimatedMonthlyTotal: number | null;
+  totalNote: string;
+};
+
+export type Comparison = {
+  items: ComparedListing[];
+  daysPerMonth: number;
+  maxCommuteMinutes: number;
+  collegeShortName: string;
+  generatedAt: string;
+};
+
+export type FareRuleView = {
+  id: number;
+  mode: TravelMode;
+  kind: "PER_TRIP_METERED" | "PER_TRIP_SLAB" | "MONTHLY_PASS_SLAB";
+  upToKm: number | null;
+  baseFare: number;
+  baseKm: number | null;
+  perKm: number | null;
+  description: string;
+  sourceName: string;
+  sourceUrl: string | null;
+  effectiveFrom: string;
+};
+
 // ---------------- Engagement (engagement package) ----------------
 
 export type SavedListingView = {

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
+import { CompareToggle } from "@/components/CompareControls";
 import ListingDetailsView from "@/components/ListingDetailsView";
 import ScoreBreakdown, { ScoreBadge } from "@/components/ScoreBreakdown";
 import { FreshnessNote, OwnerCheckedBadge, SampleBadge } from "@/components/TrustBadges";
@@ -52,7 +53,12 @@ export default function PublicListingPage() {
             )}
           </div>
         </div>
-        {isStudent && <SaveButton listingId={listing.id} />}
+        {isStudent && (
+          <div className="flex items-center gap-2">
+            <CompareToggle listingId={listing.id} />
+            <SaveButton listingId={listing.id} />
+          </div>
+        )}
       </div>
 
       {listing.sampleData && (

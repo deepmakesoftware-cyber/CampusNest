@@ -108,7 +108,7 @@ public class RecommendationService {
     // ---------------- helpers ----------------
 
     private record Context(Preferences prefs, College college, Map<String, String> amenityNames,
-            Map<Long, VerificationStatus> ownerVerification, StudentPreferences raw) {
+            Map<Long, VerificationStatus> ownerVerification, StudentPreferences raw, CommuteService.Context commute) {
     }
 
     private Context context(Long studentId) {
@@ -127,7 +127,7 @@ public class RecommendationService {
         Map<String, String> names = amenities.findAll().stream().collect(Collectors.toMap(Amenity::getCode, Amenity::getName));
         Map<Long, VerificationStatus> verification = ownerProfiles.findAll().stream()
                 .collect(Collectors.toMap(OwnerProfile::getUserId, OwnerProfile::getVerificationStatus));
-        return new Context(prefs, profile.getCollege(), names, verification, p);
+        return new Context(prefs, profile.getCollege(), names, verification, p, commute.context());
     }
 
     private ListingFacts facts(Listing l, Context ctx) {
@@ -142,7 +142,7 @@ public class RecommendationService {
                 mandatoryMonthly, answers, ctx.amenityNames(),
                 ctx.ownerVerification().get(l.getOwner().getId()) == VerificationStatus.VERIFIED,
                 l.getLastConfirmedAt(), trust.reviewCount(), trust.reviewRatingSum(), trust.upheldReportsLast90Days(),
-                commute.estimate(l, ctx.college(), ctx.raw().getCommuteMode()));
+                commute.estimate(ctx.commute(), l, ctx.college(), ctx.raw().getCommuteMode()));
     }
 
     private RecommendedListing toView(Listing l, Result r, Context ctx) {

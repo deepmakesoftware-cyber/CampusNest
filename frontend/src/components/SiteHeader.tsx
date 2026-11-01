@@ -46,6 +46,7 @@ export default function SiteHeader() {
             <>
               <Link href="/admin/listings" className={navLink}>Listing review</Link>
               <Link href="/admin" className={navLink}>Users</Link>
+              <Link href="/admin/fares" className={navLink}>Fares</Link>
             </>
           )}
 
