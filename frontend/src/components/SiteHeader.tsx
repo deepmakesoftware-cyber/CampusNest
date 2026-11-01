@@ -34,9 +34,20 @@ export default function SiteHeader() {
 
         {state.status === "authenticated" && (
           <nav className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
-            <Link href={ROLE_HOME[state.user.role]} className="text-slate-700 hover:text-slate-900">
-              {state.user.role === "ADMIN" ? "Users" : "Dashboard"}
-            </Link>
+            {state.user.role === "ADMIN" ? (
+              <>
+                <Link href="/admin/listings" className="text-slate-700 hover:text-slate-900">
+                  Listing review
+                </Link>
+                <Link href="/admin" className="text-slate-700 hover:text-slate-900">
+                  Users
+                </Link>
+              </>
+            ) : (
+              <Link href={ROLE_HOME[state.user.role]} className="text-slate-700 hover:text-slate-900">
+                Dashboard
+              </Link>
+            )}
             <Link href="/account" className="text-slate-700 hover:text-slate-900">
               Account
             </Link>

@@ -35,8 +35,8 @@ com.campusnest
 ├── college/         college reference data                                     (Phase 2 ✔)
 ├── student/         student profile ✔, preferences                             (Phase 2/4)
 ├── owner/           owner profile ✔                                            (Phase 2)
-├── listing/         listings, rooms, charges, amenities, images, lifecycle   (Phase 3)
-├── moderation/      admin user management ✔, listing review, verification, reports (Phase 2/3/8)
+├── listing/         listings, rooms, charges, amenities, photos, state machine ✔ (Phase 3)
+├── moderation/      admin user management ✔, listing review ✔, verification, reports (Phase 2/3/8)
 ├── discovery/       search, saved listings, enquiries, reviews               (Phase 4/8)
 ├── recommendation/  suitability scoring                                       (Phase 5)
 ├── commute/         distance, routing, fares, comparison                      (Phase 6)
@@ -79,7 +79,8 @@ controllers, so private fields cannot leak by accident.
 | Authorization | URL role rules + service-level ownership checks (prevents IDOR) | 2–3 |
 | Validation | Jakarta Bean Validation on all request DTOs; global JSON error handler | 2 |
 | Rate limiting | Login, registration, enquiries, roommate requests (Bucket4j) | 2/7 |
-| Uploads | JPEG/PNG/WebP allow-list by magic bytes, ≤ 5 MB, random names, outside web root, EXIF stripped | 3 |
+| Uploads | JPEG/PNG allow-list by magic bytes (WebP dropped: Java's built-in image library cannot re-encode it), ≤ 5 MB, ≤ 6000 px checked before decoding, decoded and re-encoded (EXIF/GPS removed), random UUID names, stored outside the web root, served only through an access-checked endpoint | 3 ✔ |
+| Concurrent edits | `@Version` optimistic locking on listings → 409 instead of silently overwriting | 3 ✔ |
 | Injection / XSS | JPA parameterised queries only; React escaping; no `dangerouslySetInnerHTML` | all |
 
 ## 6. API design (proposed, all under `/api/v1`)
@@ -96,8 +97,10 @@ enforced in `SecurityConfig`. Inside an area, services additionally check that a
 | Colleges | `GET /colleges` ✔ | public |
 | Student | `GET/PUT /student/profile` ✔, `GET/PUT /student/preferences`, `GET /student/recommendations`, `GET /student/compare?ids=` | STUDENT |
 | Discovery | `GET /listings?…filters`, `GET /listings/{id}` | public |
-| Owner | `GET/PUT /owner/profile` ✔, `GET/POST /owner/listings`, `GET/PUT/DELETE /owner/listings/{id}`, `POST /owner/listings/{id}/submit`, `PATCH /owner/listings/{id}/availability`, `POST /owner/listings/{id}/images` | OWNER (own only) |
-| Admin | `GET /admin/users?role=&page=` ✔, `POST /admin/users/{id}/suspend` ✔ (reason required), `POST /admin/users/{id}/reinstate` ✔, `GET /admin/listings?status=`, `POST /admin/listings/{id}/approve\|reject\|request-changes\|suspend\|reinstate`, `POST /admin/owners/{id}/verification`, `GET/POST /admin/reports…` | ADMIN |
+| Amenities | `GET /amenities` ✔ | public |
+| Listing photos | `GET /listing-images/{id}` ✔ (public only if the listing is published; owner always; admin except drafts) | public / checked per photo |
+| Owner | `GET/PUT /owner/profile` ✔, `GET/POST /owner/listings` ✔, `GET/PUT/DELETE /owner/listings/{id}` ✔ (delete = drafts only), `POST /owner/listings/{id}/submit` ✔, `PATCH /owner/listings/{id}/availability` ✔, `POST /owner/listings/{id}/images` ✔ (multipart `file`), `DELETE /owner/listings/{id}/images/{imageId}` ✔ | OWNER (own only) |
+| Admin | `GET /admin/users?role=&page=` ✔, `POST /admin/users/{id}/suspend` ✔ (reason required), `POST /admin/users/{id}/reinstate` ✔, `GET /admin/listings?status=&page=` ✔, `GET /admin/listings/{id}` ✔, `POST /admin/listings/{id}/approve` ✔, `…/request-changes` ✔, `…/reject` ✔, `…/suspend` ✔ (reason required for these three), `…/reinstate` ✔, `POST /admin/owners/{id}/verification`, `GET/POST /admin/reports…` | ADMIN |
 | Engagement | `GET/POST/DELETE /student/saved`, `GET/POST /student/enquiries`, `GET /owner/enquiries`, `POST /enquiries/{id}/messages`, `GET /listings/{id}/reviews`, `POST /student/reviews`, `POST /reports` | STUDENT / OWNER |
 | Roommates | `GET/PUT /student/roommates/me`, `GET /student/roommates/matches`, `POST /student/roommates/requests`, `PATCH /student/roommates/requests/{id}` | STUDENT |
 

@@ -1,5 +1,7 @@
 package com.campusnest.common.error;
 
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 
 /**
@@ -10,11 +12,18 @@ public class ApiException extends RuntimeException {
 
     private final HttpStatus status;
     private final String code;
+    private final Map<String, String> fields;
 
     public ApiException(HttpStatus status, String code, String message) {
+        this(status, code, message, null);
+    }
+
+    /** With per-field messages, e.g. the list of items missing before a listing can be submitted. */
+    public ApiException(HttpStatus status, String code, String message, Map<String, String> fields) {
         super(message);
         this.status = status;
         this.code = code;
+        this.fields = fields;
     }
 
     public static ApiException badRequest(String code, String message) {
@@ -35,5 +44,9 @@ public class ApiException extends RuntimeException {
 
     public String getCode() {
         return code;
+    }
+
+    public Map<String, String> getFields() {
+        return fields;
     }
 }

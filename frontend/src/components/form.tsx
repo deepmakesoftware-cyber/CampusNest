@@ -21,6 +21,9 @@ type FieldProps = {
   required?: boolean;
   maxLength?: number;
   disabled?: boolean;
+  /** Shows a numeric keyboard on phones (we keep type="text" so the value is never silently rounded). */
+  inputMode?: "numeric" | "decimal";
+  placeholder?: string;
 };
 
 export function TextField({ label, value, onChange, type = "text", error, hint, ...rest }: FieldProps) {

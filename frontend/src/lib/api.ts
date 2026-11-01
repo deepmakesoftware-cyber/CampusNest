@@ -27,6 +27,8 @@ type RequestOptions = {
   json?: unknown;
   /** Sent as a form-encoded body (used by the login endpoint). */
   form?: Record<string, string>;
+  /** Sent as multipart/form-data (file uploads). The browser sets the Content-Type boundary itself. */
+  formData?: FormData;
 };
 
 const CSRF_COOKIE = "XSRF-TOKEN";
@@ -68,6 +70,8 @@ export async function api<T>(path: string, options: RequestOptions = {}): Promis
     body = JSON.stringify(options.json);
   } else if (options.form) {
     body = new URLSearchParams(options.form);
+  } else if (options.formData) {
+    body = options.formData;
   }
   if (method !== "GET") {
     headers[CSRF_HEADER] = await csrfToken();

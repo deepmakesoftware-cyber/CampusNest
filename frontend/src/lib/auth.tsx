@@ -32,7 +32,7 @@ type AuthContextValue = {
 export const ROLE_HOME: Record<Role, string> = {
   STUDENT: "/student",
   OWNER: "/owner",
-  ADMIN: "/admin",
+  ADMIN: "/admin/listings", // moderation first
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);

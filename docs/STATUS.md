@@ -1,8 +1,31 @@
 # CampusNest — Development Status
 
-Last updated: 2026-11-01 (end of Phase 2)
+Last updated: 2026-11-01 (end of Phase 3)
 
 Legend: **Proposed** (planned) · **Implemented** (code exists) · **Tested** (automated or recorded manual test passes).
+
+## Phase 3 — Accommodation listing management (FR-3)
+
+| Feature | Status | Evidence |
+|---|---|---|
+| Flyway V2: listings, room options, charges, amenities (15 seeded, 8 core), listing amenities, images, status history | Tested | Applied to local DB and test containers |
+| Listing state machine (7 states) as an explicit transition table | Tested | `ListingLifecycleTest` (23 cases incl. every allowed and key forbidden move) |
+| Owner: create draft, edit everything (rooms, charges, amenity yes/no/unknown, location), delete drafts only | Tested | `ListingWorkflowTest` |
+| Submission checklist (description, address, PIN, Mumbai-region location, ≥1 room, ≥1 photo, all core amenities) | Tested | `incompleteListingCannotBeSubmitted`, `locationOutsideMumbaiIsNotAccepted` |
+| Locked while under review; rejected listings locked permanently | Tested | `submitThenApprove…`, `rejectedListingIsLockedForever` |
+| Admin queue (oldest first, drafts never shown), approve / request changes / reject / suspend / reinstate, reasons required | Tested | `ListingWorkflowTest` (7 tests) |
+| Approval publishes as Available or Full depending on free beds; reinstated → Full until owner re-confirms | Tested | `listingWithNoFreeBedsIsPublishedAsUnavailable`, `suspended…Reinstated` |
+| Owner availability update / re-confirmation (freshness timestamp), auto Available ↔ Full | Tested | `availabilityUpdatesSwitch…` |
+| Material edits (title, description, address, location, type, gender policy, amenities, photos) → back to review; rent/charges/beds → no re-review | Tested | `rentChangeStaysPublishedButTitleChangeNeedsNewReview` |
+| Audit history of every status change with actor role and reason | Tested | history assertions in `ListingWorkflowTest` |
+| Ownership isolation (other owners get 404), students can't manage listings, owners can't moderate | Tested | `ownersCannotTouchEachOthersListings`, `studentsCannotManage…` |
+| Photo upload: JPEG/PNG by magic bytes, ≤ 5 MB, ≤ 6000 px, re-encoded (EXIF/GPS stripped), random file names, max 10 | Tested | `ImageProcessorTest` (6), `nonImageUploadIsRejected` |
+| Photo access: public only when published; owner always; admin except drafts | Tested | `draftPhotosAreVisibleOnlyToTheirOwner`, suspension test |
+| Optimistic locking (owner edit vs admin decision at the same time → 409) | Implemented | `@Version` + handler; not yet covered by a concurrent test |
+| Frontend: owner listings dashboard, listing editor (map pin-drop with Leaflet + OSM, rooms, charges, amenities, photos, checklist, availability, history), admin queue and review page | Implemented | Lint, type-check, production build pass; E2E script through proxy 31/31. **Not yet clicked through in a browser by the AI** |
+
+**Test totals (2026-11-01, end of Phase 3):** backend `mvnw test` — 81 tests, 0 failures. Listing E2E script
+through the Next.js proxy (real multipart upload) — 31 checks, 0 failures.
 
 ## Phase 2 — Authentication and authorization
 
@@ -39,8 +62,8 @@ Next.js proxy — 27 checks, 0 failures.
 
 ## Pending (next phases)
 
-- **Phase 3:** listings (rooms, charges, amenities, images, location), submission, admin review, state machine.
-- Phases 4–10 as per [PROJECT-PLAN.md](PROJECT-PLAN.md).
+- **Phase 4:** student search, filters, public listing page, saved listings, enquiries, demo seed data.
+- Phases 5–10 as per [PROJECT-PLAN.md](PROJECT-PLAN.md).
 - Features agreed for later (e.g. Google sign-in): [BACKLOG.md](BACKLOG.md).
 
 ## Known issues / technical debt
@@ -57,5 +80,10 @@ Next.js proxy — 27 checks, 0 failures.
 | T10 | Registration says "email already exists" (reveals that an account exists) | Common UX trade-off; revisit with email verification in a later release |
 | T11 | No password change / reset, no email verification | Tracked as backlog items B2–B4 |
 | T12 | Suspensions are recorded only as the latest status + reason on the user row (no full history) | Add an audit log table with the moderation work in Phase 8 |
+
+| T13 | A material edit sends a published listing back to review, which hides it from students until re-approved | Simple and safe for v1; a later version could keep the approved version live while edits are reviewed |
+| T14 | Photo files are deleted from disk before the database transaction commits; a rollback could leave a DB row without its file | Rare; move deletion to an after-commit hook if it ever happens |
+| T15 | Local dev database contains E2E test accounts and two "E2E Hostel…" test listings | Reset the dev database (`docker compose down -v`) before loading demo seed data in Phase 4 |
+| T16 | OpenStreetMap public tiles: no SLA, light use only | Tile URL is configurable (`NEXT_PUBLIC_MAP_TILE_URL`); coordinates can always be typed manually |
 
 Resolved in Phase 2: T1 (generated default password log), T6 (Flyway "no migrations" warning).

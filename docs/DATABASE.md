@@ -7,7 +7,16 @@ migration is added. **Never edit an applied migration — add a new one.**
 | Migration | Tables | Status |
 |---|---|---|
 | `V1__accounts_colleges_profiles.sql` (Phase 2) | `colleges` (VJTI seeded from OpenStreetMap coordinates), `users`, `student_profiles`, `owner_profiles` | Implemented & tested |
-| Phase 3+ | all other tables below | Proposed |
+| `V2__listings.sql` (Phase 3) | `amenities` (15 seeded, 8 core), `listings`, `room_options`, `listing_charges`, `listing_amenities`, `listing_images`, `listing_status_history` | Implemented & tested |
+| Phase 4+ | all other tables below | Proposed |
+
+Phase 3 differences from the proposal:
+- Money and counts are `INTEGER` (whole rupees), not decimals.
+- `listings` also has `status_reason` (latest admin message), `submitted_at` and `version` (optimistic locking).
+- `listing_charges` uses `mandatory` (must every tenant pay?) instead of `included_in_rent`.
+- `listing_amenities` has a surrogate `id` plus a unique (listing, amenity) constraint, which is simpler to map in JPA
+  than a composite key.
+- `listings.nearest_station_id` and the `stations` table are deferred to Phase 6 (commute).
 
 Implemented differences from the proposal: `users` also has `status_reason` (why an admin suspended the
 account); emails are enforced lower-case by a CHECK constraint, so a plain UNIQUE constraint prevents

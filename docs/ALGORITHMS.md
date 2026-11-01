@@ -122,12 +122,18 @@ stateDiagram-v2
     REJECTED --> [*]
 ```
 
+**Status: Implemented and tested (Phase 3)** — `ListingLifecycle.java` (table), `ListingLifecycleService.java`
+(the only code that changes a status), `ListingLifecycleTest` + `ListingWorkflowTest`.
+
 **Rules**
 
-- Submit requires: title, map location, ≥ 1 room option with rent, ≥ 1 image, all core amenities declared.
+- Submit requires (`SubmissionChecklist.java`): description ≥ 30 characters, street address and locality, 6-digit PIN
+  code, a map location inside the Mumbai region, ≥ 1 room type with rent, ≥ 1 photo, and a yes/no answer for all
+  8 core amenities. Missing items are returned as a list so the owner sees exactly what to fix.
+- While a listing is under review the owner cannot edit it (409 `LISTING_UNDER_REVIEW`).
 - Reject, request-changes and suspend require a written reason, shown to the owner.
-- Material edits (location, photos, property type, description) need re-review. Rent, charges and
-  availability updates do not, but are logged.
+- Material edits (title, description, address, location, property type, gender policy, amenities, photos) need
+  re-review. Rent, charges and bed counts do not (owners must be able to keep prices and availability current).
 - Reinstated listings return as `PUBLISHED_UNAVAILABLE`, so the owner must re-confirm availability.
 - Stale availability (> 30 days unconfirmed) is a label and trust penalty, not a state.
 - If an owner account is suspended, their listings are hidden from search (computed, not a state change).

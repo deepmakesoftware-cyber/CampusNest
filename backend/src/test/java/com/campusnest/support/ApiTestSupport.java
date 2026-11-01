@@ -26,7 +26,7 @@ import com.campusnest.auth.UserAccountRepository;
  * All subclasses share one Spring context and one container, so the suite stays fast.
  * Each test uses fresh random emails, so tests never depend on each other's data.
  */
-@SpringBootTest
+@SpringBootTest(properties = "campusnest.storage.dir=target/test-uploads")
 @AutoConfigureMockMvc
 @Import(TestcontainersConfiguration.class)
 public abstract class ApiTestSupport {
