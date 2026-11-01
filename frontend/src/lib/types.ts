@@ -213,6 +213,57 @@ export type PublicListingDetail = ListingContent & {
   owner: { displayName: string; ownerType: OwnerType | null; businessName: string | null; verificationStatus: VerificationStatus };
 };
 
+// ---------------- Preferences & recommendations (Phase 5) ----------------
+
+export type TravelMode = "ANY" | "WALK" | "AUTO_RICKSHAW" | "BUS" | "LOCAL_TRAIN";
+
+export type Preferences = {
+  budgetMax: number;
+  maxCommuteMinutes: number;
+  commuteMode: TravelMode;
+  roomChoices: RoomType[];
+  mustHaveAmenities: string[];
+  niceToHaveAmenities: string[];
+  updatedAt?: string;
+};
+
+export type CommuteEstimate = { mode: TravelMode; distanceKm: number; minutes: number; approximate: boolean; method: string };
+export type ScoreComponent = { key: string; label: string; weight: number; score: number; explanation: string };
+export type Exclusion = "FULL" | "GENDER_POLICY" | "OVER_BUDGET";
+
+export type SuitabilityResult = {
+  eligible: boolean;
+  exclusions: Exclusion[];
+  bestRoomId: number | null;
+  bestRoomType: RoomType | null;
+  monthlyCost: number | null;
+  totalScore: number | null;
+  band: string | null;
+  components: ScoreComponent[];
+  dataCompleteness: number;
+  notes: string[];
+  commute: CommuteEstimate | null;
+};
+
+export type RecommendedListing = {
+  listingId: number;
+  title: string;
+  locality: string | null;
+  propertyType: PropertyType;
+  genderPolicy: GenderPolicy;
+  coverImageUrl: string | null;
+  sampleData: boolean;
+  ownerVerification: VerificationStatus;
+  result: SuitabilityResult;
+};
+
+export type Recommendations = {
+  items: RecommendedListing[];
+  excludedByReason: Record<string, number>;
+  collegeShortName: string;
+  generatedAt: string;
+};
+
 // ---------------- Engagement (engagement package) ----------------
 
 export type SavedListingView = {

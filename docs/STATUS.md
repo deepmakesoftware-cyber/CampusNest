@@ -1,8 +1,25 @@
 # CampusNest — Development Status
 
-Last updated: 2026-11-01 (end of Phase 4)
+Last updated: 2026-11-01 (end of Phase 5)
 
 Legend: **Proposed** (planned) · **Implemented** (code exists) · **Tested** (automated or recorded manual test passes).
+
+## Phase 5 — Accommodation Suitability Score (FR-1)
+
+| Feature | Status | Evidence |
+|---|---|---|
+| Flyway V4: `student_preferences` | Tested | Applied locally and in test containers |
+| Preferences API: max budget, max commute, travel mode, ranked room types, must-have / nice-to-have amenities, validation | Tested | `RecommendationApiTest.invalidPreferencesAreRejected` |
+| `SuitabilityScorer`: eligibility (full / gender / > 30% over budget), budget, commute curve, room rank, amenities (unknown = half), trust (verified, freshness, Bayesian rating, reports), bands, data completeness, plain-English explanations | Tested | `SuitabilityScorerTest` — 19 cases incl. the 7 faculty cases: excellent budget, poor budget, excellent commute, room-type mismatch, missing amenity info, unverified owner, stale/missing availability |
+| Approximate commute (straight-line × 1.3 at documented assumed speeds), always labelled approximate | Tested | `ApproximateCommuteTest` (4) |
+| Ranked recommendations from real stored listings, with counts of excluded listings by reason; single-listing breakdown | Tested | `RecommendationApiTest` (hand-calculated totals 90 and 65 match) |
+| Frontend: preferences form, recommendations page (rank, score badge, band, expandable breakdown with the arithmetic shown), "Your suitability" panel on listing pages | Implemented | Lint, type-check, build pass; demo student's recommendations checked through the proxy (11 ranked, 1 excluded as full) |
+| Demo student has preferences pre-filled (seeder is idempotent and fills them in on an existing demo database) | Tested (manual) | Startup + recommendations call |
+
+**Test totals (end of Phase 5):** backend `mvnw test` — 125 tests, 0 failures.
+
+Bug found and fixed in Phase 5: saving preferences for the first time inserted an empty row before the values were
+set, which the database CHECK constraint rejected (caught by `RecommendationApiTest`).
 
 ## Phase 4 — Student accommodation discovery
 
@@ -82,8 +99,8 @@ Next.js proxy — 27 checks, 0 failures.
 
 ## Pending (next phases)
 
-- **Phase 5:** accommodation preferences and the explainable suitability score.
-- Phases 6–10 as per [PROJECT-PLAN.md](PROJECT-PLAN.md).
+- **Phase 6:** commute estimates with local-train stations and fares, cost-versus-commute comparison.
+- Phases 7–10 as per [PROJECT-PLAN.md](PROJECT-PLAN.md).
 - Features agreed for later (e.g. Google sign-in): [BACKLOG.md](BACKLOG.md).
 
 ## Known issues / technical debt
@@ -106,6 +123,8 @@ Next.js proxy — 27 checks, 0 failures.
 | T16 | OpenStreetMap public tiles: no SLA, light use only | Tile URL is configurable (`NEXT_PUBLIC_MAP_TILE_URL`); coordinates can always be typed manually |
 | T17 | Search filters run in Java over all visible listings (simple, fine for hundreds of listings) | Move filters into the SQL query if listings reach many thousands; API stays the same |
 | T18 | No unread-message counts or notifications for enquiries | Later (would need e-mail or push; must stay free) |
+| T19 | Suitability weights and commute speed assumptions are documented hypotheses, not validated | Short survey of ~20 VJTI students (planned for documentation phase) |
+| T20 | Recommendations are computed on every request (fine for hundreds of listings) | Cache per student if listings grow large |
 
 Resolved in Phase 2: T1 (generated default password log), T6 (Flyway "no migrations" warning).
 Resolved 2026-11-01: T15 (E2E test accounts and listings removed from the local dev database; admin kept).

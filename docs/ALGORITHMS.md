@@ -5,6 +5,19 @@ class so they can be tuned, and any change must be recorded here with its reason
 
 ## 1. Accommodation Suitability Score (FR-1)
 
+**Status: Implemented and tested (Phase 5).** Code: `recommendation/SuitabilityScorer.java` (pure Java, no database),
+`RecommendationService.java` (loads real listings and ranks them). Tests: `SuitabilityScorerTest` (19 cases incl. all 7
+required by the faculty) and `RecommendationApiTest` (end-to-end, totals checked by hand: 90 and 65).
+
+Implementation notes (differences from the original proposal):
+- Preferences store only the **maximum** budget; a minimum budget does not change the score (we never penalise a
+  cheaper place), so it was dropped.
+- The total is computed from the **rounded** part scores, so anyone can recompute it from the breakdown shown in the UI.
+- Gender: listings are excluded only when the student's declared gender conflicts with a women-only / men-only
+  policy. If the student has not declared a gender, the listing is shown with a note instead.
+- Reviews and reports do not exist until Phase 8, so every listing currently gets the neutral rating prior and
+  "no upheld reports".
+
 ### 1.1 Eligibility (hard filters — excluded, not scored)
 
 1. Listing status is `PUBLISHED_AVAILABLE`.
@@ -39,12 +52,25 @@ differ significantly.
 | Situation | Handling | Shown to student |
 |---|---|---|
 | Charges not disclosed | Budget uses rent only | "Additional charges not disclosed" |
-| No road/transit estimate | Straight-line distance × 1.3 detour factor | "Approximate (straight-line)" |
+| No road/transit estimate | Straight-line distance × 1.3 detour factor at assumed speeds (below) | "Approximate estimate" |
 | Amenity unknown | Half credit | "Wi-Fi: not specified by owner" |
 | No reviews | Neutral prior | "No reviews yet" |
 | Location missing | Impossible — required before submission | — |
 
-A **data completeness** percentage (known inputs / total inputs) is shown beside the score.
+A **data completeness** percentage is shown beside the score: commute (precise = 1, approximate = 0.5) plus one point
+for each amenity the student cares about that the owner has answered, divided by the number of items.
+
+**Approximate commute (Phase 5, `commute/ApproximateCommute.java`) — assumptions, to be validated with students:**
+
+| Assumption | Value | Why |
+|---|---|---|
+| Road distance vs straight line | × 1.3 | Common rule of thumb for dense city street grids |
+| Walking speed | 4.5 km/h | Typical planning value for adults |
+| Auto-rickshaw average speed | 18 km/h + 5 min to find one | Assumed average including Mumbai traffic; not measured data |
+| "Any" mode | walk if road distance ≤ 1.5 km, else auto-rickshaw | Practical choice for short trips |
+
+Local train and bus need station/timetable data and are added in Phase 6; until then a train preference falls back
+to the road estimate and the UI says so.
 
 ### 1.4 Interpretation
 

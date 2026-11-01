@@ -4,12 +4,13 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
 import ListingDetailsView from "@/components/ListingDetailsView";
+import ScoreBreakdown, { ScoreBadge } from "@/components/ScoreBreakdown";
 import { FreshnessNote, OwnerCheckedBadge, SampleBadge } from "@/components/TrustBadges";
 import { FormMessage } from "@/components/form";
-import { api, errorMessage } from "@/lib/api";
+import { ApiError, api, errorMessage } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { formatDate } from "@/lib/listingLabels";
-import type { EnquiryView, PublicListingDetail, SavedListingView } from "@/lib/types";
+import type { EnquiryView, PublicListingDetail, RecommendedListing, SavedListingView } from "@/lib/types";
 
 const OWNER_TYPE = { INDIVIDUAL: "Individual owner", PG_OPERATOR: "PG operator", HOSTEL_OPERATOR: "Hostel operator" } as const;
 
@@ -66,6 +67,8 @@ export default function PublicListingPage() {
         </div>
 
         <aside className="space-y-4">
+          {isStudent && <SuitabilityPanel listingId={listing.id} />}
+
           <section className="rounded-lg border border-slate-200 bg-white p-5 text-sm">
             <h2 className="font-semibold text-slate-900">About this listing</h2>
             <ul className="mt-2 space-y-1 text-slate-700">
@@ -84,6 +87,36 @@ export default function PublicListingPage() {
         </aside>
       </div>
     </div>
+  );
+}
+
+function SuitabilityPanel({ listingId }: { listingId: number }) {
+  const [data, setData] = useState<RecommendedListing | null>(null);
+  const [needsSetup, setNeedsSetup] = useState(false);
+
+  useEffect(() => {
+    api<RecommendedListing>(`/api/v1/student/recommendations/listings/${listingId}`)
+      .then(setData)
+      .catch((e) => setNeedsSetup(e instanceof ApiError && e.status === 409));
+  }, [listingId]);
+
+  if (needsSetup) {
+    return (
+      <section className="rounded-lg border border-teal-200 bg-teal-50 p-5 text-sm">
+        <h2 className="font-semibold text-slate-900">How well does this fit you?</h2>
+        <p className="mt-1 text-slate-700">Set your college and preferences to see your personal suitability score.</p>
+        <Link href="/student/preferences" className="mt-2 inline-block text-teal-800 underline underline-offset-4">Set preferences</Link>
+      </section>
+    );
+  }
+  if (!data) return null;
+  const r = data.result;
+  return (
+    <section className="rounded-lg border border-slate-200 bg-white p-5">
+      <h2 className="mb-3 font-semibold text-slate-900">Your suitability</h2>
+      {r.eligible && r.totalScore !== null && r.band && <div className="mb-3"><ScoreBadge score={r.totalScore} band={r.band} /></div>}
+      <ScoreBreakdown result={r} />
+    </section>
   );
 }
 

@@ -30,6 +30,7 @@ export default function SiteHeader() {
 
           {role === "STUDENT" && (
             <>
+              <Link href="/student/recommendations" className={navLink}>Recommended</Link>
               <Link href="/student" className={navLink}>Dashboard</Link>
               <Link href="/student/saved" className={navLink}>Saved</Link>
               <Link href="/messages" className={navLink}>Messages</Link>

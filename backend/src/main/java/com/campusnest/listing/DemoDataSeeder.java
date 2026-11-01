@@ -40,6 +40,10 @@ import com.campusnest.listing.ListingTypes.RoomType;
 import com.campusnest.owner.OwnerProfile;
 import com.campusnest.owner.OwnerProfileRepository;
 import com.campusnest.owner.OwnerType;
+import com.campusnest.commute.TravelMode;
+import com.campusnest.student.Gender;
+import com.campusnest.student.StudentPreferences;
+import com.campusnest.student.StudentPreferencesRepository;
 import com.campusnest.student.StudentProfile;
 import com.campusnest.student.StudentProfileRepository;
 
@@ -68,6 +72,7 @@ public class DemoDataSeeder implements ApplicationRunner {
     private final UserAccountRepository users;
     private final OwnerProfileRepository ownerProfiles;
     private final StudentProfileRepository studentProfiles;
+    private final StudentPreferencesRepository studentPreferences;
     private final CollegeRepository colleges;
     private final ListingRepository listings;
     private final AmenityRepository amenities;
@@ -79,15 +84,16 @@ public class DemoDataSeeder implements ApplicationRunner {
             @Value("${campusnest.demo-data.password:}") String demoPassword,
             @Value("${campusnest.admin.email:}") String adminEmail,
             UserAccountRepository users, OwnerProfileRepository ownerProfiles,
-            StudentProfileRepository studentProfiles, CollegeRepository colleges, ListingRepository listings,
-            AmenityRepository amenities, ListingLifecycleService lifecycle, ImageStorage imageStorage,
-            PasswordEncoder passwordEncoder) {
+            StudentProfileRepository studentProfiles, StudentPreferencesRepository studentPreferences,
+            CollegeRepository colleges, ListingRepository listings, AmenityRepository amenities,
+            ListingLifecycleService lifecycle, ImageStorage imageStorage, PasswordEncoder passwordEncoder) {
         this.enabled = enabled;
         this.demoPassword = demoPassword;
         this.adminEmail = UserAccount.normalizeEmail(adminEmail);
         this.users = users;
         this.ownerProfiles = ownerProfiles;
         this.studentProfiles = studentProfiles;
+        this.studentPreferences = studentPreferences;
         this.colleges = colleges;
         this.listings = listings;
         this.amenities = amenities;
@@ -196,8 +202,9 @@ public class DemoDataSeeder implements ApplicationRunner {
             log.warn("DEMO_DATA is on but DEMO_PASSWORD is missing or shorter than 12 characters: demo data NOT created.");
             return;
         }
+        ensureDemoStudent(); // idempotent: also fills in data added in later phases (e.g. preferences)
         if (listings.existsBySampleDataTrue()) {
-            log.info("Sample listings already exist: demo data not re-created.");
+            log.info("Sample listings already exist: demo listings not re-created.");
             return;
         }
 
@@ -215,8 +222,6 @@ public class DemoDataSeeder implements ApplicationRunner {
             }
             return account;
         }).toList();
-
-        createDemoStudent();
 
         Map<String, Amenity> amenityByCode = amenities.findAll().stream()
                 .collect(java.util.stream.Collectors.toMap(Amenity::getCode, a -> a));
@@ -259,16 +264,23 @@ public class DemoDataSeeder implements ApplicationRunner {
                 SAMPLES.size(), OWNERS.size());
     }
 
-    private void createDemoStudent() {
+    /** Sample student "Asha": VJTI, MCA year 1, with accommodation preferences ready for the recommendation demo. */
+    private void ensureDemoStudent() {
         String email = "student.asha@example.com";
-        if (users.existsByEmail(email)) {
-            return;
+        UserAccount student = users.findByEmail(email).orElseGet(() -> {
+            UserAccount created = users.save(new UserAccount(email, passwordEncoder.encode(demoPassword), Role.STUDENT,
+                    "Asha Kulkarni (sample)"));
+            StudentProfile profile = studentProfiles.save(new StudentProfile(created));
+            colleges.findAllByOrderByNameAsc().stream().findFirst()
+                    .ifPresent(vjti -> profile.update(vjti, "MCA", (short) 1, Gender.FEMALE));
+            return created;
+        });
+        if (!studentPreferences.existsById(student.getId())) {
+            StudentPreferences prefs = new StudentPreferences(student);
+            prefs.update(11_000, 40, TravelMode.ANY, List.of("DOUBLE", "SINGLE"), List.of("WIFI", "MEALS"),
+                    List.of("HOT_WATER", "LAUNDRY"));
+            studentPreferences.save(prefs);
         }
-        UserAccount student = users.save(new UserAccount(email, passwordEncoder.encode(demoPassword), Role.STUDENT,
-                "Asha Kulkarni (sample)"));
-        StudentProfile profile = studentProfiles.save(new StudentProfile(student));
-        colleges.findAllByOrderByNameAsc().stream().findFirst()
-                .ifPresent(vjti -> profile.update(vjti, "MCA", (short) 1, null));
     }
 
     /** A clearly labelled placeholder image (no real property photos are used). */

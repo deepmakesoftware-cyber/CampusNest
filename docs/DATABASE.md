@@ -9,7 +9,8 @@ migration is added. **Never edit an applied migration — add a new one.**
 | `V1__accounts_colleges_profiles.sql` (Phase 2) | `colleges` (VJTI seeded from OpenStreetMap coordinates), `users`, `student_profiles`, `owner_profiles` | Implemented & tested |
 | `V2__listings.sql` (Phase 3) | `amenities` (15 seeded, 8 core), `listings`, `room_options`, `listing_charges`, `listing_amenities`, `listing_images`, `listing_status_history` | Implemented & tested |
 | `V3__saved_listings_and_enquiries.sql` (Phase 4) | `saved_listings`, `enquiries` (with `student_shares_contact` / `owner_shares_contact`), `enquiry_messages` | Implemented & tested |
-| Phase 5+ | all other tables below | Proposed |
+| `V4__student_preferences.sql` (Phase 5) | `student_preferences` (max budget, max commute, travel mode, ranked room types and amenity lists as comma-separated codes) | Implemented & tested |
+| Phase 6+ | all other tables below | Proposed |
 
 Phase 3 differences from the proposal:
 - Money and counts are `INTEGER` (whole rupees), not decimals.

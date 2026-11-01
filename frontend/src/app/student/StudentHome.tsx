@@ -52,6 +52,8 @@ export default function StudentHome() {
 
       <section className="grid gap-3 sm:grid-cols-3">
         {[
+          { href: "/student/recommendations", title: "Recommended for you", text: "Listings ranked by suitability, with reasons" },
+          { href: "/student/preferences", title: "Your preferences", text: "Budget, commute, room type, amenities" },
           { href: "/listings", title: "Find accommodation", text: "Search reviewed listings near your college" },
           { href: "/student/saved", title: "Saved listings", text: "Places you bookmarked" },
           { href: "/messages", title: "Messages", text: "Your conversations with owners" },
@@ -65,7 +67,6 @@ export default function StudentHome() {
 
       <ComingSoon
         items={[
-          { phase: "Phase 5", title: "Ranked recommendations", description: "suitability scores with a full explanation" },
           { phase: "Phase 6", title: "Cost vs commute", description: "compare rent, travel time and transport cost" },
           { phase: "Phase 7", title: "Roommate matching", description: "find compatible roommates, privately" },
         ]}

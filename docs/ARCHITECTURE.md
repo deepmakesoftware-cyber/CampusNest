@@ -38,8 +38,9 @@ com.campusnest
 ├── listing/         listings, rooms, charges, amenities, photos, state machine ✔ (Phase 3)
 ├── moderation/      admin user management ✔, listing review ✔, verification, reports (Phase 2/3/8)
 ├── discovery/       search, saved listings, enquiries, reviews               (Phase 4/8)
-├── recommendation/  suitability scoring                                       (Phase 5)
-├── commute/         distance, routing, fares, comparison                      (Phase 6)
+├── recommendation/  suitability scoring and ranking ✔                         (Phase 5)
+├── commute/         approximate commute ✔; stations, fares, comparison        (Phase 5/6)
+├── engagement/      saved listings ✔, enquiries ✔; reviews, reports           (Phase 4/8)
 └── roommate/        roommate profiles, compatibility, requests                (Phase 7)
 ```
 
@@ -95,7 +96,7 @@ enforced in `SecurityConfig`. Inside an area, services additionally check that a
 | Auth | `POST /auth/register` (JSON) ✔, `POST /auth/login` (form: `email`, `password`) ✔, `POST /auth/logout` ✔, `GET /auth/me` ✔, `GET /auth/csrf` ✔ | public / any logged-in |
 | Account | `PUT /users/me` (name, phone) ✔ | any logged-in |
 | Colleges | `GET /colleges` ✔ | public |
-| Student | `GET/PUT /student/profile` ✔, `GET/PUT /student/preferences`, `GET /student/recommendations`, `GET /student/compare?ids=` | STUDENT |
+| Student | `GET/PUT /student/profile` ✔, `GET/PUT /student/preferences` ✔ (GET = 204 if not set), `GET /student/recommendations` ✔ (409 `COLLEGE_REQUIRED` / `PREFERENCES_REQUIRED`), `GET /student/recommendations/listings/{id}` ✔ (breakdown or exclusion reasons), `GET /student/compare?ids=` | STUDENT |
 | Discovery | `GET /listings?q=&maxRent=&roomType=&suitableFor=&amenities=&availableOnly=&collegeId=&maxDistanceKm=&sort=&page=` ✔, `GET /listings/{id}` ✔ (published only, no owner contact) | public |
 | Saved | `GET /student/saved` ✔, `PUT/DELETE /student/saved/{listingId}` ✔ (idempotent) | STUDENT |
 | Enquiries | `POST /student/enquiries` ✔ (start or continue; optional `shareContact`), `GET /student/enquiries` ✔, `GET /owner/enquiries` ✔, `GET /enquiries/{id}` ✔, `POST /enquiries/{id}/messages` ✔ | participants only |
