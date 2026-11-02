@@ -41,7 +41,7 @@ com.campusnest
 ├── recommendation/  suitability scoring and ranking ✔                         (Phase 5)
 ├── commute/         approximate commute ✔; stations, fares, comparison        (Phase 5/6)
 ├── engagement/      saved listings ✔, enquiries ✔; reviews, reports           (Phase 4/8)
-└── roommate/        roommate profiles, compatibility, requests                (Phase 7)
+└── roommate/        roommate profiles, compatibility, requests, blocks ✔      (Phase 7)
 ```
 
 Inside each module: `controller` (HTTP) → `service` (rules, authorization checks) → `repository`
@@ -106,7 +106,7 @@ enforced in `SecurityConfig`. Inside an area, services additionally check that a
 | Owner | `GET/PUT /owner/profile` ✔, `GET/POST /owner/listings` ✔, `GET/PUT/DELETE /owner/listings/{id}` ✔ (delete = drafts only), `POST /owner/listings/{id}/submit` ✔, `PATCH /owner/listings/{id}/availability` ✔, `POST /owner/listings/{id}/images` ✔ (multipart `file`), `DELETE /owner/listings/{id}/images/{imageId}` ✔ | OWNER (own only) |
 | Admin | `GET /admin/users?role=&page=` ✔, `POST /admin/users/{id}/suspend` ✔ (reason required), `POST /admin/users/{id}/reinstate` ✔, `GET /admin/listings?status=&page=` ✔, `GET /admin/listings/{id}` ✔, `POST /admin/listings/{id}/approve` ✔, `…/request-changes` ✔, `…/reject` ✔, `…/suspend` ✔ (reason required for these three), `…/reinstate` ✔, `POST /admin/owners/{id}/verification`, `GET/POST /admin/reports…` | ADMIN |
 | Reviews & reports | `GET /listings/{id}/reviews`, `POST /student/reviews`, `POST /reports` | STUDENT / OWNER |
-| Roommates | `GET/PUT /student/roommates/me`, `GET /student/roommates/matches`, `POST /student/roommates/requests`, `PATCH /student/roommates/requests/{id}` | STUDENT |
+| Roommates | `GET/PUT /student/roommates/profile` ✔ (GET = 204 if none), `GET /student/roommates/matches` ✔ (409 `ROOMMATE_PROFILE_REQUIRED`), `GET/POST /student/roommates/requests` ✔, `POST /student/roommates/requests/{id}/accept\|decline\|withdraw` ✔, `GET /student/roommates/connections` ✔ (only place with full name + contact), `POST /student/roommates/blocks/{userId}` ✔ | STUDENT |
 
 Conventions: JSON bodies; errors as `{ "error": "CODE", "message": "...", "fields": {...} }`; 400 validation,
 401 not logged in (or account suspended), 403 wrong role / missing CSRF token, 404 not found (also used when a

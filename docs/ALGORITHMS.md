@@ -91,6 +91,20 @@ mismatch · all amenities unknown · unverified owner · availability older than
 
 ## 2. Roommate compatibility (FR-2)
 
+**Status: Implemented and tested (Phase 7).** Code: `roommate/CompatibilityScorer.java` (pure Java),
+`RoommateService.java`. Tests: `CompatibilityScorerTest` (9, incl. a hand-calculated 45% partial match) and
+`RoommateApiTest` (7: privacy, request lifecycle, dealbreakers, blocking, roles).
+
+Implementation details:
+- Smoking answers: non-smoker / smokes outdoors only / smoker. "Cannot live with a smoker" excludes both kinds of smoker.
+- Same-gender-only is a dealbreaker unless both genders are known and equal (conservative when unknown).
+- Food (optional): same or "no preference" 100; two vegetarian-family answers (veg / eggetarian / vegan) 70;
+  vegetarian-family vs non-veg 30.
+- Areas: chosen from a list of localities near VJTI, or "anywhere near college" (matches everyone).
+- Summary bands: ≥ 80 strong, ≥ 60 good, ≥ 40 mixed, otherwise many differences.
+- Matches are visible only to students whose own profile is visible (reciprocity). Blocks hide both ways and close
+  any open request. Max 10 new requests per day. One pending-or-accepted connection per pair (database index).
+
 ### 2.1 Candidates and dealbreakers
 
 Only students with `discoverable = true` and completed core fields, in the same city, are candidates.

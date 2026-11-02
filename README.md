@@ -10,8 +10,8 @@ For students who did not get a hostel seat, it ranks listings with an explainabl
 rent against commute time and cost, makes listing trust visible, and matches compatible roommates without
 exposing private details.
 
-> **Development status:** Phase 4 (accounts, listings with admin review, student search, saved listings and
-> private enquiries) is complete. See [docs/STATUS.md](docs/STATUS.md)
+> **Development status:** Phases 1–7 complete: accounts and roles, listings with admin review, search, private
+> enquiries, explainable suitability score, cost-vs-commute comparison and roommate matching. See [docs/STATUS.md](docs/STATUS.md)
 > for what is proposed, implemented and tested.
 
 ## Tech stack
@@ -97,7 +97,10 @@ Set `DEMO_DATA=true` and a `DEMO_PASSWORD` (12+ characters) in `.env`, then rest
   generated "SAMPLE PHOTO" image. Rents are illustrative, not market data.
 - 4 sample owners: `owner.ramesh@example.com`, `owner.sunita@example.com` (identity checked),
   `owner.imran@example.com`, `owner.prakash@example.com`
-- 1 sample student: `student.asha@example.com` (VJTI, MCA year 1)
+- 1 main sample student: `student.asha@example.com` (VJTI, MCA year 1) with accommodation preferences and a
+  roommate profile
+- 4 more sample students with roommate profiles: `student.meera@`, `student.priya@`, `student.kavya@`,
+  `student.rohan@example.com`
 
 All sample accounts use `DEMO_PASSWORD`. Never put real people's details in demo data.
 

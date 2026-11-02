@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import ComingSoon from "@/components/ComingSoon";
 import { FormMessage } from "@/components/form";
 import { api, errorMessage } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
@@ -57,6 +56,8 @@ export default function StudentHome() {
           { href: "/listings", title: "Find accommodation", text: "Search reviewed listings near your college" },
           { href: "/student/saved", title: "Saved listings", text: "Places you bookmarked" },
           { href: "/messages", title: "Messages", text: "Your conversations with owners" },
+          { href: "/student/roommates", title: "Roommates", text: "Compatible students, matched privately" },
+          { href: "/student/compare", title: "Compare", text: "Rent vs commute for your shortlist" },
         ].map((card) => (
           <Link key={card.href} href={card.href} className="rounded-lg border border-slate-200 bg-white p-4 hover:border-teal-600">
             <span className="font-medium text-slate-900">{card.title}</span>
@@ -64,13 +65,6 @@ export default function StudentHome() {
           </Link>
         ))}
       </section>
-
-      <ComingSoon
-        items={[
-          { phase: "Phase 6", title: "Cost vs commute", description: "compare rent, travel time and transport cost" },
-          { phase: "Phase 7", title: "Roommate matching", description: "find compatible roommates, privately" },
-        ]}
-      />
     </div>
   );
 }

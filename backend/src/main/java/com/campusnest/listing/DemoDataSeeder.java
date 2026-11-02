@@ -41,6 +41,13 @@ import com.campusnest.owner.OwnerProfile;
 import com.campusnest.owner.OwnerProfileRepository;
 import com.campusnest.owner.OwnerType;
 import com.campusnest.commute.TravelMode;
+import com.campusnest.roommate.RoommateProfile;
+import com.campusnest.roommate.RoommateProfileRepository;
+import com.campusnest.roommate.RoommateTypes.FoodPreference;
+import com.campusnest.roommate.RoommateTypes.SharingSize;
+import com.campusnest.roommate.RoommateTypes.SleepSchedule;
+import com.campusnest.roommate.RoommateTypes.Smoking;
+import com.campusnest.roommate.RoommateTypes.StudyEnvironment;
 import com.campusnest.student.Gender;
 import com.campusnest.student.StudentPreferences;
 import com.campusnest.student.StudentPreferencesRepository;
@@ -73,6 +80,7 @@ public class DemoDataSeeder implements ApplicationRunner {
     private final OwnerProfileRepository ownerProfiles;
     private final StudentProfileRepository studentProfiles;
     private final StudentPreferencesRepository studentPreferences;
+    private final RoommateProfileRepository roommateProfiles;
     private final CollegeRepository colleges;
     private final ListingRepository listings;
     private final AmenityRepository amenities;
@@ -85,7 +93,7 @@ public class DemoDataSeeder implements ApplicationRunner {
             @Value("${campusnest.admin.email:}") String adminEmail,
             UserAccountRepository users, OwnerProfileRepository ownerProfiles,
             StudentProfileRepository studentProfiles, StudentPreferencesRepository studentPreferences,
-            CollegeRepository colleges, ListingRepository listings, AmenityRepository amenities,
+            RoommateProfileRepository roommateProfiles, CollegeRepository colleges, ListingRepository listings, AmenityRepository amenities,
             ListingLifecycleService lifecycle, ImageStorage imageStorage, PasswordEncoder passwordEncoder) {
         this.enabled = enabled;
         this.demoPassword = demoPassword;
@@ -94,6 +102,7 @@ public class DemoDataSeeder implements ApplicationRunner {
         this.ownerProfiles = ownerProfiles;
         this.studentProfiles = studentProfiles;
         this.studentPreferences = studentPreferences;
+        this.roommateProfiles = roommateProfiles;
         this.colleges = colleges;
         this.listings = listings;
         this.amenities = amenities;
@@ -203,6 +212,7 @@ public class DemoDataSeeder implements ApplicationRunner {
             return;
         }
         ensureDemoStudent(); // idempotent: also fills in data added in later phases (e.g. preferences)
+        ensureDemoRoommates();
         if (listings.existsBySampleDataTrue()) {
             log.info("Sample listings already exist: demo listings not re-created.");
             return;
@@ -275,11 +285,56 @@ public class DemoDataSeeder implements ApplicationRunner {
                     .ifPresent(vjti -> profile.update(vjti, "MCA", (short) 1, Gender.FEMALE));
             return created;
         });
+        studentProfiles.findById(student.getId()).filter(p -> p.getGender() == null)
+                .ifPresent(p -> p.update(p.getCollege(), p.getCourse(), p.getYearOfStudy(), Gender.FEMALE));
         if (!studentPreferences.existsById(student.getId())) {
             StudentPreferences prefs = new StudentPreferences(student);
             prefs.update(11_000, 40, TravelMode.ANY, List.of("DOUBLE", "SINGLE"), List.of("WIFI", "MEALS"),
                     List.of("HOT_WATER", "LAUNDRY"));
             studentPreferences.save(prefs);
+        }
+    }
+
+    private record DemoRoommate(String email, String name, Gender gender, String course, int year, int min, int max,
+            List<String> areas, boolean anywhere, SleepSchedule sleep, Smoking smoking, boolean noSmokers,
+            StudyEnvironment study, int clean, int guests, FoodPreference food, SharingSize sharing, boolean sameGender,
+            String about) {
+    }
+
+    /** Invented students with deliberately different habits, so the demo shows strong, partial and excluded matches. */
+    private static final List<DemoRoommate> ROOMMATES = List.of(
+            new DemoRoommate("student.asha@example.com", null, Gender.FEMALE, null, 1, 8000, 11000, List.of("Matunga", "Dadar"), false,
+                    SleepSchedule.EARLY, Smoking.NON_SMOKER, true, StudyEnvironment.QUIET, 4, 2, FoodPreference.VEG,
+                    SharingSize.ONE_ROOMMATE, true, "Sample profile: MCA first year, early riser, likes a quiet room."),
+            new DemoRoommate("student.meera@example.com", "Meera Joshi (sample)", Gender.FEMALE, "MCA", 1, 8500, 12000,
+                    List.of("Matunga", "King's Circle"), false, SleepSchedule.EARLY, Smoking.NON_SMOKER, false,
+                    StudyEnvironment.QUIET, 4, 2, FoodPreference.VEG, SharingSize.ONE_ROOMMATE, true,
+                    "Sample profile: early mornings, tidy, vegetarian."),
+            new DemoRoommate("student.priya@example.com", "Priya Nair (sample)", Gender.FEMALE, "B.Tech Civil", 2, 9000, 13000,
+                    List.of("Dadar", "Sion"), false, SleepSchedule.LATE, Smoking.NON_SMOKER, false, StudyEnvironment.LIVELY,
+                    2, 4, FoodPreference.NON_VEG, SharingSize.EITHER, false, "Sample profile: night owl, enjoys company."),
+            new DemoRoommate("student.kavya@example.com", "Kavya Rao (sample)", Gender.FEMALE, "M.Tech", 1, 7000, 9500,
+                    List.of("Wadala"), false, SleepSchedule.REGULAR, Smoking.NON_SMOKER, false, StudyEnvironment.MODERATE,
+                    3, 3, FoodPreference.EGGETARIAN, SharingSize.TWO_OR_MORE, false, "Sample profile: budget-conscious, flexible."),
+            new DemoRoommate("student.rohan@example.com", "Rohan Mehta (sample)", Gender.MALE, "MCA", 2, 9000, 12000,
+                    List.of(), true, SleepSchedule.REGULAR, Smoking.OUTDOOR_SMOKER, false, StudyEnvironment.MODERATE,
+                    3, 3, null, SharingSize.EITHER, false, "Sample profile: smokes outdoors only."));
+
+    private void ensureDemoRoommates() {
+        for (DemoRoommate d : ROOMMATES) {
+            UserAccount student = users.findByEmail(d.email()).orElseGet(() -> {
+                UserAccount created = users.save(new UserAccount(d.email(), passwordEncoder.encode(demoPassword), Role.STUDENT, d.name()));
+                StudentProfile profile = studentProfiles.save(new StudentProfile(created));
+                colleges.findAllByOrderByNameAsc().stream().findFirst()
+                        .ifPresent(vjti -> profile.update(vjti, d.course(), (short) d.year(), d.gender()));
+                return created;
+            });
+            if (!roommateProfiles.existsById(student.getId())) {
+                RoommateProfile p = new RoommateProfile(student);
+                p.update(true, d.min(), d.max(), d.areas(), d.anywhere(), d.sleep(), d.smoking(), d.noSmokers(), d.study(),
+                        d.clean(), d.guests(), d.food(), d.sharing(), d.sameGender(), d.about());
+                roommateProfiles.save(p);
+            }
         }
     }
 

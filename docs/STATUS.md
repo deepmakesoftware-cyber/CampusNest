@@ -1,8 +1,23 @@
 # CampusNest — Development Status
 
-Last updated: 2026-11-01 (end of Phase 6)
+Last updated: 2026-11-02 (end of Phase 7)
 
 Legend: **Proposed** (planned) · **Implemented** (code exists) · **Tested** (automated or recorded manual test passes).
+
+## Phase 7 — Roommate matching (FR-2)
+
+| Feature | Status | Evidence |
+|---|---|---|
+| Flyway V6: roommate profiles, requests (one active per pair), blocks | Tested | Applied locally and in test containers |
+| Opt-in profile (budget range, areas, sleep, smoking + dealbreaker, study, cleanliness, guests, optional food, roommate count, same-gender-only, short note) | Tested | `RoommateApiTest.invalidProfilesAndWrongRolesAreRejected` |
+| Compatibility: dealbreakers (gender, smoking, budget), 9 weighted factors, optional factor skipped and weights rebalanced, symmetric, matches/differences/summary | Tested | `CompatibilityScorerTest` (9) — high, partial (45% by hand), incompatible budgets, conflicting lifestyles, incomplete preferences |
+| Privacy: only discoverable students, reciprocity, short name only, no email/phone/exact budget/gender before mutual acceptance | Tested | `compatibleStudentsSeeAnExplainedMatchWithoutPrivateDetails`, `contactDetailsAreSharedOnlyAfterTheRequestIsAccepted` |
+| Requests: send (respects dealbreakers, 10/day), accept/decline by recipient, withdraw by sender, outsiders 404 | Tested | `RoommateApiTest` (3 tests) |
+| Blocking hides both ways and closes open requests | Tested | `blockingHidesBothWaysAndStopsRequests` |
+| Demo: sample Asha + 4 sample students (strong 87%, mixed 53% / 45%, one excluded by dealbreakers) | Tested (manual) | Checked through the proxy; no private data in the response |
+| Frontend: roommate profile form, matches / requests / connections, compatibility explanation, disclaimer, block | Implemented | Lint, type-check, build pass; flow checked through the proxy |
+
+**Test totals (end of Phase 7):** backend `mvnw test` — 156 tests, 0 failures.
 
 ## Phase 6 — Commute and cost comparison (FR-4)
 
@@ -117,8 +132,8 @@ Next.js proxy — 27 checks, 0 failures.
 
 ## Pending (next phases)
 
-- **Phase 7:** roommate matching.
-- Phases 8–10 as per [PROJECT-PLAN.md](PROJECT-PLAN.md).
+- **Phase 8:** reviews, reports, owner verification by admins, trust indicators.
+- Phases 9–10 as per [PROJECT-PLAN.md](PROJECT-PLAN.md).
 - Features agreed for later (e.g. Google sign-in): [BACKLOG.md](BACKLOG.md).
 
 ## Known issues / technical debt

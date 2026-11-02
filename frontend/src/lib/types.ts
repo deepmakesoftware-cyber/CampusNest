@@ -317,6 +317,84 @@ export type FareRuleView = {
   effectiveFrom: string;
 };
 
+// ---------------- Roommates (Phase 7) ----------------
+
+export type SleepSchedule = "EARLY" | "REGULAR" | "LATE";
+export type Smoking = "NON_SMOKER" | "OUTDOOR_SMOKER" | "SMOKER";
+export type StudyEnvironment = "QUIET" | "MODERATE" | "LIVELY";
+export type FoodPreference = "VEG" | "EGGETARIAN" | "NON_VEG" | "VEGAN" | "NO_PREFERENCE";
+export type SharingSize = "ONE_ROOMMATE" | "TWO_OR_MORE" | "EITHER";
+
+export type RoommateProfile = {
+  discoverable: boolean;
+  budgetMin: number;
+  budgetMax: number;
+  preferredLocalities: string[];
+  anywhereNearCollege: boolean;
+  sleepSchedule: SleepSchedule;
+  smoking: Smoking;
+  cannotLiveWithSmoker: boolean;
+  studyEnvironment: StudyEnvironment;
+  cleanliness: number;
+  guests: number;
+  foodPreference: FoodPreference | null;
+  sharingSize: SharingSize;
+  sameGenderOnly: boolean;
+  about: string | null;
+};
+
+export type PersonPreview = {
+  userId: number;
+  shortName: string;
+  college: string | null;
+  course: string | null;
+  yearOfStudy: number | null;
+  about: string | null;
+  sleepSchedule: SleepSchedule;
+  studyEnvironment: StudyEnvironment;
+  cleanliness: number;
+  guests: number;
+  smoking: Smoking;
+  foodPreference: FoodPreference | null;
+  sharingSize: SharingSize;
+  preferredLocalities: string[];
+  anywhereNearCollege: boolean;
+};
+
+export type Compatibility = {
+  compatible: boolean;
+  dealbreakers: string[];
+  percent: number | null;
+  factors: { key: string; label: string; weight: number; score: number }[];
+  matches: string[];
+  differences: string[];
+  summary: string | null;
+  factorsUsed: number;
+  factorsTotal: number;
+  budgetOverlap: string | null;
+};
+
+export type Relationship = "NONE" | "REQUEST_SENT" | "REQUEST_RECEIVED" | "CONNECTED";
+export type MatchView = { person: PersonPreview; compatibility: Compatibility; relationship: Relationship; requestId: number | null };
+export type RoommateRequestView = {
+  id: number;
+  direction: "SENT" | "RECEIVED";
+  status: "PENDING" | "ACCEPTED" | "DECLINED" | "WITHDRAWN";
+  message: string | null;
+  createdAt: string;
+  person: PersonPreview | null;
+};
+export type ConnectionView = {
+  requestId: number;
+  userId: number;
+  displayName: string;
+  email: string;
+  phone: string | null;
+  college: string | null;
+  course: string | null;
+  connectedAt: string;
+};
+
 // ---------------- Engagement (engagement package) ----------------
 
 export type SavedListingView = {
