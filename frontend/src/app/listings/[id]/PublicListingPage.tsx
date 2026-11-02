@@ -5,6 +5,8 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
 import { CompareToggle } from "@/components/CompareControls";
 import ListingDetailsView from "@/components/ListingDetailsView";
+import ReportButton from "@/components/ReportButton";
+import ReviewsSection from "@/components/ReviewsSection";
 import ScoreBreakdown, { ScoreBadge } from "@/components/ScoreBreakdown";
 import { FreshnessNote, OwnerCheckedBadge, SampleBadge } from "@/components/TrustBadges";
 import { FormMessage } from "@/components/form";
@@ -68,8 +70,11 @@ export default function PublicListingPage() {
       )}
 
       <div className="grid gap-6 lg:grid-cols-[1fr_20rem]">
-        <div className="rounded-lg border border-slate-200 bg-white p-5 sm:p-6">
-          <ListingDetailsView listing={listing} hideTitle />
+        <div className="space-y-6">
+          <div className="rounded-lg border border-slate-200 bg-white p-5 sm:p-6">
+            <ListingDetailsView listing={listing} hideTitle />
+          </div>
+          <ReviewsSection listingId={listing.id} />
         </div>
 
         <aside className="space-y-4">
@@ -87,6 +92,9 @@ export default function PublicListingPage() {
               CampusNest reviews listings and some owners&apos; identities, but cannot guarantee a property&apos;s condition or safety.
               Always visit before paying any money.
             </p>
+            {state.status === "authenticated" && state.user.role !== "ADMIN" && (
+              <div className="mt-2"><ReportButton targetType="LISTING" targetId={listing.id} label="Report this listing" /></div>
+            )}
           </section>
 
           <ContactPanel listing={listing} />

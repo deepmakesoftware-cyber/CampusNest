@@ -12,7 +12,7 @@ migration is added. **Never edit an applied migration — add a new one.**
 | `V4__student_preferences.sql` (Phase 5) | `student_preferences` (max budget, max commute, travel mode, ranked room types and amenity lists as comma-separated codes) | Implemented & tested |
 | `V5__commute_stations_and_fares.sql` (Phase 6) | `stations` (59 rows from OpenStreetMap, ODbL), `fare_rules` (auto-rickshaw tariff + 5 BEST slabs, each with source and date; no train fares) | Implemented & tested |
 | `V6__roommates.sql` (Phase 7) | `roommate_profiles`, `roommate_requests` (partial unique index: one pending/accepted per pair, either direction), `roommate_blocks` | Implemented & tested |
-| Phase 8+ | `reviews`, `reports`, `verification_records` | Proposed |
+| `V7__trust_reviews_reports_verification.sql` (Phase 8) | `reviews`, `reports` (polymorphic target, partial unique index on open reports), `verification_records`; `owner_profiles.verification_requested_at` | Implemented & tested |
 
 Phase 6 difference from the proposal: commute estimates are computed on request from stations + fare rules rather
 than stored in a `commute_estimates` table (they are cheap to compute and would go stale when fares change).

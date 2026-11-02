@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import ReportButton from "@/components/ReportButton";
 import { FormMessage } from "@/components/form";
 import { ApiError, api, errorMessage } from "@/lib/api";
 import { formatDate } from "@/lib/listingLabels";
@@ -201,7 +202,10 @@ function MatchCard({ match, onConnect, onBlock }: { match: MatchView; onConnect:
         {match.relationship === "REQUEST_SENT" && <span className="text-slate-600">Request sent: waiting for their answer.</span>}
         {match.relationship === "REQUEST_RECEIVED" && <span className="text-slate-600">They asked to connect: see the Requests tab.</span>}
         {match.relationship === "CONNECTED" && <span className="text-green-800">Connected: see the Connections tab.</span>}
-        <button type="button" onClick={onBlock} className="ml-auto text-xs text-slate-500 underline underline-offset-4">Block</button>
+        <span className="ml-auto flex items-center gap-3">
+          <ReportButton targetType="USER" targetId={p.userId} />
+          <button type="button" onClick={onBlock} className="text-xs text-slate-500 underline underline-offset-4">Block</button>
+        </span>
       </div>
       {writing && (
         <form onSubmit={(e) => { e.preventDefault(); onConnect(text); setWriting(false); }} className="mt-3 space-y-2">

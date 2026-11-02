@@ -15,8 +15,8 @@ Implementation notes (differences from the original proposal):
 - The total is computed from the **rounded** part scores, so anyone can recompute it from the breakdown shown in the UI.
 - Gender: listings are excluded only when the student's declared gender conflicts with a women-only / men-only
   policy. If the student has not declared a gender, the listing is shown with a note instead.
-- Reviews and reports do not exist until Phase 8, so every listing currently gets the neutral rating prior and
-  "no upheld reports".
+- Since Phase 8 the trust part uses real data: visible (not hidden) reviews, and listing reports an administrator
+  UPHELD in the last 90 days (`recommendation/TrustSignals.java`).
 
 ### 1.1 Eligibility (hard filters — excluded, not scored)
 

@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
-import ComingSoon from "@/components/ComingSoon";
 import ListingStatusBadge from "@/components/ListingStatusBadge";
 import { FormMessage, SubmitButton, TextField } from "@/components/form";
 import { ApiError, api, errorMessage } from "@/lib/api";
@@ -110,6 +109,28 @@ export default function OwnerHome() {
         <section className="rounded-lg border border-slate-200 bg-white p-5 sm:p-6">
           <h2 className="text-lg font-semibold text-slate-900">Provider profile</h2>
           <p className="mt-2 text-slate-700">{VERIFICATION_TEXT[profile.verificationStatus]}</p>
+          {(profile.verificationStatus === "UNVERIFIED" || profile.verificationStatus === "REJECTED") && (
+            <div className="mt-2 text-sm">
+              <p className="text-slate-600">
+                Ask CampusNest to check your identity. An administrator will contact you (for example by phone) and, if it
+                matches, your listings show “Owner identity checked”. No ID documents are stored.
+              </p>
+              <button
+                type="button"
+                onClick={async () => {
+                  try {
+                    await api("/api/v1/owner/verification-request", { method: "POST" });
+                    setProfile({ ...profile, verificationStatus: "PENDING" });
+                  } catch (e) {
+                    setError(errorMessage(e));
+                  }
+                }}
+                className="mt-2 rounded-md border border-teal-700 px-3 py-1.5 font-medium text-teal-800 hover:bg-teal-50"
+              >
+                Request identity verification
+              </button>
+            </div>
+          )}
           <p className="mt-1 text-sm text-slate-600">
             {profile.businessName ?? "No business name added."}{" "}
             <Link href="/account" className="text-teal-700 underline underline-offset-4">
@@ -119,11 +140,6 @@ export default function OwnerHome() {
         </section>
       )}
 
-      <ComingSoon
-        items={[
-          { phase: "Phase 8", title: "Owner verification requests", description: "get the “identity checked” badge" },
-        ]}
-      />
     </div>
   );
 }

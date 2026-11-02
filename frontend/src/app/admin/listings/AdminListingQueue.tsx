@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import AdminOverview from "@/components/AdminOverview";
 import ListingStatusBadge from "@/components/ListingStatusBadge";
 import { FormMessage } from "@/components/form";
 import { api, errorMessage } from "@/lib/api";
@@ -39,6 +40,7 @@ export default function AdminListingQueue() {
 
   return (
     <div>
+      <AdminOverview />
       <h1 className="text-2xl font-semibold text-slate-900">Listing review</h1>
       <p className="mt-1 text-slate-600">Check submitted listings before students can see them. Oldest submissions are shown first.</p>
 

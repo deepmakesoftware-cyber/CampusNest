@@ -1,8 +1,22 @@
 # CampusNest — Development Status
 
-Last updated: 2026-11-02 (end of Phase 7)
+Last updated: 2026-11-02 (end of Phase 8)
 
 Legend: **Proposed** (planned) · **Implemented** (code exists) · **Tested** (automated or recorded manual test passes).
+
+## Phase 8 — Trust: reviews, reports, owner verification (FR-3)
+
+| Feature | Status | Evidence |
+|---|---|---|
+| Flyway V7: reviews, reports (one open report per reporter+target), verification records, `owner_profiles.verification_requested_at` | Tested | Applied locally and in test containers |
+| Reviews: only after an enquiry (D9), one per student per listing (editable), short reviewer name, always "stay not verified", admin hide/unhide (editing never un-hides) | Tested | `TrustApiTest` (2 tests) |
+| Reports on listings, reviews and users; validation (visible target, not self, not admins), duplicates blocked, 10/day; admin uphold/dismiss once with a note | Tested | `reportsAreValidatedDeduplicatedAndResolvedOnceByAdmins` |
+| Owner verification: owner requests → admin verifies/rejects/revokes with method + notes (no documents stored) → public "identity checked" status | Tested | `ownerVerificationIsRequestedDecidedRecordedAndShownPublicly` |
+| Trust score uses real data: visible reviews (Bayesian) and upheld listing reports in the last 90 days | Tested | `reviewsAndUpheldReportsChangeTheTrustPartOfTheScore` (56 → 58 → 48, hand-calculated) |
+| Admin overview (listings awaiting review, open reports, verification requests) | Tested | `adminOverviewCountsWhatNeedsAttention` |
+| Frontend: reviews section + review form, report buttons (listing, review, roommate), owner verification request, admin reports queue (incl. hide review), admin owner-verification queue, overview strip | Implemented | Lint, type-check, build pass; endpoints checked through the proxy |
+
+**Test totals (end of Phase 8):** backend `mvnw test` — 162 tests, 0 failures.
 
 ## Phase 7 — Roommate matching (FR-2)
 
@@ -132,8 +146,8 @@ Next.js proxy — 27 checks, 0 failures.
 
 ## Pending (next phases)
 
-- **Phase 8:** reviews, reports, owner verification by admins, trust indicators.
-- Phases 9–10 as per [PROJECT-PLAN.md](PROJECT-PLAN.md).
+- **Phase 9:** full-journey integration test, performance check, fixes.
+- **Phase 10:** documentation, UML, user manual, viva preparation, demo script.
 - Features agreed for later (e.g. Google sign-in): [BACKLOG.md](BACKLOG.md).
 
 ## Known issues / technical debt

@@ -48,7 +48,8 @@ public class SecurityConfig {
                         // Photo access is decided per image in ListingImageController (public only if published).
                         .requestMatchers(HttpMethod.GET, "/api/v1/listing-images/**").permitAll()
                         // Published listings are public (the service only ever returns published ones).
-                        .requestMatchers(HttpMethod.GET, "/api/v1/listings", "/api/v1/listings/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/listings", "/api/v1/listings/*",
+                                "/api/v1/listings/*/reviews").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/register").permitAll()
                         .requestMatchers("/api/v1/student/**").hasRole("STUDENT")
                         .requestMatchers("/api/v1/owner/**").hasRole("OWNER")

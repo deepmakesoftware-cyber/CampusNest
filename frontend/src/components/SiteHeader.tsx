@@ -46,6 +46,8 @@ export default function SiteHeader() {
           {role === "ADMIN" && (
             <>
               <Link href="/admin/listings" className={navLink}>Listing review</Link>
+              <Link href="/admin/reports" className={navLink}>Reports</Link>
+              <Link href="/admin/owners" className={navLink}>Owners</Link>
               <Link href="/admin" className={navLink}>Users</Link>
               <Link href="/admin/fares" className={navLink}>Fares</Link>
             </>

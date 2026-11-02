@@ -395,6 +395,45 @@ export type ConnectionView = {
   connectedAt: string;
 };
 
+// ---------------- Trust: reviews, reports, verification (Phase 8) ----------------
+
+export type ReviewView = { id: number; reviewerName: string; rating: number; comment: string | null; createdAt: string; stayVerified: boolean };
+export type ListingReviews = { count: number; average: number | null; reviews: ReviewView[] };
+export type OwnReview = { id: number; rating: number; comment: string | null; visible: boolean; updatedAt: string };
+export type MyReview = { eligible: boolean; reason: string | null; review: OwnReview | null };
+
+export type ReportTarget = "LISTING" | "REVIEW" | "USER";
+export type ReportReason = "FAKE_LISTING" | "WRONG_INFORMATION" | "UNSAFE" | "SPAM" | "HARASSMENT" | "INAPPROPRIATE" | "OTHER";
+export type ReportView = {
+  id: number;
+  targetType: ReportTarget;
+  targetId: number;
+  targetSummary: string;
+  reason: ReportReason;
+  details: string | null;
+  reporterName: string;
+  status: "OPEN" | "UPHELD" | "DISMISSED";
+  resolutionNote: string | null;
+  createdAt: string;
+  resolvedAt: string | null;
+};
+
+export type VerificationMethod = "PHONE_CALL" | "VIDEO_CALL" | "IN_PERSON_VISIT" | "DOCUMENT_SEEN_NOT_STORED" | "OTHER";
+export type OwnerVerificationView = {
+  ownerId: number;
+  displayName: string;
+  email: string;
+  phone: string | null;
+  ownerType: OwnerType | null;
+  businessName: string | null;
+  status: VerificationStatus;
+  requestedAt: string | null;
+  listingCount: number;
+  history: { decision: "VERIFIED" | "REJECTED" | "REVOKED"; method: VerificationMethod; notes: string; reviewer: string; at: string }[];
+};
+
+export type AdminOverview = { listingsAwaitingReview: number; openReports: number; ownerVerificationRequests: number };
+
 // ---------------- Engagement (engagement package) ----------------
 
 export type SavedListingView = {

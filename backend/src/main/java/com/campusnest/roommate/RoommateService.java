@@ -19,6 +19,7 @@ import com.campusnest.auth.AccountStatus;
 import com.campusnest.auth.Role;
 import com.campusnest.auth.UserAccount;
 import com.campusnest.auth.UserAccountRepository;
+import com.campusnest.common.Names;
 import com.campusnest.common.error.ApiException;
 import com.campusnest.roommate.CompatibilityScorer.Result;
 import com.campusnest.roommate.CompatibilityScorer.Side;
@@ -289,14 +290,8 @@ public class RoommateService {
                 p.isAnywhereNearCollege() ? List.of() : p.getPreferredLocalities(), p.isAnywhereNearCollege());
     }
 
-    /** "Asha Kulkarni (sample)" -> "Asha K." : first name and the initial of the last name only. */
     static String shortName(String displayName) {
-        String cleaned = displayName.replaceAll("\\(.*?\\)", " ").trim().replaceAll("\\s+", " ");
-        String[] parts = cleaned.split(" ");
-        if (parts.length == 0 || parts[0].isEmpty()) {
-            return "Student";
-        }
-        return parts.length == 1 ? parts[0] : parts[0] + " " + Character.toUpperCase(parts[parts.length - 1].charAt(0)) + ".";
+        return Names.shortName(displayName);
     }
 
     private static List<Long> concat(List<Long> ids, Long extra) {
