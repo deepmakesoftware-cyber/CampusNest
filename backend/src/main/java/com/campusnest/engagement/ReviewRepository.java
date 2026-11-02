@@ -12,7 +12,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     List<Review> findByListingIdAndStatusOrderByCreatedAtDesc(Long listingId, String status);
 
-    /** [count, sum of ratings] of visible reviews for one listing, used by the trust score. */
-    @Query("select count(r), coalesce(sum(r.rating), 0) from Review r where r.listing.id = :listingId and r.status = 'VISIBLE'")
-    List<Object[]> visibleStats(Long listingId);
+    /** [listingId, count, sum of ratings] for every listing with visible reviews: one query for a whole ranking. */
+    @Query("select r.listing.id, count(r), sum(r.rating) from Review r where r.status = 'VISIBLE' group by r.listing.id")
+    List<Object[]> visibleStatsByListing();
 }

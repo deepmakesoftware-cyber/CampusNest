@@ -108,7 +108,8 @@ public class RecommendationService {
     // ---------------- helpers ----------------
 
     private record Context(Preferences prefs, College college, Map<String, String> amenityNames,
-            Map<Long, VerificationStatus> ownerVerification, StudentPreferences raw, CommuteService.Context commute) {
+            Map<Long, VerificationStatus> ownerVerification, StudentPreferences raw, CommuteService.Context commute,
+            TrustSignals.Snapshot trust) {
     }
 
     private Context context(Long studentId) {
@@ -127,7 +128,7 @@ public class RecommendationService {
         Map<String, String> names = amenities.findAll().stream().collect(Collectors.toMap(Amenity::getCode, Amenity::getName));
         Map<Long, VerificationStatus> verification = ownerProfiles.findAll().stream()
                 .collect(Collectors.toMap(OwnerProfile::getUserId, OwnerProfile::getVerificationStatus));
-        return new Context(prefs, profile.getCollege(), names, verification, p, commute.context());
+        return new Context(prefs, profile.getCollege(), names, verification, p, commute.context(), trustSignals.snapshot());
     }
 
     private ListingFacts facts(Listing l, Context ctx) {
@@ -136,7 +137,7 @@ public class RecommendationService {
                 .mapToInt(ListingCharge::getAmount).sum();
         Map<String, Boolean> answers = l.getAmenityAnswers().stream()
                 .collect(Collectors.toMap(a -> a.getAmenity().getCode(), ListingAmenity::isAvailable));
-        TrustSignals.Signals trust = trustSignals.forListing(l.getId());
+        TrustSignals.Signals trust = ctx.trust().get(l.getId());
         return new ListingFacts(l.getStatus(), l.getGenderPolicy(),
                 l.getRooms().stream().map(r -> new RoomFacts(r.getId(), r.getRoomType(), r.getMonthlyRent(), r.getBedsAvailable())).toList(),
                 mandatoryMonthly, answers, ctx.amenityNames(),

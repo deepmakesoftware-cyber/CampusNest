@@ -1,8 +1,20 @@
 # CampusNest — Development Status
 
-Last updated: 2026-11-02 (end of Phase 8)
+Last updated: 2026-11-02 (end of Phase 9)
 
 Legend: **Proposed** (planned) · **Implemented** (code exists) · **Tested** (automated or recorded manual test passes).
+
+## Phase 9 — Integration, performance and fixes
+
+| Item | Status | Evidence |
+|---|---|---|
+| Full demonstration journey as one test (register → preferences → owner listing → admin changes requested → approve → owner verified → ranked recommendations → comparison → enquiry → review → roommate match → access-control checks) | Tested | `FullJourneyTest` |
+| Performance with 1,000 listings (target < 1 s) | Tested | `PerformanceTest`: search **~115 ms**, recommendations **~210 ms** average (2 runs on the lead's laptop) |
+| Performance fix: trust signals loaded with 2 grouped queries for a whole ranking instead of 2 queries per listing | Implemented | Found while planning the performance test |
+| Mockito agent configured (removes the JDK self-attach warning, T2) | Done | No warning in test output |
+| Smoke test of 22 pages + 29 API endpoints + 3 cross-role checks through the proxy | Tested (manual script) | `scripts/smoke-test.sh` — 0 failures |
+
+**Test totals (end of Phase 9):** backend `mvnw test` — **165 tests, 0 failures**.
 
 ## Phase 8 — Trust: reviews, reports, owner verification (FR-3)
 
@@ -146,7 +158,6 @@ Next.js proxy — 27 checks, 0 failures.
 
 ## Pending (next phases)
 
-- **Phase 9:** full-journey integration test, performance check, fixes.
 - **Phase 10:** documentation, UML, user manual, viva preparation, demo script.
 - Features agreed for later (e.g. Google sign-in): [BACKLOG.md](BACKLOG.md).
 
@@ -154,7 +165,6 @@ Next.js proxy — 27 checks, 0 failures.
 
 | # | Item | Plan |
 |---|---|---|
-| T2 | Mockito warns that self-attaching will stop working on future JDKs | Configure Mockito as a Java agent in Surefire when Mockito is first used directly |
 | T3 | Maven prints 401 warnings for two Flyway community repositories while resolving metadata | Harmless (dependencies resolve from Maven Central) |
 | T4 | `/status` is a developer page and is publicly reachable | Hide or protect before any public deployment |
 | T5 | No automated frontend tests yet | Playwright E2E for the demo journey (Phase 9) |
@@ -178,3 +188,4 @@ Next.js proxy — 27 checks, 0 failures.
 
 Resolved in Phase 2: T1 (generated default password log), T6 (Flyway "no migrations" warning).
 Resolved 2026-11-01: T15 (E2E test accounts and listings removed from the local dev database; admin kept).
+Resolved in Phase 9: T2 (Mockito runs as a Java agent).
