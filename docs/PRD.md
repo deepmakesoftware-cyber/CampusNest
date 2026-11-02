@@ -114,3 +114,22 @@ cost-vs-commute comparison.
 5. No payments or bookings; enquiries only.
 6. Owner verification does not store government ID images (decision D4); the admin records how they verified.
 7. Reviews are limited to students who sent an enquiry for that listing and are labelled "stay not verified" (D9).
+
+## 10. Limitations (v1)
+
+1. Commute times and costs are model estimates (straight line × road factor, assumed speeds), not live transit data;
+   train routes ignore lines and transfers.
+2. Local-train pass fares are not entered until an admin adds them from an official source; train cost shows
+   "not available" until then.
+3. Suitability weights and speeds are documented hypotheses, not yet validated with a student survey.
+4. Reviews cannot prove the reviewer stayed there; they are labelled "stay not verified".
+5. Owner verification is a manual identity check, not an inspection of the property.
+6. No email verification, password reset, notifications, or automated frontend tests.
+7. Single server; login limits are in memory. English only; desktop-first layout.
+
+## 11. Future scope
+
+Tracked in [BACKLOG.md](BACKLOG.md): Google sign-in, password change/reset, email verification, a step-by-step
+listing wizard and assisted listing for less-educated owners, Hindi and Marathi, "use my current location".
+Beyond that: more colleges and cities, notifications, timetable-based commute data if an open source becomes
+available, and a short student survey to tune the scoring weights.

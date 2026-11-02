@@ -1,8 +1,32 @@
 # CampusNest — Development Status
 
-Last updated: 2026-11-02 (end of Phase 9)
+Last updated: 2026-11-02 (end of Phase 10 — all planned phases complete)
 
 Legend: **Proposed** (planned) · **Implemented** (code exists) · **Tested** (automated or recorded manual test passes).
+
+## Summary: faculty requirements
+
+| Requirement | Implemented | Tested by |
+|---|---|---|
+| FR-1 Explainable suitability score | Weighted 5-part score with reasons, hard filters, ranked recommendations | `SuitabilityScorerTest`, `RecommendationApiTest`, `PerformanceTest` |
+| FR-2 Roommate matching | Opt-in profiles, 9-factor compatibility with dealbreakers, mutual-accept contact sharing, blocking | `CompatibilityScorerTest`, `RoommateApiTest` |
+| FR-3 Listing verification and trust | Admin review state machine, owner identity check, reviews after enquiry, reports, freshness, trust score | `ListingLifecycleTest`, `ListingWorkflowTest`, `TrustApiTest` |
+| FR-4 Cost vs commute comparison | Commute model per mode, sourced fare rules, 2–4 listing comparison | `CommuteModelTest`, `FareCalculatorTest`, `ComparisonApiTest` |
+| FR-5 Privacy and role-based access | Role URL areas, ownership checks, CSRF, rate limiting, contact hidden by default, EXIF removal | `RoleAccessTest`, `AuthFlowTest`, `LoginAttemptServiceTest`, `ImageProcessorTest`, `EngagementTest` |
+| All nine demonstration steps | One automated journey + manual click-through by the team | `FullJourneyTest`, [DEMO-SCRIPT.md](DEMO-SCRIPT.md) |
+
+Remaining limitations are listed under *Known issues* below; the most visible are T21 (no train pass fares) and T5
+(no automated frontend tests).
+
+## Phase 10 — Documentation and viva preparation
+
+| Item | Status |
+|---|---|
+| UML: use case, component, class, ER, 4 state machines, 4 sequence and 2 activity diagrams | Done — [UML.md](UML.md) |
+| Test case catalogue mapped to requirements and real test methods | Done — [TEST-CASES.md](TEST-CASES.md) |
+| User manual (student, owner, admin) | Done — [USER-MANUAL.md](USER-MANUAL.md) |
+| Faculty demo script, deployment guide, API conventions, viva Q&A | Done — [DEMO-SCRIPT.md](DEMO-SCRIPT.md), [DEPLOYMENT.md](DEPLOYMENT.md), [API.md](API.md), [VIVA.md](VIVA.md) |
+| Screenshots for the report | **Pending** — to be taken by the team from the running app (list in DEMO-SCRIPT.md) |
 
 ## Phase 9 — Integration, performance and fixes
 
@@ -156,10 +180,11 @@ Next.js proxy — 27 checks, 0 failures.
 | `GET /api/v1/health` with database check | Tested | 503 DEGRADED within 3 s when DB stopped, recovers on restart |
 | Next.js 16 frontend with Tailwind, `/api/*` proxy to Spring Boot | Tested | lint, type-check, build; proxy verified with curl |
 
-## Pending (next phases)
+## Pending
 
-- **Phase 10:** documentation, UML, user manual, viva preparation, demo script.
-- Features agreed for later (e.g. Google sign-in): [BACKLOG.md](BACKLOG.md).
+- Screenshots for the project report; a final browser click-through on the demo laptop before the review.
+- Local-train pass fares from an official source (T21).
+- Features agreed for later (e.g. Google sign-in, simpler listing wizard): [BACKLOG.md](BACKLOG.md).
 
 ## Known issues / technical debt
 
@@ -167,7 +192,7 @@ Next.js proxy — 27 checks, 0 failures.
 |---|---|---|
 | T3 | Maven prints 401 warnings for two Flyway community repositories while resolving metadata | Harmless (dependencies resolve from Maven Central) |
 | T4 | `/status` is a developer page and is publicly reachable | Hide or protect before any public deployment |
-| T5 | No automated frontend tests yet | Playwright E2E for the demo journey (Phase 9) |
+| T5 | No automated frontend tests yet | Covered by `FullJourneyTest` (API level), the smoke test and manual checks; Playwright E2E is future work |
 | T7 | Microsoft Build of OpenJDK 25 used instead of Temurin (GitHub downloads too slow on this network) | Both are TCK-certified OpenJDK 25 LTS builds |
 | T8 | Login attempt counters are in memory: reset on restart, per-server only | Acceptable for a single server; move to the database if CampusNest ever runs multiple servers |
 | T9 | Per-email lockout lets someone who knows an email lock that user out for 15 minutes | Documented trade-off vs. password guessing; could add per-IP limits later |

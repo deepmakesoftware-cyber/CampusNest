@@ -10,9 +10,10 @@ For students who did not get a hostel seat, it ranks listings with an explainabl
 rent against commute time and cost, makes listing trust visible, and matches compatible roommates without
 exposing private details.
 
-> **Development status:** Phases 1–7 complete: accounts and roles, listings with admin review, search, private
-> enquiries, explainable suitability score, cost-vs-commute comparison and roommate matching. See [docs/STATUS.md](docs/STATUS.md)
-> for what is proposed, implemented and tested.
+> **Development status:** all planned phases (0–10) complete: accounts and roles, listings with admin review, search
+> and map, private enquiries, explainable suitability score, cost-vs-commute comparison, roommate matching, reviews,
+> reports and owner verification, with 165 automated backend tests. See [docs/STATUS.md](docs/STATUS.md) for what is
+> implemented and tested, and the known limitations.
 
 ## Tech stack
 
@@ -143,3 +144,10 @@ npx tsc --noEmit
 - [Project plan, risks & team split](docs/PROJECT-PLAN.md)
 - [Status: completed / pending / known issues](docs/STATUS.md)
 - [Feature backlog: agreed features for later](docs/BACKLOG.md)
+- [REST API conventions and error codes](docs/API.md)
+- [UML diagrams](docs/UML.md)
+- [Test cases by requirement](docs/TEST-CASES.md)
+- [User manual](docs/USER-MANUAL.md)
+- [Faculty demonstration script](docs/DEMO-SCRIPT.md)
+- [Deployment guide](docs/DEPLOYMENT.md)
+- [Viva preparation](docs/VIVA.md)

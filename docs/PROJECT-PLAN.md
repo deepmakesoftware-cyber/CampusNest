@@ -19,17 +19,19 @@
 
 | Phase | Deliverable | Needed for faculty demo |
 |---|---|---|
-| 0 | Discovery and plan | — ✔ |
-| 1 | Repo, frontend + backend + PostgreSQL running, health check end to end | ✔ |
-| 2 | Registration, login, logout, 3 roles, protected endpoints, role navigation | demo 1, 9 |
-| 3 | Owner listing CRUD, images, admin review, state machine | demo 7, 8 |
-| 4 | Search, details, saved listings, enquiries, map | demo 2 |
-| 5 | Suitability engine and score breakdown | demo 3, 4 |
-| 6 | Commute estimates, cost-vs-commute comparison | demo 5 |
-| 7 | Roommate matching | demo 6 |
-| 8 | Reviews, reports, trust indicators, freshness | partial |
-| 9 | Integration and full-journey tests | yes |
-| 10 | Test suite, documentation, UML, viva prep, deployment | — |
+| 0 | Discovery and plan ✔ | — |
+| 1 | Repo, frontend + backend + PostgreSQL running, health check end to end ✔ | — |
+| 2 | Registration, login, logout, 3 roles, protected endpoints, role navigation ✔ | demo 1, 9 |
+| 3 | Owner listing CRUD, images, admin review, state machine ✔ | demo 7, 8 |
+| 4 | Search, details, saved listings, enquiries, map ✔ | demo 2 |
+| 5 | Suitability engine and score breakdown ✔ | demo 3, 4 |
+| 6 | Commute estimates, cost-vs-commute comparison ✔ | demo 5 |
+| 7 | Roommate matching ✔ | demo 6 |
+| 8 | Reviews, reports, trust indicators, freshness ✔ | partial |
+| 9 | Integration and full-journey tests ✔ | yes |
+| 10 | Test suite, documentation, UML, viva prep, deployment ✔ | — |
+
+All phases completed 2026-11-02 (✔ = done; see [STATUS.md](STATUS.md) for evidence).
 
 If the review date is close, build thin vertical slices of phases 2–7 first and polish afterwards.
 
