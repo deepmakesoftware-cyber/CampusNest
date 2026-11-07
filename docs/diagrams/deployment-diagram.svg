@@ -1,24 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1270" height="900" viewBox="0 0 1270 900">
+<svg xmlns="http://www.w3.org/2000/svg" width="1230" height="860" viewBox="0 0 1230 860">
   <title>CampusNest UML deployment diagram</title>
   <style>
     text { font-family: Arial, Helvetica, sans-serif; fill: #111; }
     .h1 { font-size: 22px; font-weight: bold; }
     .h2 { font-size: 13px; fill: #555; }
+    .hd { font-size: 13px; font-weight: bold; fill: #1f3a5f; letter-spacing: 0.5px; }
     .st { font-size: 11px; fill: #555; }
     .nm { font-size: 14px; font-weight: bold; }
     .onm { font-size: 15px; font-weight: bold; }
     .sb { font-size: 11.5px; fill: #444; }
     .lbl { font-size: 12px; }
     .sm { font-size: 11px; }
-    .front { fill: #ffffff; stroke: #111; stroke-width: 1.8; }
-    .face { fill: #e8edf4; stroke: #111; stroke-width: 1.8; stroke-linejoin: round; }
-    .ee { fill: #f6f8fb; stroke: #333; stroke-width: 1.4; }
-    .eeface { fill: #e3e9f1; stroke: #333; stroke-width: 1.4; stroke-linejoin: round; }
-    .art { fill: #fffdf6; stroke: #333; stroke-width: 1.3; }
-    .ext { fill: #fbf7ee; stroke: #111; stroke-width: 1.8; }
-    .path { fill: none; stroke: #111; stroke-width: 1.6; }
+    .front { fill: #ffffff; stroke: #1f3a5f; stroke-width: 1.8; }
+    .face { fill: #e4ebf4; stroke: #1f3a5f; stroke-width: 1.8; stroke-linejoin: round; }
+    .dev { fill: #eef3fb; stroke: #34495e; stroke-width: 1.4; }
+    .devface { fill: #dbe4f0; stroke: #34495e; stroke-width: 1.4; stroke-linejoin: round; }
+    .ee { fill: #f2f8f6; stroke: #34495e; stroke-width: 1.3; }
+    .eeface { fill: #dcebe6; stroke: #34495e; stroke-width: 1.3; stroke-linejoin: round; }
+    .art { fill: #fffdf6; stroke: #555; stroke-width: 1.2; }
+    .ext { fill: #fdf5ea; stroke: #b0742a; stroke-width: 1.8; }
+    .extface { fill: #f6e6cf; stroke: #b0742a; stroke-width: 1.8; stroke-linejoin: round; }
+    .path { fill: none; stroke: #111; stroke-width: 1.8; }
     .dep { fill: none; stroke: #222; stroke-width: 1.3; stroke-dasharray: 6 4; marker-end: url(#open); }
-    .bg { fill: #ffffff; }
   </style>
   <defs>
     <marker id="open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto">
@@ -33,159 +36,169 @@
       <ellipse cx="10" cy="4" rx="9" ry="3" fill="#fff" stroke="#222" stroke-width="1.4"/>
     </symbol>
   </defs>
-  <rect width="1270" height="900" fill="#ffffff"/>
+  <rect width="1230" height="860" fill="#ffffff"/>
 
-  <text x="638" y="36" class="h1" text-anchor="middle">CampusNest — UML Deployment Diagram</text>
-  <text x="638" y="58" class="h2" text-anchor="middle">Demonstration setup used for the faculty review (v1)</text>
+  <text x="615" y="34" class="h1" text-anchor="middle">CampusNest — UML Deployment Diagram</text>
+  <text x="615" y="56" class="h2" text-anchor="middle">Real deployment used for development and the faculty demonstration (v1)</text>
 
+  <text x="30" y="90" class="hd">CLIENT DEVICES</text>
+  <text x="440" y="90" class="hd">APPLICATION HOSTING (one machine in the demo)</text>
 
-  <!-- ================= User device ================= -->
-  <polygon points="40,140 56,124 386,124 370,140" class="face"/>
-  <polygon points="370,140 386,124 386,554 370,570" class="face"/>
-  <rect x="40" y="140" width="330" height="430" class="front"/>
-  <text x="56" y="164" class="st">«device»</text>
-  <text x="56" y="184" class="onm">User device</text>
-  <text x="56" y="202" class="sb">laptop or phone (Student, Owner, Admin)</text>
+  <!-- ================= Client devices ================= -->
+  <polygon points="30,120 44,106 364,106 350,120" class="face"/>
+  <polygon points="350,120 364,106 364,681 350,695" class="face"/>
+  <rect x="30" y="120" width="320" height="575" class="front"/>
+  <text x="46" y="142" class="st">«device»</text>
+  <text x="46" y="160" class="onm">Client devices</text>
+  <text x="46" y="176" class="sb">any device with a modern web browser</text>
 
-  <polygon points="65,225 75,215 355,215 345,225" class="eeface"/>
-  <polygon points="345,225 355,215 355,530 345,540" class="eeface"/>
-  <rect x="65" y="225" width="280" height="315" class="ee"/>
-  <text x="80" y="245" class="st">«execution environment»</text>
-  <text x="80" y="263" class="nm">Web browser</text>
-  <text x="80" y="280" class="sb">Chrome / Edge / Firefox</text>
+  <!-- Student -->
+  <polygon points="50,195 60,185 330,185 320,195" class="devface"/>
+  <polygon points="320,195 330,185 330,330 320,340" class="devface"/>
+  <rect x="50" y="195" width="270" height="145" class="dev"/>
+  <text x="64" y="215" class="st">«device»</text>
+  <text x="64" y="233" class="nm">Student laptop / phone</text>
+  <rect x="66" y="245" width="238" height="82" class="ee"/>
+  <text x="78" y="262" class="st">«executionEnvironment»</text>
+  <text x="78" y="280" class="nm">Web browser</text>
+  <text x="78" y="298" class="sb">Student portal: search, scores,</text>
+  <text x="78" y="314" class="sb">compare, roommates</text>
 
-  <rect x="85" y="296" width="240" height="84" class="art"/>
-  <use href="#doc" x="301" y="302" width="14" height="18"/>
-  <text x="205" y="314" class="st" text-anchor="middle">«artifact»</text>
-  <text x="205" y="334" class="nm" text-anchor="middle">CampusNest web UI</text>
-  <text x="205" y="352" class="sb" text-anchor="middle">HTML, JavaScript, CSS from Next.js</text>
-  <text x="205" y="369" class="sb" text-anchor="middle">includes the Leaflet map</text>
+  <!-- Owner -->
+  <polygon points="50,360 60,350 330,350 320,360" class="devface"/>
+  <polygon points="320,360 330,350 330,495 320,505" class="devface"/>
+  <rect x="50" y="360" width="270" height="145" class="dev"/>
+  <text x="64" y="380" class="st">«device»</text>
+  <text x="64" y="398" class="nm">Owner phone / PC</text>
+  <rect x="66" y="410" width="238" height="82" class="ee"/>
+  <text x="78" y="427" class="st">«executionEnvironment»</text>
+  <text x="78" y="445" class="nm">Web browser</text>
+  <text x="78" y="463" class="sb">Owner portal: listings, photos,</text>
+  <text x="78" y="479" class="sb">enquiries, verification</text>
 
-  <text x="85" y="412" class="lbl" font-weight="bold">Kept in the browser:</text>
-  <text x="85" y="432" class="sb">• session cookie JSESSIONID (HttpOnly,</text>
-  <text x="97" y="448" class="sb">SameSite=Lax) — only a random id</text>
-  <text x="85" y="468" class="sb">• XSRF-TOKEN cookie (CSRF protection)</text>
-  <text x="85" y="488" class="sb">• no passwords or personal data stored</text>
+  <!-- Admin -->
+  <polygon points="50,525 60,515 330,515 320,525" class="devface"/>
+  <polygon points="320,525 330,515 330,660 320,670" class="devface"/>
+  <rect x="50" y="525" width="270" height="145" class="dev"/>
+  <text x="64" y="545" class="st">«device»</text>
+  <text x="64" y="563" class="nm">Administrator PC</text>
+  <rect x="66" y="575" width="238" height="82" class="ee"/>
+  <text x="78" y="592" class="st">«executionEnvironment»</text>
+  <text x="78" y="610" class="nm">Web browser</text>
+  <text x="78" y="628" class="sb">Admin portal: listing review,</text>
+  <text x="78" y="644" class="sb">reports, owners, users</text>
 
   <!-- ================= OpenStreetMap ================= -->
-  <polygon points="40,690 56,674 386,674 370,690" class="face"/>
-  <polygon points="370,690 386,674 386,774 370,790" class="face"/>
-  <rect x="40" y="690" width="330" height="100" class="ext"/>
-  <text x="56" y="714" class="st">«external server»</text>
-  <text x="56" y="734" class="onm">OpenStreetMap tile server</text>
-  <text x="56" y="754" class="sb">tile.openstreetmap.org · map images only</text>
+  <polygon points="30,750 44,736 364,736 350,750" class="extface"/>
+  <polygon points="350,750 364,736 364,816 350,830" class="extface"/>
+  <rect x="30" y="750" width="320" height="80" class="ext"/>
+  <text x="46" y="770" class="st">«external system»</text>
+  <text x="46" y="790" class="nm">OpenStreetMap Tile Server</text>
+  <text x="46" y="808" class="sb">tile.openstreetmap.org · map images only</text>
 
   <!-- ================= Application server ================= -->
-  <polygon points="500,110 516,94 1236,94 1220,110" class="face"/>
-  <polygon points="1220,110 1236,94 1236,794 1220,810" class="face"/>
-  <rect x="500" y="110" width="720" height="700" class="front"/>
-  <text x="516" y="134" class="st">«device»</text>
-  <text x="516" y="154" class="onm">Application server</text>
-  <text x="516" y="172" class="sb">demo: team laptop (Windows 11) · production: one Linux VM</text>
+  <polygon points="430,120 446,104 1206,104 1190,120" class="face"/>
+  <polygon points="1190,120 1206,104 1206,814 1190,830" class="face"/>
+  <rect x="430" y="120" width="760" height="710" class="front"/>
+  <text x="446" y="142" class="st">«device»</text>
+  <text x="446" y="162" class="onm">Application Server</text>
+  <text x="446" y="180" class="sb">demo: team laptop (Windows 11) · production: one Linux VM</text>
 
   <!-- Node.js -->
-  <polygon points="530,205 540,195 860,195 850,205" class="eeface"/>
-  <polygon points="850,205 860,195 860,365 850,375" class="eeface"/>
-  <rect x="530" y="205" width="320" height="170" class="ee"/>
-  <text x="545" y="225" class="st">«execution environment»</text>
-  <text x="545" y="243" class="nm">Node.js 24</text>
-  <rect x="550" y="258" width="280" height="98" class="art"/>
-  <use href="#doc" x="806" y="264" width="14" height="18"/>
-  <text x="690" y="276" class="st" text-anchor="middle">«artifact»</text>
-  <text x="690" y="296" class="nm" text-anchor="middle">frontend — Next.js 16 app</text>
-  <text x="690" y="314" class="sb" text-anchor="middle">next dev / next start · port 3000</text>
-  <text x="690" y="331" class="sb" text-anchor="middle">rewrites /api/* to port 8080</text>
-  <text x="690" y="348" class="sb" text-anchor="middle">(folder frontend/)</text>
+  <polygon points="460,210 470,200 800,200 790,210" class="eeface"/>
+  <polygon points="790,210 800,200 800,365 790,375" class="eeface"/>
+  <rect x="460" y="210" width="330" height="165" class="ee"/>
+  <text x="475" y="230" class="st">«executionEnvironment»</text>
+  <text x="475" y="248" class="nm">Node.js 24</text>
+  <rect x="478" y="262" width="294" height="98" class="art"/>
+  <use href="#doc" x="748" y="268" width="14" height="18"/>
+  <text x="625" y="280" class="st" text-anchor="middle">«artifact»</text>
+  <text x="625" y="300" class="nm" text-anchor="middle">frontend build (Next.js 16)</text>
+  <text x="625" y="318" class="sb" text-anchor="middle">next start · port 3000</text>
+  <text x="625" y="335" class="sb" text-anchor="middle">serves pages, forwards /api/* to :8080</text>
+  <text x="625" y="351" class="sb" text-anchor="middle">(frontend/.next)</text>
 
   <!-- JVM -->
-  <polygon points="530,445 540,435 860,435 850,445" class="eeface"/>
-  <polygon points="850,445 860,435 860,615 850,625" class="eeface"/>
-  <rect x="530" y="445" width="320" height="180" class="ee"/>
-  <text x="545" y="465" class="st">«execution environment»</text>
-  <text x="545" y="483" class="nm">JVM — OpenJDK 25</text>
-  <rect x="550" y="498" width="280" height="110" class="art"/>
-  <use href="#doc" x="806" y="504" width="14" height="18"/>
-  <text x="690" y="516" class="st" text-anchor="middle">«artifact»</text>
-  <text x="690" y="536" class="nm" text-anchor="middle">campusnest-backend.jar</text>
-  <text x="690" y="554" class="sb" text-anchor="middle">0.0.1-SNAPSHOT, built with Maven</text>
-  <text x="690" y="572" class="sb" text-anchor="middle">Spring Boot 4.1 · embedded Tomcat</text>
-  <text x="690" y="590" class="sb" text-anchor="middle">port 8080 (REST API /api/v1)</text>
+  <polygon points="460,455 470,445 800,445 790,455" class="eeface"/>
+  <polygon points="790,455 800,445 800,630 790,640" class="eeface"/>
+  <rect x="460" y="455" width="330" height="185" class="ee"/>
+  <text x="475" y="475" class="st">«executionEnvironment»</text>
+  <text x="475" y="493" class="nm">JVM — OpenJDK 25</text>
+  <rect x="478" y="507" width="294" height="118" class="art"/>
+  <use href="#doc" x="748" y="513" width="14" height="18"/>
+  <text x="625" y="525" class="st" text-anchor="middle">«artifact»</text>
+  <text x="625" y="545" class="nm" text-anchor="middle">campusnest-backend.jar</text>
+  <text x="625" y="563" class="sb" text-anchor="middle">version 0.0.1-SNAPSHOT (Maven build)</text>
+  <text x="625" y="580" class="sb" text-anchor="middle">Spring Boot 4.1 · embedded Tomcat</text>
+  <text x="625" y="597" class="sb" text-anchor="middle">REST API /api/v1 · port 8080</text>
+  <text x="625" y="614" class="sb" text-anchor="middle">business rules, login and role checks</text>
 
   <!-- .env -->
-  <path d="M690,625 V679" class="dep"/>
-  <text x="702" y="657" class="sm">«read»</text>
-  <rect x="530" y="680" width="320" height="96" class="art"/>
-  <use href="#doc" x="826" y="686" width="14" height="18"/>
-  <text x="690" y="698" class="st" text-anchor="middle">«artifact»</text>
-  <text x="690" y="718" class="nm" text-anchor="middle">.env (configuration)</text>
-  <text x="690" y="736" class="sb" text-anchor="middle">database credentials, first admin account,</text>
-  <text x="690" y="752" class="sb" text-anchor="middle">feature flags — git-ignored, never committed</text>
+  <rect x="460" y="690" width="330" height="100" class="art"/>
+  <use href="#doc" x="766" y="696" width="14" height="18"/>
+  <text x="625" y="708" class="st" text-anchor="middle">«artifact»</text>
+  <text x="625" y="728" class="nm" text-anchor="middle">.env (configuration file)</text>
+  <text x="625" y="746" class="sb" text-anchor="middle">database credentials, first admin account,</text>
+  <text x="625" y="762" class="sb" text-anchor="middle">feature flags · git-ignored, never committed</text>
 
-  <!-- Docker -->
-  <polygon points="900,205 910,195 1200,195 1190,205" class="eeface"/>
-  <polygon points="1190,205 1200,195 1200,575 1190,585" class="eeface"/>
-  <rect x="900" y="205" width="290" height="380" class="ee"/>
-  <text x="915" y="225" class="st">«execution environment»</text>
-  <text x="915" y="243" class="nm">Docker Engine</text>
+  <!-- Docker / PostgreSQL -->
+  <polygon points="850,210 860,200 1170,200 1160,210" class="eeface"/>
+  <polygon points="1160,210 1170,200 1170,600 1160,610" class="eeface"/>
+  <rect x="850" y="210" width="310" height="400" class="ee"/>
+  <text x="865" y="230" class="st">«executionEnvironment»</text>
+  <text x="865" y="248" class="nm">Docker Engine</text>
 
-  <polygon points="920,265 928,257 1178,257 1170,265" class="face"/>
-  <polygon points="1170,265 1178,257 1178,557 1170,565" class="face"/>
-  <rect x="920" y="265" width="250" height="300" class="front"/>
-  <text x="935" y="285" class="st">«container»</text>
-  <text x="935" y="303" class="nm">campusnest-db</text>
-  <text x="935" y="320" class="sb">image postgres:18-alpine</text>
+  <polygon points="870,270 878,262 1148,262 1140,270" class="eeface"/>
+  <polygon points="1140,270 1148,262 1148,582 1140,590" class="eeface"/>
+  <rect x="870" y="270" width="270" height="320" class="ee" fill="#ffffff"/>
+  <text x="884" y="290" class="st">«executionEnvironment»</text>
+  <text x="884" y="308" class="nm">PostgreSQL 18 DBMS</text>
+  <text x="884" y="324" class="sb">container image postgres:18-alpine</text>
 
-  <rect x="940" y="335" width="210" height="105" class="art"/>
-  <use href="#cyl" x="1128" y="341" width="15" height="18"/>
-  <text x="1045" y="353" class="st" text-anchor="middle">«database»</text>
-  <text x="1045" y="373" class="nm" text-anchor="middle">campusnest</text>
-  <text x="1045" y="391" class="sb" text-anchor="middle">PostgreSQL 18 · 23 tables</text>
-  <text x="1045" y="408" class="sb" text-anchor="middle">schema by Flyway V1–V7</text>
-  <text x="1045" y="425" class="sb" text-anchor="middle">port 5432, bound to 127.0.0.1</text>
+  <rect x="888" y="340" width="234" height="110" class="art"/>
+  <use href="#cyl" x="1100" y="346" width="14" height="17"/>
+  <text x="1005" y="358" class="st" text-anchor="middle">«artifact»</text>
+  <text x="1005" y="378" class="nm" text-anchor="middle">campusnest database</text>
+  <text x="1005" y="396" class="sb" text-anchor="middle">23 tables, created by</text>
+  <text x="1005" y="412" class="sb" text-anchor="middle">Flyway scripts V1–V7 (.sql)</text>
+  <text x="1005" y="430" class="sb" text-anchor="middle">port 5432 · bound to 127.0.0.1</text>
 
-  <rect x="940" y="458" width="210" height="88" class="art"/>
-  <use href="#doc" x="1126" y="464" width="14" height="18"/>
-  <text x="1045" y="476" class="st" text-anchor="middle">«volume»</text>
-  <text x="1045" y="496" class="nm" text-anchor="middle">campusnest-db-data</text>
-  <text x="1045" y="514" class="sb" text-anchor="middle">database files on disk,</text>
-  <text x="1045" y="530" class="sb" text-anchor="middle">kept across restarts</text>
+  <rect x="888" y="468" width="234" height="104" class="art"/>
+  <use href="#doc" x="1100" y="474" width="14" height="18"/>
+  <text x="1005" y="486" class="st" text-anchor="middle">«artifact»</text>
+  <text x="1005" y="506" class="nm" text-anchor="middle">campusnest-db-data</text>
+  <text x="1005" y="524" class="sb" text-anchor="middle">Docker volume: database</text>
+  <text x="1005" y="540" class="sb" text-anchor="middle">files kept across restarts</text>
 
-  <!-- Photo storage -->
-  <path d="M900,640 h80 l10,10 h200 v110 h-290 z" class="ee"/>
-  <text x="1045" y="672" class="st" text-anchor="middle">«file system»</text>
-  <text x="1045" y="692" class="nm" text-anchor="middle">uploads/  (STORAGE_DIR)</text>
-  <text x="1045" y="710" class="sb" text-anchor="middle">listing photos</text>
-  <text x="1045" y="727" class="sb" text-anchor="middle">re-encoded, EXIF / GPS removed</text>
+  <!-- File system -->
+  <path d="M850,650 h80 l10,10 h220 v130 h-310 z" class="ee"/>
+  <text x="1005" y="684" class="st" text-anchor="middle">«file system»</text>
+  <text x="1005" y="704" class="nm" text-anchor="middle">uploads/ (STORAGE_DIR)</text>
+  <text x="1005" y="724" class="st" text-anchor="middle">«artifact» listing photos (JPEG / PNG)</text>
+  <text x="1005" y="742" class="sb" text-anchor="middle">re-encoded, EXIF / GPS data removed</text>
 
-  <!-- ===== communication paths ===== -->
-  <line x1="345" y1="300" x2="530" y2="285" class="path"/>
-  <line x1="200" y1="540" x2="200" y2="674" class="path"/>
-  <line x1="690" y1="375" x2="690" y2="435" class="path"/>
-  <line x1="850" y1="520" x2="920" y2="420" class="path"/>
-  <line x1="850" y1="590" x2="900" y2="690" class="path"/>
+  <!-- ================= communication paths ================= -->
+  <line x1="350" y1="300" x2="460" y2="300" class="path"/>
+  <text x="397" y="277" class="sm" text-anchor="middle" font-weight="bold">«HTTP»</text>
+  <text x="397" y="291" class="sm" text-anchor="middle">:3000</text>
+  <text x="397" y="316" class="sm" text-anchor="middle">(HTTPS in</text>
+  <text x="397" y="329" class="sm" text-anchor="middle">production)</text>
 
-  <!-- ===== path labels ===== -->
-  <text x="443" y="262" class="lbl" text-anchor="middle">«HTTP»</text>
-  <text x="443" y="278" class="lbl" text-anchor="middle">:3000</text>
-  <text x="443" y="318" class="sb" text-anchor="middle">pages,</text>
-  <text x="443" y="333" class="sb" text-anchor="middle">/api/* calls</text>
+  <line x1="190" y1="695" x2="190" y2="736" class="path"/>
+  <text x="202" y="720" class="lbl">«HTTPS» map tiles</text>
 
-  <text x="213" y="612" class="lbl">«HTTPS»</text>
-  <text x="213" y="629" class="sb">map tiles (PNG)</text>
+  <line x1="625" y1="375" x2="625" y2="445" class="path"/>
+  <text x="637" y="405" class="lbl">«HTTP» localhost:8080</text>
+  <text x="637" y="421" class="sb">/api/* forwarded</text>
 
-  <text x="702" y="401" class="lbl">«HTTP» localhost:8080</text>
-  <text x="702" y="418" class="sb">/api/* forwarded</text>
+  <line x1="790" y1="520" x2="870" y2="520" class="path"/>
+  <text x="822" y="498" class="sm" text-anchor="middle">«JDBC»</text>
+  <text x="822" y="512" class="sm" text-anchor="middle">:5432</text>
 
-  <rect x="856" y="455" width="58" height="32" class="bg"/>
-  <text x="885" y="468" class="sm" text-anchor="middle">«JDBC»</text>
-  <text x="885" y="482" class="sm" text-anchor="middle">TCP 5432</text>
+  <line x1="790" y1="610" x2="850" y2="700" class="path"/>
+  <rect x="799" y="640" width="46" height="16" fill="#ffffff"/>
+  <text x="822" y="652" class="sm" text-anchor="middle">file I/O</text>
 
-  <rect x="851" y="632" width="48" height="18" class="bg"/>
-  <text x="875" y="645" class="sm" text-anchor="middle">file I/O</text>
-
-  <!-- ===== note ===== -->
-  <path d="M40,826 H1224 L1236,838 V884 H40 Z" fill="#fffef2" stroke="#666" stroke-width="1.2"/>
-  <path d="M1224,826 V838 H1236" fill="none" stroke="#666" stroke-width="1.2"/>
-  <text x="54" y="850" class="lbl">Demo: all server processes run on one laptop; the browser opens http://localhost:3000 and the database port is reachable only from that laptop.</text>
-  <text x="54" y="870" class="lbl">Public deployment: put an HTTPS reverse proxy (Caddy / Nginx) in front of port 3000, set SESSION_COOKIE_SECURE=true and DEMO_DATA=false (see docs/DEPLOYMENT.md).</text>
+  <path d="M625,640 V689" class="dep"/>
+  <text x="637" y="669" class="sm">«read»</text>
 </svg>

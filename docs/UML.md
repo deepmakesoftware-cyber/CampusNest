@@ -4,8 +4,11 @@ All diagrams describe the system **as implemented** (end of Phase 10) and are wr
 renders automatically. To export images for the report, paste a diagram into <https://mermaid.live> and download
 PNG/SVG.
 
-The **component** and **deployment** diagrams use strict UML 2 notation (interfaces, ports, nodes, artifacts) and
-are drawn as SVG with ready-to-submit PNG exports in [docs/diagrams/](diagrams/).
+The **component** and **deployment** diagrams follow the department's Mini Project-I handouts and are drawn as SVG
+with PNG exports in [docs/diagrams/](diagrams/). Ready-to-submit PDFs (diagram + explanation, with blanks for names,
+roll numbers and batch): [CampusNest_ComponentDiagram.pdf](diagrams/CampusNest_ComponentDiagram.pdf) and
+[CampusNest_DeploymentDiagram.pdf](diagrams/CampusNest_DeploymentDiagram.pdf), generated from the
+`*-sheet.html` files in the same folder.
 
 Contents: [1 Use cases](#1-use-case-diagram) · [2 Architecture](#2-architecture--component-diagram) ·
 [3 Class diagram](#3-class-diagram-domain-model) · [4 ER diagram](#4-entity-relationship-diagram) ·
@@ -82,24 +85,27 @@ Students and owners can also do everything a visitor can (generalisation, not dr
 
 ![CampusNest UML component diagram](diagrams/component-diagram.png)
 
-Source: [component-diagram.svg](diagrams/component-diagram.svg). The frontend *requires* the REST API that the
-backend *provides* (ball-and-socket assembly through ports); the backend requires PostgreSQL (JDBC) and the photo
-folder; the map view requires OpenStreetMap tiles.
+Source: [component-diagram.svg](diagrams/component-diagram.svg). Components are named by responsibility
+(UI → REST API & Security Layer → business services → Data Access Layer / Image Store); dashed «use» arrows point
+from consumer to supplier, and each service offers one interface (IAccount, IListing, IRecommendation, ICommute,
+IRoommateMatching, IEngagement, IModeration). These interface names are design contracts: in code each is the public
+methods of the matching Spring service class. The full provides/requires table and a traced success/failure are in
+the component PDF.
 
-Direct dependencies between backend modules, from the Java `import` statements (excluding `common`, and `auth`
-used for the current user). The diagram draws only the arrows not already implied by other arrows:
+How the diagram's components map to the Java packages, with the direct package dependencies from the `import`
+statements (excluding `common`, and `auth` used for the current user):
 
-| Module | Depends on |
+| Package (component) | Depends on |
 |---|---|
-| recommendation | student, engagement, listing, commute, owner, college |
-| moderation | engagement, listing, owner |
-| roommate | student |
-| student | commute, listing (amenities, room types), college |
-| engagement | listing |
-| commute | listing, college |
-| listing | owner, college (the demo-data seeder also uses student, roommate, commute) |
-| auth | student, owner (registration creates the profile) |
-| owner, college | — |
+| recommendation → Recommendation Engine | student, engagement, listing, commute, owner, college |
+| moderation → Moderation Service | engagement, listing, owner |
+| roommate → Roommate Matching | student |
+| student → Account Service (profiles, preferences) | commute, listing (amenities, room types), college |
+| engagement → Engagement Service | listing |
+| commute → Commute & Cost Estimator | listing, college |
+| listing → Listing Service | owner, college (the demo-data seeder also uses student, roommate, commute) |
+| auth → Account Service + security | student, owner (registration creates the profile) |
+| owner, college → Account Service, reference data | — |
 
 ### 2.2 Request flow overview
 
@@ -542,7 +548,8 @@ flowchart TD
 
 ![CampusNest UML deployment diagram](diagrams/deployment-diagram.png)
 
-Source: [deployment-diagram.svg](diagrams/deployment-diagram.svg). Shows the demonstration setup: the browser on the
-user's device talks HTTP to the Next.js server (port 3000), which forwards `/api/*` to the Spring Boot jar on the
-JVM (port 8080); the backend reaches PostgreSQL in a Docker container over JDBC (port 5432, bound to 127.0.0.1)
-and stores photos in the `uploads/` folder. Production changes are listed in [DEPLOYMENT.md](DEPLOYMENT.md).
+Source: [deployment-diagram.svg](diagrams/deployment-diagram.svg). Shows the real demonstration setup: student,
+owner and admin browsers talk HTTP to the Next.js server on Node.js (port 3000), which forwards `/api/*` to the
+Spring Boot jar on the JVM (port 8080); the backend reaches the PostgreSQL DBMS in a Docker container over JDBC
+(port 5432, bound to 127.0.0.1), reads `.env` and stores photos in `uploads/`; browsers load map tiles from
+OpenStreetMap over HTTPS. Assumptions and production changes: the deployment PDF and [DEPLOYMENT.md](DEPLOYMENT.md).

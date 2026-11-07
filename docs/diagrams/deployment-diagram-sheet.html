@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CampusNest Deployment Diagram</title>
+<style>
+  @page { size: A4 landscape; margin: 10mm 12mm; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Arial, Helvetica, sans-serif; color: #1b2733; font-size: 10.5pt; line-height: 1.4; background: #fff; }
+  .page { page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+  .kicker { font-size: 8.5pt; font-weight: bold; color: #1f3a5f; letter-spacing: .6px; text-transform: uppercase; }
+  h1 { font-size: 17pt; margin: 2px 0 2px; color: #1f2d3d; }
+  h2 { font-size: 12pt; margin: 10px 0 4px; color: #1f2d3d; }
+  .meta { display: grid; grid-template-columns: 2.2fr 1.6fr 1fr; gap: 4px 18px; font-size: 9.5pt; margin: 6px 0 6px; padding: 6px 10px; border: 1px solid #c9d6e2; background: #f6f9fc; }
+  .meta b { color: #1f2d3d; }
+  .fill { display: inline-block; min-width: 60%; border-bottom: 1px solid #777; height: 1.1em; }
+  .fig { text-align: center; }
+  .fig img { max-width: 100%; height: 150mm; object-fit: contain; }
+  .cap { font-size: 8.5pt; color: #555; text-align: center; margin-top: 2px; }
+  table { border-collapse: collapse; width: 100%; font-size: 9pt; }
+  th, td { border-bottom: 1px solid #d5dee8; padding: 3px 6px; text-align: left; vertical-align: top; }
+  th { background: #edf2f8; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  p { margin: 4px 0; }
+  ul { margin: 4px 0 4px 18px; padding: 0; }
+  li { margin: 2px 0; }
+  .box { border: 1px solid #c9d6e2; background: #f6f9fc; padding: 6px 10px; margin-top: 6px; }
+</style>
+</head>
+<body>
+
+<section class="page">
+  <div class="kicker">FY MCA · Mini Project-I · UML Deployment Diagram</div>
+  <h1>CampusNest — Smart Student Accommodation and Roommate Matching System</h1>
+  <div class="meta">
+    <div><b>Student name(s):</b> <span class="fill"></span></div>
+    <div><b>Roll no(s):</b> <span class="fill"></span></div>
+    <div><b>Batch:</b> <span class="fill"></span></div>
+  </div>
+  <div class="fig">
+    <img src="deployment-diagram.svg" alt="CampusNest UML deployment diagram">
+    <div class="cap">Figure 1 — Deployment diagram: where each CampusNest artifact runs and how the nodes communicate.</div>
+  </div>
+</section>
+
+<section class="page">
+  <div class="two">
+    <div>
+      <h2>Description of the architecture</h2>
+      <p>Students, owners and administrators use CampusNest from any device with a web browser; each role gets its
+      own portal in the same web application. The browser talks only to the <b>Node.js</b> server on port 3000, which
+      serves the Next.js pages and forwards <code>/api/*</code> calls to the Spring Boot backend on the same machine
+      (port 8080). The backend <b>.jar</b> runs on the <b>JVM (OpenJDK 25)</b>: it applies the business rules,
+      processes login, CSRF and role checks, reads its settings from the <b>.env</b> file, stores listing photos in the
+      <b>uploads/</b> folder and connects to <b>PostgreSQL 18</b> over JDBC. PostgreSQL runs in a <b>Docker</b>
+      container whose port is bound to 127.0.0.1, so other computers cannot reach the database directly. Map images
+      are loaded by the browser straight from the <b>OpenStreetMap</b> tile server over HTTPS.</p>
+
+      <h2>Assumptions</h2>
+      <ul>
+        <li>The diagram shows the <b>real deployment</b> used for development and the faculty demonstration: every
+            server part runs on one team laptop (Windows 11), and the browser opens <code>http://localhost:3000</code>.</li>
+        <li>Public hosting is <b>not final</b>. The plan is one Linux VM running the same three parts, behind an HTTPS
+            reverse proxy (Caddy or Nginx), with secure cookies on and sample data off.</li>
+        <li>Plain HTTP is acceptable only on localhost; any public deployment must use HTTPS.</li>
+        <li>The database and the application run on the same physical machine, so the database is drawn inside
+            the Application Server node rather than as a separate server.</li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>Nodes, environments and artifacts</h2>
+      <table>
+        <tr><th>Node / environment</th><th>Kind</th><th>Artifacts deployed</th></tr>
+        <tr><td>Student / Owner / Admin device</td><td>«device»</td><td>Web browser showing the matching portal</td></tr>
+        <tr><td>Application Server</td><td>«device»</td><td>hosts everything below</td></tr>
+        <tr><td>Node.js 24</td><td>«executionEnvironment»</td><td>frontend build (Next.js 16, <code>frontend/.next</code>)</td></tr>
+        <tr><td>JVM — OpenJDK 25</td><td>«executionEnvironment»</td><td><code>campusnest-backend-0.0.1-SNAPSHOT.jar</code></td></tr>
+        <tr><td>Docker Engine → PostgreSQL 18 DBMS</td><td>«executionEnvironment»</td><td><code>campusnest</code> database (Flyway V1–V7 scripts), volume <code>campusnest-db-data</code></td></tr>
+        <tr><td>Server file system</td><td>«file system»</td><td>uploads/ — listing photos; <code>.env</code> configuration (git-ignored)</td></tr>
+        <tr><td>OpenStreetMap Tile Server</td><td>«external system»</td><td>not deployed by the team</td></tr>
+      </table>
+
+      <h2>Communication paths</h2>
+      <table>
+        <tr><th>From → To</th><th>Protocol</th><th>Purpose</th></tr>
+        <tr><td>Browser → Node.js</td><td>HTTP :3000 (HTTPS in production)</td><td>pages and <code>/api/*</code> requests</td></tr>
+        <tr><td>Node.js → JVM</td><td>HTTP localhost:8080</td><td>forwarded REST API calls</td></tr>
+        <tr><td>JVM → PostgreSQL</td><td>JDBC over TCP :5432</td><td>read and write data</td></tr>
+        <tr><td>JVM → uploads/</td><td>file I/O</td><td>save and serve photos</td></tr>
+        <tr><td>Browser → OpenStreetMap</td><td>HTTPS</td><td>map tiles</td></tr>
+      </table>
+
+      <div class="box"><b>Consistency with the component diagram:</b> the Web UI component is the frontend build on
+      Node.js; the REST API &amp; Security Layer, business services, Data Access Layer and Image Store are all inside
+      the backend .jar; PostgreSQL, the file system and OpenStreetMap appear in both diagrams.</div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

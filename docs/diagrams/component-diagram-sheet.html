@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CampusNest Component Diagram</title>
+<style>
+  @page { size: A4 landscape; margin: 10mm 12mm; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Arial, Helvetica, sans-serif; color: #1b2733; font-size: 10.5pt; line-height: 1.38; background: #fff; }
+  .page { page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+  .kicker { font-size: 8.5pt; font-weight: bold; color: #2f6f73; letter-spacing: .6px; text-transform: uppercase; }
+  h1 { font-size: 17pt; margin: 2px 0 2px; color: #1f2d3d; }
+  h2 { font-size: 12pt; margin: 10px 0 4px; color: #1f2d3d; }
+  .meta { display: grid; grid-template-columns: 2.2fr 1.6fr 1fr; gap: 4px 18px; font-size: 9.5pt; margin: 6px 0 6px; padding: 6px 10px; border: 1px solid #c9d6e2; background: #f6f9fc; }
+  .meta b { color: #1f2d3d; }
+  .fill { display: inline-block; min-width: 60%; border-bottom: 1px solid #777; height: 1.1em; }
+  .fig { text-align: center; }
+  .fig img { width: 100%; max-height: 148mm; object-fit: contain; }
+  .cap { font-size: 8.5pt; color: #555; text-align: center; margin-top: 2px; }
+  table { border-collapse: collapse; width: 100%; font-size: 8.8pt; }
+  th, td { border-bottom: 1px solid #d5dee8; padding: 3px 6px; text-align: left; vertical-align: top; }
+  th { background: #edf2f8; }
+  .two { display: grid; grid-template-columns: 1.15fr 1fr; gap: 16px; }
+  p { margin: 4px 0; }
+  ol { margin: 4px 0 4px 18px; padding: 0; }
+  li { margin: 2px 0; }
+  .box { border: 1px solid #c9d6e2; background: #f6f9fc; padding: 6px 10px; margin-top: 6px; font-size: 9.3pt; }
+  code { font-family: Consolas, monospace; font-size: 8.8pt; }
+</style>
+</head>
+<body>
+
+<section class="page">
+  <div class="kicker">FY MCA · Mini Project-I · UML Component Diagram</div>
+  <h1>CampusNest — Smart Student Accommodation and Roommate Matching System</h1>
+  <div class="meta">
+    <div><b>Student name(s):</b> <span class="fill"></span></div>
+    <div><b>Roll no(s):</b> <span class="fill"></span></div>
+    <div><b>Batch:</b> <span class="fill"></span></div>
+  </div>
+  <div class="fig">
+    <img src="component-diagram.svg" alt="CampusNest UML component diagram">
+    <div class="cap">Figure 1 — Component diagram of CampusNest as implemented (Next.js frontend, Spring Boot modular monolith, PostgreSQL).</div>
+  </div>
+</section>
+
+<section class="page">
+      <h2>Brief explanation</h2>
+      <p>CampusNest is a web application in which students find accommodation and roommates near their college,
+      owners list rooms, and administrators verify listings. The <b>Web UI</b> holds no business rules: every request
+      goes through the <b>REST API &amp; Security Layer</b>, which checks the login session, CSRF token and the user's
+      role before calling a service. Seven <b>business services</b> each own one responsibility and offer one
+      interface — for example the <b>Recommendation Engine</b> computes the explainable suitability score using the
+      <b>Listing Service</b> and the <b>Commute &amp; Cost Estimator</b>. Services never talk to the database directly;
+      they read and store data through the <b>Data Access Layer</b> (repositories), and photos go through the
+      <b>Image Store</b>. PostgreSQL, the server's file system and OpenStreetMap are outside the system boundary.
+      All components run inside one Spring Boot application (a modular monolith): a component is a Java package of
+      classes, not a separate microservice.</p>
+      <h2>Components and contracts</h2>
+      <table>
+        <tr><th>Component</th><th>Responsibility</th><th>Provides</th><th>Requires</th></tr>
+        <tr><td>Web UI</td><td>Pages for the three roles; collects input; shows scores, comparisons and errors</td><td>—</td><td>REST API</td></tr>
+        <tr><td>REST API &amp; Security Layer</td><td>Receives every HTTP request; session, CSRF, rate limit and role checks</td><td>REST API /api/v1</td><td>all seven service interfaces</td></tr>
+        <tr><td>Account Service</td><td>Register, login, profiles, preferences</td><td>IAccount</td><td>IUserStore, IReferenceStore</td></tr>
+        <tr><td>Listing Service</td><td>Search, details, owner create / edit / submit, lifecycle, photos</td><td>IListing</td><td>IListingStore, IUserStore, IReferenceStore, IImageStore</td></tr>
+        <tr><td>Recommendation Engine</td><td>Explainable suitability score; cost-vs-commute comparison</td><td>IRecommendation</td><td>IListing, ICommute, IListingStore, IUserStore, IEngagementStore</td></tr>
+        <tr><td>Commute &amp; Cost Estimator</td><td>Travel time per mode; monthly cost from sourced fare rules</td><td>ICommute</td><td>IReferenceStore</td></tr>
+        <tr><td>Roommate Matching</td><td>Compatibility % with dealbreakers; requests, contact sharing, blocking</td><td>IRoommateMatching</td><td>IRoommateStore, IUserStore</td></tr>
+        <tr><td>Engagement Service</td><td>Saved listings, enquiries, reviews, reports</td><td>IEngagement</td><td>IListing, IEngagementStore, IListingStore, IUserStore</td></tr>
+        <tr><td>Moderation Service</td><td>Admin listing review, owner verification, user suspension</td><td>IModeration</td><td>IListing, IListingStore, IUserStore</td></tr>
+        <tr><td>Data Access Layer</td><td>Spring Data JPA repositories: read and write rows</td><td>IUserStore, IListingStore, IEngagementStore, IRoommateStore, IReferenceStore</td><td>PostgreSQL (JDBC)</td></tr>
+        <tr><td>Image Store</td><td>Check image type, remove EXIF, save and delete files</td><td>IImageStore</td><td>server file system</td></tr>
+      </table>
+      <div class="box"><b>Note on interface names.</b> IAccount, IListing … are the design contracts. In the code each
+      contract is the set of public methods of the matching Spring service class (e.g. <code>RecommendationService</code>);
+      separate Java interface files were not created because every contract has exactly one implementation.</div>
+</section>
+
+<section class="page">
+  <div class="two">
+    <div>
+      <h2>Trace one action</h2>
+      <p><b>Success — a student opens “Recommended”:</b></p>
+      <ol>
+        <li>Web UI sends <code>GET /api/v1/student/recommendations</code>.</li>
+        <li>The security layer finds a valid session with role STUDENT and calls <code>recommend(studentId)</code> through IRecommendation.</li>
+        <li>The Recommendation Engine reads the student's preferences (IUserStore), published listings (IListing, IListingStore),
+            commute estimates (ICommute) and review/report counts (IEngagementStore), then scores and ranks the listings.</li>
+        <li>The ranked list with its score breakdown returns as JSON and the Web UI displays it.</li>
+      </ol>
+      <p><b>Failure — an owner opens the same address:</b> the security layer answers <b>403 Forbidden</b> before any
+      service runs, so no student data is read.</p>
+    </div>
+    <div>
+      <h2>Example operations</h2>
+      <table>
+        <tr><th>Interface</th><th>Operations (real method names)</th></tr>
+        <tr><td>IRecommendation</td><td><code>recommend(studentId)</code>, <code>forListing(studentId, listingId)</code>, <code>compare(studentId, ids, daysPerMonth)</code></td></tr>
+        <tr><td>IListing</td><td><code>search(criteria)</code>, <code>get(id)</code>, <code>create(…)</code>, <code>submit(…)</code>, <code>updateAvailability(…)</code></td></tr>
+        <tr><td>ICommute</td><td><code>estimate(listing, college, mode)</code>, <code>options(listing, college, daysPerMonth)</code></td></tr>
+        <tr><td>IRoommateMatching</td><td><code>matches(viewerId)</code>, <code>sendRequest(fromId, toId, message)</code>, <code>respond(…)</code>, <code>block(…)</code></td></tr>
+        <tr><td>IModeration</td><td><code>approve</code>, <code>requestChanges</code>, <code>reject</code>, <code>suspend</code>, <code>reinstate</code>, verification <code>decide</code></td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
