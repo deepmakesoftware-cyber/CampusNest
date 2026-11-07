@@ -5,9 +5,9 @@ renders automatically. To export images for the report, paste a diagram into <ht
 PNG/SVG.
 
 The **component** and **deployment** diagrams follow the department's Mini Project-I handouts and are drawn as SVG
-with PNG exports in [docs/diagrams/](diagrams/). Ready-to-submit PDFs (diagram + explanation, with blanks for names,
-roll numbers and batch): [CampusNest_ComponentDiagram.pdf](diagrams/CampusNest_ComponentDiagram.pdf) and
-[CampusNest_DeploymentDiagram.pdf](diagrams/CampusNest_DeploymentDiagram.pdf), generated from the
+with PNG exports in [docs/diagrams/](diagrams/). Submission PDFs (Batch 3; diagram + explanation):
+[component](diagrams/262010044_262010049_262010051_CampusNest_ComponentDiagram.pdf) and
+[deployment](diagrams/262010044_262010049_262010051_CampusNest_DeploymentDiagram.pdf), generated from the
 `*-sheet.html` files in the same folder.
 
 Contents: [1 Use cases](#1-use-case-diagram) · [2 Architecture](#2-architecture--component-diagram) ·
