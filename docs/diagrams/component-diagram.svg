@@ -1,0 +1,279 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="860" viewBox="0 0 1500 860">
+  <title>CampusNest UML component diagram</title>
+  <style>
+    text { font-family: Arial, Helvetica, sans-serif; fill: #111; }
+    .h1 { font-size: 22px; font-weight: bold; }
+    .h2 { font-size: 13px; fill: #555; }
+    .st { font-size: 11px; fill: #555; }
+    .nm { font-size: 14px; font-weight: bold; }
+    .onm { font-size: 15px; font-weight: bold; }
+    .sb { font-size: 11.5px; fill: #444; }
+    .lbl { font-size: 12px; }
+    .note { font-size: 12px; fill: #444; }
+    .outer { fill: #ffffff; stroke: #111; stroke-width: 2; }
+    .box { fill: #f3f6fa; stroke: #333; stroke-width: 1.3; }
+    .ext { fill: #fbf7ee; stroke: #333; stroke-width: 1.3; }
+    .grp { fill: none; stroke: #8a8a8a; stroke-width: 1.2; stroke-dasharray: 6 4; }
+    .dep { fill: none; stroke: #222; stroke-width: 1.3; stroke-dasharray: 6 4; marker-end: url(#open); }
+    .del { fill: none; stroke: #222; stroke-width: 1.4; marker-end: url(#open); }
+    .sol { fill: none; stroke: #222; stroke-width: 1.4; }
+    .port { fill: #ffffff; stroke: #111; stroke-width: 1.4; }
+    .ball { fill: #ffffff; stroke: #111; stroke-width: 1.5; }
+  </style>
+  <defs>
+    <marker id="open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto">
+      <path d="M1,1 L11,6 L1,11" fill="none" stroke="#222" stroke-width="1.4"/>
+    </marker>
+    <symbol id="ci" viewBox="0 0 20 22">
+      <rect x="4" y="1" width="15" height="20" fill="#fff" stroke="#222" stroke-width="1.4"/>
+      <rect x="0.7" y="5" width="7.5" height="4" fill="#fff" stroke="#222" stroke-width="1.4"/>
+      <rect x="0.7" y="13" width="7.5" height="4" fill="#fff" stroke="#222" stroke-width="1.4"/>
+    </symbol>
+    <symbol id="cyl" viewBox="0 0 20 24">
+      <path d="M1,4 v16 a9,3 0 0 0 18,0 v-16" fill="#fff" stroke="#222" stroke-width="1.4"/>
+      <ellipse cx="10" cy="4" rx="9" ry="3" fill="#fff" stroke="#222" stroke-width="1.4"/>
+    </symbol>
+  </defs>
+  <rect width="1500" height="860" fill="#ffffff"/>
+
+  <text x="750" y="36" class="h1" text-anchor="middle">CampusNest — UML Component Diagram</text>
+  <text x="750" y="58" class="h2" text-anchor="middle">Smart Student Accommodation and Roommate Matching System · as implemented (v1)</text>
+
+  <!-- ================= Frontend ================= -->
+  <rect x="40" y="100" width="380" height="470" class="outer"/>
+  <use href="#ci" x="388" y="110" width="18" height="20"/>
+  <text x="60" y="126" class="st">«component»</text>
+  <text x="60" y="146" class="onm">CampusNest Web Frontend</text>
+  <text x="60" y="164" class="sb">Next.js 16 · React 19 · TypeScript · Tailwind</text>
+
+  <!-- provided interface: web pages -->
+  <line x1="230" y1="100" x2="230" y2="80" class="sol"/>
+  <circle cx="230" cy="72" r="8" class="ball"/>
+  <text x="246" y="77" class="lbl">Web pages (HTTP :3000) — used in a browser by Student, Owner, Admin</text>
+
+  <rect x="70" y="185" width="320" height="58" class="box"/>
+  <use href="#ci" x="370" y="191" width="13" height="15"/>
+  <text x="230" y="202" class="st" text-anchor="middle">«component»</text>
+  <text x="230" y="219" class="nm" text-anchor="middle">Pages &amp; layouts</text>
+  <text x="230" y="235" class="sb" text-anchor="middle">Student · Owner · Admin areas (App Router)</text>
+
+  <rect x="70" y="280" width="320" height="58" class="box"/>
+  <use href="#ci" x="370" y="286" width="13" height="15"/>
+  <text x="230" y="297" class="st" text-anchor="middle">«component»</text>
+  <text x="230" y="314" class="nm" text-anchor="middle">UI components</text>
+  <text x="230" y="330" class="sb" text-anchor="middle">search, score breakdown, compare, roommates</text>
+
+  <rect x="70" y="375" width="150" height="66" class="box"/>
+  <use href="#ci" x="200" y="381" width="13" height="15"/>
+  <text x="145" y="394" class="st" text-anchor="middle">«component»</text>
+  <text x="145" y="413" class="nm" text-anchor="middle">Map view</text>
+  <text x="145" y="430" class="sb" text-anchor="middle">Leaflet 1.9</text>
+
+  <rect x="240" y="375" width="150" height="66" class="box"/>
+  <use href="#ci" x="370" y="381" width="13" height="15"/>
+  <text x="315" y="394" class="st" text-anchor="middle">«component»</text>
+  <text x="315" y="413" class="nm" text-anchor="middle">API client</text>
+  <text x="315" y="430" class="sb" text-anchor="middle">api.ts · CSRF header</text>
+
+  <rect x="240" y="478" width="150" height="66" class="box"/>
+  <use href="#ci" x="370" y="484" width="13" height="15"/>
+  <text x="315" y="497" class="st" text-anchor="middle">«component»</text>
+  <text x="315" y="516" class="nm" text-anchor="middle">/api proxy</text>
+  <text x="315" y="533" class="sb" text-anchor="middle">Next.js rewrites</text>
+
+  <path d="M230,243 V279" class="dep"/>
+  <path d="M145,338 V374" class="dep"/>
+  <path d="M315,338 V374" class="dep"/>
+  <path d="M315,441 V477" class="dep"/>
+
+  <!-- frontend -> backend: port, required/provided interface (assembly) -->
+  <path d="M390,511 H413" class="del"/>
+  <rect x="414" y="505" width="12" height="12" class="port"/>
+  <line x1="426" y1="511" x2="458" y2="511" class="sol"/>
+  <path d="M470,499 A12,12 0 0 0 470,523" class="sol"/>
+  <circle cx="470" cy="511" r="8" class="ball"/>
+  <line x1="478" y1="511" x2="534" y2="511" class="sol"/>
+  <rect x="534" y="505" width="12" height="12" class="port"/>
+  <text x="480" y="478" class="lbl" text-anchor="middle" font-weight="bold">REST API</text>
+  <text x="480" y="494" class="lbl" text-anchor="middle">/api/v1 · JSON</text>
+
+  <!-- frontend -> OSM -->
+  <path d="M145,441 V563" class="del"/>
+  <rect x="139" y="564" width="12" height="12" class="port"/>
+  <line x1="145" y1="576" x2="145" y2="602" class="sol"/>
+  <path d="M133,614 A12,12 0 0 1 157,614" class="sol"/>
+  <circle cx="145" cy="614" r="8" class="ball"/>
+  <line x1="145" y1="622" x2="145" y2="650" class="sol"/>
+  <text x="166" y="606" class="lbl">map tiles (HTTPS)</text>
+
+  <rect x="40" y="650" width="300" height="90" class="ext"/>
+  <use href="#ci" x="310" y="658" width="15" height="17"/>
+  <text x="190" y="674" class="st" text-anchor="middle">«external component»</text>
+  <text x="190" y="696" class="nm" text-anchor="middle">OpenStreetMap tile server</text>
+  <text x="190" y="716" class="sb" text-anchor="middle">tile.openstreetmap.org (URL configurable)</text>
+
+  <!-- ================= Backend ================= -->
+  <rect x="540" y="100" width="680" height="700" class="outer"/>
+  <use href="#ci" x="1188" y="110" width="18" height="20"/>
+  <text x="560" y="126" class="st">«component»</text>
+  <text x="560" y="146" class="onm">CampusNest API</text>
+  <text x="560" y="164" class="sb">Spring Boot 4.1 · Java 25 · modular monolith (one package per module)</text>
+
+  <path d="M546,511 H569" class="del"/>
+
+  <rect x="570" y="185" width="130" height="590" class="box"/>
+  <use href="#ci" x="680" y="191" width="13" height="15"/>
+  <text x="635" y="215" class="st" text-anchor="middle">«component»</text>
+  <text x="635" y="238" class="nm" text-anchor="middle">Security</text>
+  <text x="635" y="256" class="nm" text-anchor="middle">filter chain</text>
+  <text x="635" y="292" class="sb" text-anchor="middle">session cookie</text>
+  <text x="635" y="312" class="sb" text-anchor="middle">CSRF token check</text>
+  <text x="635" y="332" class="sb" text-anchor="middle">login rate limit</text>
+  <text x="635" y="348" class="sb" text-anchor="middle">(5 fails / 15 min)</text>
+  <text x="635" y="368" class="sb" text-anchor="middle">active-account</text>
+  <text x="635" y="384" class="sb" text-anchor="middle">check</text>
+  <text x="635" y="404" class="sb" text-anchor="middle">role rules:</text>
+  <text x="635" y="420" class="sb" text-anchor="middle">/student/**</text>
+  <text x="635" y="436" class="sb" text-anchor="middle">/owner/**</text>
+  <text x="635" y="452" class="sb" text-anchor="middle">/admin/**</text>
+  <text x="635" y="600" class="sb" text-anchor="middle">deny by default</text>
+
+  <path d="M700,420 H714" class="dep"/>
+
+  <rect x="715" y="182" width="495" height="496" class="grp"/>
+  <text x="723" y="198" class="st" font-style="italic">feature modules</text>
+
+  <!-- Row 1 -->
+  <rect x="730" y="210" width="140" height="56" class="box"/>
+  <use href="#ci" x="850" y="215" width="13" height="15"/>
+  <text x="800" y="227" class="st" text-anchor="middle">«component»</text>
+  <text x="800" y="244" class="nm" text-anchor="middle">roommate</text>
+  <text x="800" y="259" class="sb" text-anchor="middle">CompatibilityScorer</text>
+
+  <rect x="895" y="210" width="140" height="56" class="box"/>
+  <use href="#ci" x="1015" y="215" width="13" height="15"/>
+  <text x="965" y="227" class="st" text-anchor="middle">«component»</text>
+  <text x="965" y="244" class="nm" text-anchor="middle">recommendation</text>
+  <text x="965" y="259" class="sb" text-anchor="middle">SuitabilityScorer</text>
+
+  <rect x="1060" y="210" width="140" height="56" class="box"/>
+  <use href="#ci" x="1180" y="215" width="13" height="15"/>
+  <text x="1130" y="227" class="st" text-anchor="middle">«component»</text>
+  <text x="1130" y="244" class="nm" text-anchor="middle">moderation</text>
+  <text x="1130" y="259" class="sb" text-anchor="middle">verification, reports</text>
+
+  <!-- Row 2 -->
+  <rect x="730" y="310" width="140" height="56" class="box"/>
+  <use href="#ci" x="850" y="315" width="13" height="15"/>
+  <text x="800" y="327" class="st" text-anchor="middle">«component»</text>
+  <text x="800" y="344" class="nm" text-anchor="middle">student</text>
+  <text x="800" y="359" class="sb" text-anchor="middle">profile, preferences</text>
+
+  <rect x="1060" y="310" width="140" height="56" class="box"/>
+  <use href="#ci" x="1180" y="315" width="13" height="15"/>
+  <text x="1130" y="327" class="st" text-anchor="middle">«component»</text>
+  <text x="1130" y="344" class="nm" text-anchor="middle">engagement</text>
+  <text x="1130" y="359" class="sb" text-anchor="middle">enquiries, reviews</text>
+
+  <!-- Row 3 -->
+  <rect x="730" y="410" width="140" height="56" class="box"/>
+  <use href="#ci" x="850" y="415" width="13" height="15"/>
+  <text x="800" y="427" class="st" text-anchor="middle">«component»</text>
+  <text x="800" y="444" class="nm" text-anchor="middle">commute</text>
+  <text x="800" y="459" class="sb" text-anchor="middle">stations, fares</text>
+
+  <!-- Row 4 -->
+  <rect x="895" y="510" width="140" height="56" class="box"/>
+  <use href="#ci" x="1015" y="515" width="13" height="15"/>
+  <text x="965" y="527" class="st" text-anchor="middle">«component»</text>
+  <text x="965" y="544" class="nm" text-anchor="middle">listing</text>
+  <text x="965" y="559" class="sb" text-anchor="middle">listings, lifecycle</text>
+
+  <!-- Row 5 -->
+  <rect x="730" y="610" width="140" height="56" class="box"/>
+  <use href="#ci" x="850" y="615" width="13" height="15"/>
+  <text x="800" y="627" class="st" text-anchor="middle">«component»</text>
+  <text x="800" y="644" class="nm" text-anchor="middle">college</text>
+  <text x="800" y="659" class="sb" text-anchor="middle">colleges</text>
+
+  <rect x="1060" y="610" width="140" height="56" class="box"/>
+  <use href="#ci" x="1180" y="615" width="13" height="15"/>
+  <text x="1130" y="627" class="st" text-anchor="middle">«component»</text>
+  <text x="1130" y="644" class="nm" text-anchor="middle">owner</text>
+  <text x="1130" y="659" class="sb" text-anchor="middle">owner profiles</text>
+
+  <!-- module dependencies («use»), transitive ones omitted -->
+  <path d="M800,266 V309" class="dep"/>
+  <path d="M930,266 L842,309" class="dep"/>
+  <path d="M1020,266 L1088,309" class="dep"/>
+  <path d="M1130,266 V309" class="dep"/>
+  <path d="M800,366 V409" class="dep"/>
+  <path d="M840,466 L913,509" class="dep"/>
+  <path d="M1110,366 L1002,509" class="dep"/>
+  <path d="M915,566 L842,609" class="dep"/>
+  <path d="M1015,566 L1088,609" class="dep"/>
+
+  <!-- shared modules -->
+  <path d="M842,678 V699" class="dep"/>
+  <path d="M1087,678 V699" class="dep"/>
+  <text x="965" y="694" class="st" text-anchor="middle" font-style="italic">used by all modules</text>
+
+  <rect x="730" y="700" width="225" height="58" class="box"/>
+  <use href="#ci" x="935" y="706" width="13" height="15"/>
+  <text x="842" y="717" class="st" text-anchor="middle">«component»</text>
+  <text x="842" y="734" class="nm" text-anchor="middle">auth</text>
+  <text x="842" y="750" class="sb" text-anchor="middle">accounts, login, current user</text>
+
+  <rect x="975" y="700" width="225" height="58" class="box"/>
+  <use href="#ci" x="1180" y="706" width="13" height="15"/>
+  <text x="1087" y="717" class="st" text-anchor="middle">«component»</text>
+  <text x="1087" y="734" class="nm" text-anchor="middle">common</text>
+  <text x="1087" y="750" class="sb" text-anchor="middle">errors, storage, geo, persistence</text>
+
+  <!-- ================= Backend -> external ================= -->
+  <rect x="1214" y="324" width="12" height="12" class="port"/>
+  <line x1="1226" y1="330" x2="1260" y2="330" class="sol"/>
+  <path d="M1272,318 A12,12 0 0 0 1272,342" class="sol"/>
+  <circle cx="1272" cy="330" r="8" class="ball"/>
+  <line x1="1280" y1="330" x2="1300" y2="330" class="sol"/>
+  <text x="1263" y="362" class="lbl" text-anchor="middle">JDBC</text>
+
+  <rect x="1300" y="270" width="180" height="120" class="ext"/>
+  <use href="#cyl" x="1452" y="278" width="16" height="19"/>
+  <text x="1390" y="292" class="st" text-anchor="middle">«database»</text>
+  <text x="1390" y="313" class="nm" text-anchor="middle">PostgreSQL 18</text>
+  <text x="1390" y="333" class="sb" text-anchor="middle">campusnest schema</text>
+  <text x="1390" y="350" class="sb" text-anchor="middle">23 tables</text>
+  <text x="1390" y="367" class="sb" text-anchor="middle">Flyway migrations V1–V7</text>
+
+  <rect x="1214" y="554" width="12" height="12" class="port"/>
+  <line x1="1226" y1="560" x2="1260" y2="560" class="sol"/>
+  <path d="M1272,548 A12,12 0 0 0 1272,572" class="sol"/>
+  <circle cx="1272" cy="560" r="8" class="ball"/>
+  <line x1="1280" y1="560" x2="1300" y2="560" class="sol"/>
+  <text x="1263" y="592" class="lbl" text-anchor="middle">file I/O</text>
+
+  <rect x="1300" y="505" width="180" height="110" class="ext"/>
+  <use href="#ci" x="1452" y="512" width="15" height="17"/>
+  <text x="1390" y="527" class="st" text-anchor="middle">«file system»</text>
+  <text x="1390" y="548" class="nm" text-anchor="middle">Photo storage</text>
+  <text x="1390" y="568" class="sb" text-anchor="middle">STORAGE_DIR (uploads/)</text>
+  <text x="1390" y="585" class="sb" text-anchor="middle">re-encoded, EXIF removed</text>
+
+  <!-- ================= Legend & note ================= -->
+  <rect x="40" y="762" width="440" height="80" fill="#fff" stroke="#999" stroke-width="1"/>
+  <text x="52" y="780" class="st" font-weight="bold">Legend</text>
+  <path d="M55,800 H100" class="dep"/>
+  <text x="110" y="804" class="lbl">dependency («use»)</text>
+  <circle cx="270" cy="800" r="7" class="ball"/>
+  <line x1="277" y1="800" x2="292" y2="800" class="sol"/>
+  <text x="300" y="804" class="lbl">provided interface</text>
+  <path d="M74,816 A10,10 0 0 0 74,836" class="sol"/>
+  <line x1="55" y1="826" x2="64" y2="826" class="sol"/>
+  <text x="110" y="830" class="lbl">required interface</text>
+  <rect x="264" y="820" width="12" height="12" class="port"/>
+  <text x="300" y="830" class="lbl">port</text>
+
+  <text x="540" y="823" class="note">Arrows already implied through another arrow are omitted (e.g. recommendation → listing goes via engagement).</text>
+  <text x="540" y="841" class="note">Every feature module also uses auth (current user) and common. Import-level list: docs/UML.md §2.</text>
+</svg>

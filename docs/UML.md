@@ -1,13 +1,17 @@
 # CampusNest — UML and System Diagrams
 
-All diagrams describe the system **as implemented** (end of Phase 9) and are written in Mermaid, which GitHub
+All diagrams describe the system **as implemented** (end of Phase 10) and are written in Mermaid, which GitHub
 renders automatically. To export images for the report, paste a diagram into <https://mermaid.live> and download
 PNG/SVG.
+
+The **component** and **deployment** diagrams use strict UML 2 notation (interfaces, ports, nodes, artifacts) and
+are drawn as SVG with ready-to-submit PNG exports in [docs/diagrams/](diagrams/).
 
 Contents: [1 Use cases](#1-use-case-diagram) · [2 Architecture](#2-architecture--component-diagram) ·
 [3 Class diagram](#3-class-diagram-domain-model) · [4 ER diagram](#4-entity-relationship-diagram) ·
 [5 State machines](#5-state-machine-diagrams) · [6 Sequence diagrams](#6-sequence-diagrams) ·
-[7 Activity diagrams](#7-activity-diagrams)
+[7 Activity diagrams](#7-activity-diagrams) ·
+[8 Deployment diagram](#8-deployment-diagram)
 
 ---
 
@@ -73,6 +77,31 @@ Students and owners can also do everything a visitor can (generalisation, not dr
 ---
 
 ## 2. Architecture / component diagram
+
+### 2.1 UML component diagram
+
+![CampusNest UML component diagram](diagrams/component-diagram.png)
+
+Source: [component-diagram.svg](diagrams/component-diagram.svg). The frontend *requires* the REST API that the
+backend *provides* (ball-and-socket assembly through ports); the backend requires PostgreSQL (JDBC) and the photo
+folder; the map view requires OpenStreetMap tiles.
+
+Direct dependencies between backend modules, from the Java `import` statements (excluding `common`, and `auth`
+used for the current user). The diagram draws only the arrows not already implied by other arrows:
+
+| Module | Depends on |
+|---|---|
+| recommendation | student, engagement, listing, commute, owner, college |
+| moderation | engagement, listing, owner |
+| roommate | student |
+| student | commute, listing (amenities, room types), college |
+| engagement | listing |
+| commute | listing, college |
+| listing | owner, college (the demo-data seeder also uses student, roommate, commute) |
+| auth | student, owner (registration creates the profile) |
+| owner, college | — |
+
+### 2.2 Request flow overview
 
 ```mermaid
 flowchart TB
@@ -506,3 +535,14 @@ flowchart TD
     L -- yes --> G
     L -- no --> K
 ```
+
+---
+
+## 8. Deployment diagram
+
+![CampusNest UML deployment diagram](diagrams/deployment-diagram.png)
+
+Source: [deployment-diagram.svg](diagrams/deployment-diagram.svg). Shows the demonstration setup: the browser on the
+user's device talks HTTP to the Next.js server (port 3000), which forwards `/api/*` to the Spring Boot jar on the
+JVM (port 8080); the backend reaches PostgreSQL in a Docker container over JDBC (port 5432, bound to 127.0.0.1)
+and stores photos in the `uploads/` folder. Production changes are listed in [DEPLOYMENT.md](DEPLOYMENT.md).
