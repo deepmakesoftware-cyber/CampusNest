@@ -31,6 +31,8 @@ case-variant duplicates.
 
 ## 1. Entity relationship diagram
 
+Submission ERD (Chen + Crow's Foot, business rules, constraints, tests): [262010044_CampusNest_ERD.pdf](diagrams/262010044_CampusNest_ERD.pdf).
+
 ```mermaid
 erDiagram
     USERS ||--o| STUDENT_PROFILES : "has (if student)"

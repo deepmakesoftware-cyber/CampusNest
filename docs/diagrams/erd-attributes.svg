@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="620" viewBox="0 0 1500 620">
+<title>CampusNest — Attribute types (Chen notation)</title><style>
+text{font-family:Arial,Helvetica,sans-serif;fill:#13232f}
+.h1{font-size:22px;font-weight:bold}.h2{font-size:13px;fill:#555}
+.en{font-size:13px;font-weight:bold}.rel{font-size:11px;font-weight:bold}
+.role{font-size:10px;fill:#555;font-style:italic}.at{font-size:11.5px}
+.card{font-size:13px;font-weight:bold;fill:#0f7f78}
+.tn{font-size:13px;font-weight:bold;fill:#ffffff}.col{font-size:11.5px}
+.tag{font-size:9.5px;font-weight:bold}.lbl{font-size:11px;font-style:italic;fill:#2b3a44}
+.note{font-size:11.5px;fill:#2b3a44}.nb{font-size:12px;font-weight:bold;fill:#13232f}
+.cap{font-size:12px;fill:#555;font-style:italic}
+</style>
+<rect width="1500" height="620" fill="#ffffff"/>
+<text x="750.0" y="34" class="h1" text-anchor="middle">CampusNest — Attribute types (Chen notation)</text>
+<text x="750.0" y="56" class="h2" text-anchor="middle">Key (underlined), simple, composite, derived (dashed) and multivalued (double) attributes, using real CampusNest data</text>
+<line x1="400" y1="330" x2="170" y2="230" stroke="#13232f" stroke-width="1.3"/>
+<line x1="400" y1="330" x2="170" y2="330" stroke="#13232f" stroke-width="1.3"/>
+<line x1="400" y1="330" x2="170" y2="430" stroke="#13232f" stroke-width="1.3"/>
+<line x1="400" y1="330" x2="200" y2="530" stroke="#13232f" stroke-width="1.3"/>
+<line x1="400" y1="330" x2="390" y2="540" stroke="#13232f" stroke-width="1.3"/>
+<line x1="400" y1="330" x2="600" y2="210" stroke="#13232f" stroke-width="1.3"/>
+<line x1="600" y1="210" x2="470" y2="112" stroke="#13232f" stroke-width="1.3"/>
+<line x1="600" y1="210" x2="590" y2="112" stroke="#13232f" stroke-width="1.3"/>
+<line x1="600" y1="210" x2="690" y2="112" stroke="#13232f" stroke-width="1.3"/>
+<line x1="600" y1="210" x2="790" y2="112" stroke="#13232f" stroke-width="1.3"/>
+<line x1="400" y1="330" x2="620" y2="440" stroke="#13232f" stroke-width="1.3"/>
+<line x1="620" y1="440" x2="560" y2="530" stroke="#13232f" stroke-width="1.3"/>
+<line x1="620" y1="440" x2="700" y2="530" stroke="#13232f" stroke-width="1.3"/>
+<line x1="1130" y1="110" x2="1130" y2="200" stroke="#13232f" stroke-width="1.3"/>
+<line x1="1130" y1="200" x2="1130" y2="300" stroke="#13232f" stroke-width="1.3"/>
+<line x1="1130" y1="300" x2="930" y2="380" stroke="#13232f" stroke-width="1.3"/>
+<line x1="1130" y1="300" x2="960" y2="470" stroke="#13232f" stroke-width="1.3"/>
+<line x1="1130" y1="300" x2="1130" y2="420" stroke="#13232f" stroke-width="1.3"/>
+<line x1="1130" y1="300" x2="1310" y2="470" stroke="#13232f" stroke-width="1.3"/>
+<line x1="1130" y1="300" x2="1340" y2="380" stroke="#13232f" stroke-width="1.3"/>
+<line x1="1130" y1="300" x2="1330" y2="240" stroke="#13232f" stroke-width="1.3"/>
+<rect x="325.0" y="307.0" width="150" height="46" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="400.0" y="334.5" class="en" text-anchor="middle">LISTING</text>
+<ellipse cx="170" cy="230" rx="49.0" ry="15" fill="#ffffff" stroke="#0f7f78" stroke-width="1.5"/>
+<text x="170" y="234" class="at" text-anchor="middle" text-decoration="underline">listing_id</text>
+<ellipse cx="170" cy="330" rx="36" ry="15" fill="#ffffff" stroke="#0f7f78" stroke-width="1.5"/>
+<text x="170" y="334" class="at" text-anchor="middle">title</text>
+<ellipse cx="170" cy="430" rx="36" ry="15" fill="#ffffff" stroke="#0f7f78" stroke-width="1.5"/>
+<text x="170" y="434" class="at" text-anchor="middle">status</text>
+<ellipse cx="200" cy="530" rx="63.0" ry="15" fill="#ffffff" stroke="#0f7f78" stroke-width="1.5" stroke-dasharray="5 4"/>
+<text x="200" y="534" class="at" text-anchor="middle">average_rating</text>
+<ellipse cx="390" cy="540" rx="52.5" ry="15" fill="#ffffff" stroke="#0f7f78" stroke-width="1.5" stroke-dasharray="5 4"/>
+<text x="390" y="544" class="at" text-anchor="middle">lowest_rent</text>
+<ellipse cx="600" cy="210" rx="38.5" ry="15" fill="#ffffff" stroke="#0f7f78" stroke-width="1.5"/>
+<text x="600" y="214" class="at" text-anchor="middle">address</text>
+<ellipse cx="470" cy="112" rx="56.0" ry="15" fill="#ffffff" stroke="#0f7f78" stroke-width="1.5"/>
+<text x="470" y="116" class="at" text-anchor="middle">address_line</text>
+<ellipse cx="590" cy="112" rx="42.0" ry="15" fill="#ffffff" stroke="#0f7f78" stroke-width="1.5"/>
+<text x="590" y="116" class="at" text-anchor="middle">locality</text>
+<ellipse cx="690" cy="112" rx="36" ry="15" fill="#ffffff" stroke="#0f7f78" stroke-width="1.5"/>
+<text x="690" y="116" class="at" text-anchor="middle">city</text>
+<ellipse cx="790" cy="112" rx="38.5" ry="15" fill="#ffffff" stroke="#0f7f78" stroke-width="1.5"/>
+<text x="790" y="116" class="at" text-anchor="middle">pincode</text>
+<ellipse cx="620" cy="440" rx="42.0" ry="15" fill="#ffffff" stroke="#0f7f78" stroke-width="1.5"/>
+<text x="620" y="444" class="at" text-anchor="middle">location</text>
+<ellipse cx="560" cy="530" rx="42.0" ry="15" fill="#ffffff" stroke="#0f7f78" stroke-width="1.5"/>
+<text x="560" y="534" class="at" text-anchor="middle">latitude</text>
+<ellipse cx="700" cy="530" rx="45.5" ry="15" fill="#ffffff" stroke="#0f7f78" stroke-width="1.5"/>
+<text x="700" y="534" class="at" text-anchor="middle">longitude</text>
+<rect x="1060.0" y="87.0" width="140" height="46" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="1130.0" y="114.5" class="en" text-anchor="middle">USER</text>
+<polygon points="1130,171.0 1192.0,200 1130,229.0 1068.0,200" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/><polygon points="1130,176.5 1184.0,200 1130,223.5 1076.0,200" fill="none" stroke="#0f7f78" stroke-width="1.3"/>
+<text x="1130.0" y="204.0" class="rel" text-anchor="middle">SETS</text>
+<rect x="1025.0" y="277.0" width="210" height="46" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/><rect x="1030.0" y="282.0" width="200" height="36" fill="none" stroke="#0f7f78" stroke-width="1.3"/>
+<text x="1130.0" y="304.5" class="en" text-anchor="middle">STUDENT_PREFERENCES</text>
+<ellipse cx="930" cy="380" rx="49.0" ry="15" fill="#ffffff" stroke="#0f7f78" stroke-width="1.5"/>
+<text x="930" y="384" class="at" text-anchor="middle">budget_max</text>
+<ellipse cx="960" cy="470" rx="80.5" ry="15" fill="#ffffff" stroke="#0f7f78" stroke-width="1.5"/>
+<text x="960" y="474" class="at" text-anchor="middle">max_commute_minutes</text>
+<ellipse cx="1130" cy="420" rx="56.0" ry="15" fill="#ffffff" stroke="#0f7f78" stroke-width="1.5"/><ellipse cx="1130" cy="420" rx="52.0" ry="11" fill="none" stroke="#0f7f78" stroke-width="1.2"/>
+<text x="1130" y="424" class="at" text-anchor="middle">room_choices</text>
+<ellipse cx="1310" cy="470" rx="80.5" ry="15" fill="#ffffff" stroke="#0f7f78" stroke-width="1.5"/><ellipse cx="1310" cy="470" rx="76.5" ry="11" fill="none" stroke="#0f7f78" stroke-width="1.2"/>
+<text x="1310" y="474" class="at" text-anchor="middle">must_have_amenities</text>
+<ellipse cx="1340" cy="380" rx="91.0" ry="15" fill="#ffffff" stroke="#0f7f78" stroke-width="1.5"/><ellipse cx="1340" cy="380" rx="87.0" ry="11" fill="none" stroke="#0f7f78" stroke-width="1.2"/>
+<text x="1340" y="384" class="at" text-anchor="middle">nice_to_have_amenities</text>
+<ellipse cx="1330" cy="240" rx="56.0" ry="15" fill="#ffffff" stroke="#0f7f78" stroke-width="1.5"/>
+<text x="1330" y="244" class="at" text-anchor="middle">commute_mode</text>
+<text x="420.0" y="596.0" class="cap" text-anchor="middle">LISTING: composite address and location; average_rating and lowest_rent are derived (calculated, never stored)</text>
+<text x="1150.0" y="152.0" class="card" text-anchor="start">1</text>
+<text x="1150.0" y="262.0" class="card" text-anchor="start">1</text>
+<text x="1130.0" y="560.0" class="cap" text-anchor="middle">STUDENT_PREFERENCES: weak entity identified through USER (shares user_id);</text>
+<text x="1130.0" y="576.0" class="cap" text-anchor="middle">room types and amenities are multivalued (stored as ordered code lists, see design notes)</text>
+</svg>

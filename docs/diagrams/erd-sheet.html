@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CampusNest ER Diagram</title>
+<style>
+  @page { size: A4 landscape; margin: 10mm 12mm; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Arial, Helvetica, sans-serif; color: #1b2733; font-size: 10pt; line-height: 1.38; background: #fff; }
+  .page { page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+  .kicker { font-size: 8.5pt; font-weight: bold; color: #0f7f78; letter-spacing: .6px; text-transform: uppercase; }
+  h1 { font-size: 17pt; margin: 2px 0 2px; color: #1f2d3d; }
+  h2 { font-size: 12pt; margin: 8px 0 4px; color: #1f2d3d; }
+  h3 { font-size: 10.5pt; margin: 6px 0 3px; color: #0f7f78; }
+  .meta { display: grid; grid-template-columns: 1fr auto; gap: 4px 18px; font-size: 9.5pt; margin: 6px 0 6px; padding: 6px 10px; border: 1px solid #c9d6e2; background: #f6f9fc; }
+  .fig { text-align: center; }
+  .fig img { max-width: 100%; max-height: 156mm; object-fit: contain; }
+  .fig.half img { max-height: 76mm; }
+  .cap { font-size: 8.5pt; color: #555; text-align: center; margin-top: 2px; }
+  table { border-collapse: collapse; width: 100%; font-size: 8.2pt; line-height: 1.3; }
+  th, td { border-bottom: 1px solid #d5dee8; padding: 1.8px 5px; text-align: left; vertical-align: top; }
+  th { background: #e8f3f2; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .rules { columns: 2; column-gap: 18px; font-size: 9.3pt; }
+  .rules p { margin: 0 0 4px; break-inside: avoid; }
+  .r { display: inline-block; min-width: 26px; font-weight: bold; color: #0f7f78; }
+  p { margin: 4px 0; }
+  ul, ol { margin: 4px 0 4px 18px; padding: 0; }
+  li { margin: 2px 0; }
+  .box { border: 1px solid #c9d6e2; background: #f6f9fc; padding: 6px 10px; margin-top: 6px; }
+  .story { border-left: 4px solid #0f7f78; background: #f3f9f8; padding: 6px 10px; margin: 6px 0; }
+  code { font-family: Consolas, monospace; font-size: 8.5pt; }
+  .ok { color: #0f7f78; font-weight: bold; }
+  .no { color: #a3402c; font-weight: bold; }
+  .small { font-size: 8.6pt; color: #444; }
+</style>
+</head>
+<body>
+
+<!-- 1. Story and business rules -->
+<section class="page">
+  <div class="kicker">FY MCA · Mini Project-I · Entity-Relationship Diagram</div>
+  <h1>CampusNest — Smart Student Accommodation and Roommate Matching System</h1>
+  <div class="meta">
+    <div><b>Students (roll no):</b> Shlok Janavalekar (262010051) · Uday Ghuge (262010049) · Deepak Saudai (262010044)</div>
+    <div><b>Batch:</b> 3</div>
+  </div>
+
+  <h2>Step 1 — The story</h2>
+  <div class="story">CampusNest must remember its <b>users</b> (students, accommodation owners and administrators), the
+  <b>colleges</b> students attend, and the <b>listings</b> owners publish with their room options, charges, amenities and
+  photos. Around each listing it records student activity (saved listings, enquiries with messages, reviews), trust
+  information (reports, owner identity checks, a history of every status change) and roommate matching (roommate
+  profiles, requests and blocks). Railway stations and fare rules are stored as reference data for commute estimates.
+  The model below is the one implemented in PostgreSQL (Flyway migrations V1–V7, 23 tables).</div>
+
+  <h2>Business rules (minimum and maximum in both directions)</h2>
+  <div class="rules">
+    <p><span class="r">R1</span>Every USER has exactly one role: STUDENT, OWNER or ADMIN. An email address belongs to at most one user.</p>
+    <p><span class="r">R2</span>A student user has zero or one STUDENT_PROFILE, zero or one STUDENT_PREFERENCES and zero or one ROOMMATE_PROFILE. Each of these belongs to exactly one user and cannot exist without it.</p>
+    <p><span class="r">R3</span>An owner user has zero or one OWNER_PROFILE; each owner profile belongs to exactly one user.</p>
+    <p><span class="r">R4</span>A STUDENT_PROFILE refers to zero or one COLLEGE; a COLLEGE may have zero or many students.</p>
+    <p><span class="r">R5</span>An owner may own zero or many LISTINGS; every LISTING has exactly one owner.</p>
+    <p><span class="r">R6</span>A LISTING has zero or many ROOM_OPTIONS, CHARGES, LISTING_IMAGES and STATUS_CHANGES; each belongs to exactly one listing. At least one room option is required before a listing can be submitted for review.</p>
+    <p><span class="r">R7</span>A listing may declare many AMENITIES and an amenity may be declared by many listings (M:N). Each pair appears at most once and records whether the amenity is available.</p>
+    <p><span class="r">R8</span>A student may save many listings and a listing may be saved by many students (M:N), at most once per pair.</p>
+    <p><span class="r">R9</span>A student may start zero or many ENQUIRIES, at most one per listing. Each enquiry belongs to exactly one student and is about exactly one listing.</p>
+    <p><span class="r">R10</span>An ENQUIRY contains one or many MESSAGES (it is created with its first message). Each message belongs to exactly one enquiry and has exactly one sender.</p>
+    <p><span class="r">R11</span>A student may write at most one REVIEW per listing, and only after sending an enquiry for it. Each review is for exactly one listing by exactly one student.</p>
+    <p><span class="r">R12</span>Every change of a listing's status is stored as a STATUS_CHANGE that records the old and new status and the user who made it.</p>
+    <p><span class="r">R13</span>Any logged-in user may file zero or many REPORTS. Each report is filed by exactly one user, concerns exactly one listing, review or user, and is resolved by zero or one admin.</p>
+    <p><span class="r">R14</span>Each owner identity decision is a VERIFICATION_RECORD for exactly one owner, decided by exactly one admin. An owner may have zero or many records over time.</p>
+    <p><span class="r">R15</span>A student may send and receive zero or many ROOMMATE_REQUESTS. Each request has exactly one sender and one receiver, who must be different, and two students can have at most one active request between them.</p>
+    <p><span class="r">R16</span>A student may block zero or many other students (M:N on USER), at most once per pair, and never themself.</p>
+    <p><span class="r">R17</span>STATIONS and FARE_RULES are reference data read by the commute estimator; they are not linked to other entities.</p>
+  </div>
+</section>
+
+<!-- 2. Conceptual A -->
+<section class="page">
+  <h2>Step 2–6 — Conceptual ERD (Chen notation), Part A: listings and student engagement</h2>
+  <div class="fig"><img src="erd-chen-a.svg" alt="Conceptual ERD part A"></div>
+  <div class="cap">Figure 1 — ENQUIRY, REVIEW and STATUS_CHANGE are events with their own data, so they are entities joined by two 1:N relationships (like APPOINTMENT). SAVES and PROVIDES are M:N relationships carrying an attribute.</div>
+</section>
+
+<!-- 3. Conceptual B -->
+<section class="page">
+  <h2>Conceptual ERD (Chen notation), Part B: accounts, profiles, trust and roommates</h2>
+  <div class="fig"><img src="erd-chen-b.svg" alt="Conceptual ERD part B"></div>
+  <div class="cap">Figure 2 — Profiles are weak entities identified through USER (identifying relationships). BLOCKS is a unary M:N relationship; ROOMMATE_REQUEST resolves the unary "requests" relationship because each request has a status and dates.</div>
+</section>
+
+<!-- 4. Attributes and identifiers -->
+<section class="page">
+  <h2>Attribute types and identifiers</h2>
+  <div class="fig half"><img src="erd-attributes.svg" alt="Attribute notation"></div>
+  <div class="cap">Figure 3 — Attribute notation applied to CampusNest data.</div>
+  <h3>Entities, identifiers and tables (Step 4)</h3>
+  <table>
+    <tr><th>Entity</th><th>Identifier (PK)</th><th>Table</th><th>Kind</th><th>Entity</th><th>Identifier (PK)</th><th>Table</th><th>Kind</th></tr>
+    <tr><td>USER</td><td>id</td><td>users</td><td>strong</td><td>MESSAGE</td><td>id</td><td>enquiry_messages</td><td>strong</td></tr>
+    <tr><td>COLLEGE</td><td>id</td><td>colleges</td><td>strong</td><td>REVIEW</td><td>id (pair unique)</td><td>reviews</td><td>associative</td></tr>
+    <tr><td>STUDENT_PROFILE</td><td>user_id (owner's key)</td><td>student_profiles</td><td>weak</td><td>STATUS_CHANGE</td><td>id</td><td>listing_status_history</td><td>strong</td></tr>
+    <tr><td>OWNER_PROFILE</td><td>user_id</td><td>owner_profiles</td><td>weak</td><td>REPORT</td><td>id</td><td>reports</td><td>strong</td></tr>
+    <tr><td>STUDENT_PREFERENCES</td><td>user_id</td><td>student_preferences</td><td>weak</td><td>VERIFICATION_RECORD</td><td>id</td><td>verification_records</td><td>strong</td></tr>
+    <tr><td>ROOMMATE_PROFILE</td><td>user_id</td><td>roommate_profiles</td><td>weak</td><td>ROOMMATE_REQUEST</td><td>id</td><td>roommate_requests</td><td>associative</td></tr>
+    <tr><td>LISTING</td><td>id</td><td>listings</td><td>strong</td><td>STATION</td><td>id; osm_node_id unique</td><td>stations</td><td>reference</td></tr>
+    <tr><td>ROOM_OPTION</td><td>id</td><td>room_options</td><td>strong</td><td>FARE_RULE</td><td>id</td><td>fare_rules</td><td>reference</td></tr>
+    <tr><td>CHARGE</td><td>id</td><td>listing_charges</td><td>strong</td><td><i>PROVIDES</i> (M:N)</td><td>id (pair unique)</td><td>listing_amenities</td><td>M:N table</td></tr>
+    <tr><td>LISTING_IMAGE</td><td>id</td><td>listing_images</td><td>strong</td><td><i>SAVES</i> (M:N)</td><td>id (pair unique)</td><td>saved_listings</td><td>M:N table</td></tr>
+    <tr><td>AMENITY</td><td>id; code unique</td><td>amenities</td><td>strong</td><td><i>BLOCKS</i> (M:N, unary)</td><td>id (pair unique)</td><td>roommate_blocks</td><td>M:N table</td></tr>
+    <tr><td>ENQUIRY</td><td>id (pair unique)</td><td>enquiries</td><td>associative</td><td></td><td></td><td></td><td></td></tr>
+  </table>
+  <p class="small">Every table uses a generated numeric <code>id</code> (a stable surrogate key) because natural values such as an email or a listing title can change. "Pair unique" means the two foreign keys together are unique (e.g. one review per listing and student), enforced by a UNIQUE constraint.</p>
+</section>
+
+<!-- 5. Logical A -->
+<section class="page">
+  <h2>Step 7 — Logical ERD (Crow's Foot notation), Part A: listings and student engagement</h2>
+  <div class="fig"><img src="erd-logical-a.svg" alt="Logical ERD part A"></div>
+  <div class="cap">Figure 4 — Tables with all columns. Read a line aloud: "one LISTING has zero or many ROOM_OPTIONS; each ROOM_OPTION belongs to exactly one LISTING."</div>
+</section>
+
+<!-- 6. Logical B -->
+<section class="page">
+  <h2>Logical ERD (Crow's Foot notation), Part B: accounts, profiles, trust, roommates and reference data</h2>
+  <div class="fig"><img src="erd-logical-b.svg" alt="Logical ERD part B"></div>
+  <div class="cap">Figure 5 — "One USER has zero or one STUDENT_PROFILE; each STUDENT_PROFILE belongs to exactly one USER." The users table is the same in Parts A and B.</div>
+</section>
+
+<!-- 7. Relational schema -->
+<section class="page">
+  <h2>Translate the ERD into database tables (integrity constraints)</h2>
+  <table>
+    <tr><th style="width:15%">Table</th><th style="width:9%">Primary key</th><th style="width:33%">Foreign keys (→ referenced key; delete rule)</th><th>Unique and check constraints</th></tr>
+    <tr><td>users</td><td>id</td><td>—</td><td>UNIQUE(email); email must be lower-case; role ∈ {STUDENT, OWNER, ADMIN}; status ∈ {ACTIVE, SUSPENDED}</td></tr>
+    <tr><td>colleges</td><td>id</td><td>—</td><td>UNIQUE(short_name, city); latitude / longitude within valid ranges</td></tr>
+    <tr><td>student_profiles</td><td>user_id</td><td>user_id → users.id (cascade); college_id → colleges.id (nullable)</td><td>year_of_study 1–6; gender ∈ {FEMALE, MALE, OTHER} or empty</td></tr>
+    <tr><td>owner_profiles</td><td>user_id</td><td>user_id → users.id (cascade); verified_by → users.id (nullable)</td><td>owner_type ∈ {INDIVIDUAL, PG_OPERATOR, HOSTEL_OPERATOR}; verification_status ∈ {UNVERIFIED, PENDING, VERIFIED, REJECTED}</td></tr>
+    <tr><td>student_preferences</td><td>user_id</td><td>user_id → users.id (cascade)</td><td>budget_max 1,000–2,00,000; max_commute_minutes 5–180; commute_mode from a fixed list</td></tr>
+    <tr><td>roommate_profiles</td><td>user_id</td><td>user_id → users.id (cascade)</td><td>budget_min ≤ budget_max; cleanliness and guests 1–5; sleep, smoking, study, food and sharing values from fixed lists</td></tr>
+    <tr><td>amenities</td><td>id</td><td>—</td><td>UNIQUE(code)</td></tr>
+    <tr><td>listings</td><td>id</td><td>owner_id → users.id (NOT NULL, no cascade)</td><td>status ∈ 7 lifecycle states; property_type, gender_policy from fixed lists; PIN code = 6 digits not starting with 0; <code>version</code> for optimistic locking</td></tr>
+    <tr><td>room_options</td><td>id</td><td>listing_id → listings.id (cascade)</td><td>monthly_rent 1–10,00,000; beds_total 1–500; 0 ≤ beds_available ≤ beds_total; sharing_capacity 1–12</td></tr>
+    <tr><td>listing_charges</td><td>id</td><td>listing_id → listings.id (cascade)</td><td>charge_type and frequency from fixed lists; amount ≥ 0</td></tr>
+    <tr><td>listing_amenities</td><td>id</td><td>listing_id → listings.id (cascade); amenity_id → amenities.id</td><td>UNIQUE(listing_id, amenity_id)</td></tr>
+    <tr><td>listing_images</td><td>id</td><td>listing_id → listings.id (cascade)</td><td>UNIQUE(storage_key)</td></tr>
+    <tr><td>listing_status_history</td><td>id</td><td>listing_id → listings.id (cascade); actor_id → users.id (nullable)</td><td>to_status NOT NULL</td></tr>
+    <tr><td>saved_listings</td><td>id</td><td>student_id → users.id; listing_id → listings.id (both cascade)</td><td>UNIQUE(student_id, listing_id)</td></tr>
+    <tr><td>enquiries</td><td>id</td><td>listing_id → listings.id; student_id → users.id (both cascade)</td><td>UNIQUE(listing_id, student_id)</td></tr>
+    <tr><td>enquiry_messages</td><td>id</td><td>enquiry_id → enquiries.id; sender_id → users.id (both cascade)</td><td>body NOT NULL (max 2,000 characters)</td></tr>
+    <tr><td>reviews</td><td>id</td><td>listing_id → listings.id; student_id → users.id (both cascade)</td><td>UNIQUE(listing_id, student_id); rating 1–5; status ∈ {VISIBLE, HIDDEN}</td></tr>
+    <tr><td>reports</td><td>id</td><td>reporter_id → users.id (cascade); resolved_by → users.id (nullable)</td><td>target_type ∈ {LISTING, REVIEW, USER} with target_id (no FK); one OPEN report per reporter and target (partial unique index)</td></tr>
+    <tr><td>verification_records</td><td>id</td><td>owner_id → users.id (cascade); reviewer_id → users.id (NOT NULL)</td><td>decision ∈ {VERIFIED, REJECTED, REVOKED}; method from a fixed list</td></tr>
+    <tr><td>roommate_requests</td><td>id</td><td>from_user_id → users.id; to_user_id → users.id (both cascade)</td><td>from_user_id ≠ to_user_id; status ∈ {PENDING, ACCEPTED, DECLINED, WITHDRAWN}; at most one PENDING/ACCEPTED request per pair (partial unique index)</td></tr>
+    <tr><td>roommate_blocks</td><td>id</td><td>blocker_id → users.id; blocked_id → users.id (both cascade)</td><td>UNIQUE(blocker_id, blocked_id); blocker_id ≠ blocked_id</td></tr>
+    <tr><td>stations</td><td>id</td><td>—</td><td>UNIQUE(osm_node_id)</td></tr>
+    <tr><td>fare_rules</td><td>id</td><td>—</td><td>mode and kind from fixed lists; metered rules need base_km and per_km, slab rules need up_to_km; amounts ≥ 0</td></tr>
+  </table>
+  <p class="small">All primary keys are unique and NOT NULL; every foreign key must refer to an existing parent row. "Cascade" means deleting the parent also deletes these rows; references without cascade stop the parent from being deleted while children exist.</p>
+</section>
+
+<!-- 8. Design notes and validation -->
+<section class="page">
+  <div class="two">
+    <div>
+      <h2>Prove the model with sample records</h2>
+      <table>
+        <tr><th>Table</th><th>Key</th><th>Illustrative values</th></tr>
+        <tr><td>users</td><td>U1 / U2 / U3 / U4</td><td>admin (ADMIN) · asha (STUDENT) · meera (STUDENT) · ramesh (OWNER)</td></tr>
+        <tr><td>colleges</td><td>C1</td><td>VJTI, Mumbai</td></tr>
+        <tr><td>student_profiles</td><td>U2</td><td>college C1 · MCA · year 1</td></tr>
+        <tr><td>owner_profiles</td><td>U4</td><td>VERIFIED · verified_by U1</td></tr>
+        <tr><td>listings</td><td>L1</td><td>"Green Nest PG" · owner U4 · PUBLISHED_AVAILABLE</td></tr>
+        <tr><td>room_options</td><td>R1</td><td>L1 · DOUBLE · beds_total 4 · beds_available 2</td></tr>
+        <tr><td>enquiries / enquiry_messages</td><td>E1 / M1</td><td>E1 = L1 + U2 · M1 = E1, sender U2</td></tr>
+        <tr><td>reviews</td><td>V1</td><td>L1 · U2 · rating 4</td></tr>
+        <tr><td>roommate_requests</td><td>Q1</td><td>U2 → U3 · PENDING</td></tr>
+      </table>
+      <p class="small">Illustrative sample data, not real people.</p>
+
+      <h3>Test the rules</h3>
+      <table>
+        <tr><th>Question</th><th>Answer and how it is enforced</th></tr>
+        <tr><td>Can a new student have no enquiries, reviews or saved listings?</td><td><span class="ok">Yes</span> — optional participation (0..N).</td></tr>
+        <tr><td>Can L1 exist without an owner?</td><td><span class="no">No</span> — <code>listings.owner_id</code> is NOT NULL and must match a user.</td></tr>
+        <tr><td>Can U2 review L1 a second time?</td><td><span class="no">No</span> — UNIQUE(listing_id, student_id) on reviews.</td></tr>
+        <tr><td>Can R1 show 5 free beds when it has 4 beds?</td><td><span class="no">No</span> — CHECK 0 ≤ beds_available ≤ beds_total.</td></tr>
+        <tr><td>Can U3 send U2 a new request while Q1 is pending?</td><td><span class="no">No</span> — partial unique index on the pair of students.</td></tr>
+        <tr><td>Can U2 have two STUDENT_PREFERENCES rows?</td><td><span class="no">No</span> — user_id is the primary key (1 : 0..1).</td></tr>
+        <tr><td>Can "Asha@Example.com" register beside "asha@example.com"?</td><td><span class="no">No</span> — UNIQUE(email) plus the lower-case CHECK.</td></tr>
+        <tr><td>If L1 is deleted, do E1, M1 and V1 remain?</td><td><span class="no">No</span> — ON DELETE CASCADE removes them.</td></tr>
+        <tr><td>Can U4 be deleted while L1 exists?</td><td><span class="no">No</span> — owner_id has no cascade, so the foreign key blocks it.</td></tr>
+        <tr><td>Can U2 review L1 without an enquiry?</td><td><span class="no">No</span>, but enforced by the application (R11), not by a table constraint.</td></tr>
+      </table>
+    </div>
+
+    <div>
+      <h2>Design decisions a reviewer may ask about</h2>
+      <ol>
+        <li><b>One users table for all roles.</b> Role-specific data sits in 1:1 profile tables that share the user's key
+            (user_id is both PK and FK). Foreign keys such as <code>listings.owner_id</code> point to <code>users.id</code>;
+            that the user has the right role is checked by the application.</li>
+        <li><b>M:N resolved.</b> listing_amenities (carries <code>available</code>), saved_listings and roommate_blocks are
+            relationship tables; enquiries, reviews and roommate_requests are associative entities because they carry
+            their own data and history.</li>
+        <li><b>Current state plus history.</b> <code>listings.status</code> and <code>owner_profiles.verification_status</code>
+            hold the current value for fast reads; listing_status_history and verification_records keep every change and
+            are never overwritten.</li>
+        <li><b>Derived values are not stored.</b> Average rating, lowest rent, suitability score, commute time and cost,
+            and roommate compatibility are calculated when needed, so they can never contradict the stored data.</li>
+        <li><b>Multivalued preferences.</b> room_choices, must/nice-to-have amenities and preferred_localities are stored
+            as ordered lists of codes in one column, because they are always read and saved together and the order matters
+            (first-choice room type). A stricter 1NF design would use child tables; this is a deliberate trade-off.</li>
+        <li><b>One reports table for three targets.</b> target_type + target_id point to a listing, review or user. A foreign
+            key cannot point to three tables, so the application checks the target exists.</li>
+      </ol>
+
+      <h2>Final submission checklist</h2>
+      <ul style="list-style:none; margin-left:0">
+        <li>☑ Every entity represents stored business data, not a screen.</li>
+        <li>☑ Every entity has a clearly marked stable identifier.</li>
+        <li>☑ Attributes are relevant and consistently named (snake_case, as in the database).</li>
+        <li>☑ Every relationship is meaningful and named.</li>
+        <li>☑ Both ends specify a minimum and maximum count.</li>
+        <li>☑ M:N relationships are resolved when they carry their own data.</li>
+        <li>☑ Foreign keys match their referenced primary keys.</li>
+        <li>☑ Sample records validate the business rules (left).</li>
+      </ul>
+      <p class="small">Consistency with other diagrams: entity names match the Java classes (users ↔ <code>UserAccount</code>,
+      listings ↔ <code>Listing</code>, room_options ↔ <code>RoomOption</code>, …) and the class diagram in docs/UML.md.</p>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

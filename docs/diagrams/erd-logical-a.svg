@@ -1,0 +1,415 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1760" height="1010" viewBox="0 0 1760 1010">
+<title>CampusNest — Logical ERD (Crow's Foot) · Part A</title><style>
+text{font-family:Arial,Helvetica,sans-serif;fill:#13232f}
+.h1{font-size:22px;font-weight:bold}.h2{font-size:13px;fill:#555}
+.en{font-size:13px;font-weight:bold}.rel{font-size:11px;font-weight:bold}
+.role{font-size:10px;fill:#555;font-style:italic}.at{font-size:11.5px}
+.card{font-size:13px;font-weight:bold;fill:#0f7f78}
+.tn{font-size:13px;font-weight:bold;fill:#ffffff}.col{font-size:11.5px}
+.tag{font-size:9.5px;font-weight:bold}.lbl{font-size:11px;font-style:italic;fill:#2b3a44}
+.note{font-size:11.5px;fill:#2b3a44}.nb{font-size:12px;font-weight:bold;fill:#13232f}
+.cap{font-size:12px;fill:#555;font-style:italic}
+</style>
+<rect width="1760" height="1010" fill="#ffffff"/>
+<text x="880.0" y="34" class="h1" text-anchor="middle">CampusNest — Logical ERD (Crow's Foot) · Part A</text>
+<text x="880.0" y="56" class="h2" text-anchor="middle">Listings and student engagement · all columns, PK / FK / UK marked · symbol nearest a table = how many of THAT table</text>
+<polyline points="150.0,330.0 150.0,84.0 910.0,84.0 910.0,110.0" fill="none" stroke="#13232f" stroke-width="1.3"/>
+<polyline points="260.0,378.0 294.0,378.0 366.0,167.0 400.0,167.0" fill="none" stroke="#13232f" stroke-width="1.3"/>
+<polyline points="260.0,414.0 294.0,414.0 366.0,305.0 400.0,305.0" fill="none" stroke="#13232f" stroke-width="1.3"/>
+<polyline points="260.0,450.0 294.0,450.0 366.0,515.0 400.0,515.0" fill="none" stroke="#13232f" stroke-width="1.3"/>
+<polyline points="260.0,486.0 294.0,486.0 366.0,675.0 400.0,675.0" fill="none" stroke="#13232f" stroke-width="1.3"/>
+<polyline points="260.0,522.0 294.0,522.0 366.0,941.0 400.0,941.0" fill="none" stroke="#13232f" stroke-width="1.3"/>
+<polyline points="790.0,187.2 756.0,187.2 684.0,185.0 650.0,185.0" fill="none" stroke="#13232f" stroke-width="1.3"/>
+<polyline points="790.0,281.8 756.0,281.8 684.0,287.0 650.0,287.0" fill="none" stroke="#13232f" stroke-width="1.3"/>
+<polyline points="790.0,376.2 756.0,376.2 684.0,657.0 650.0,657.0" fill="none" stroke="#13232f" stroke-width="1.3"/>
+<polyline points="790.0,470.8 756.0,470.8 684.0,887.0 650.0,887.0" fill="none" stroke="#13232f" stroke-width="1.3"/>
+<polyline points="525.0,386.0 525.0,420.0 525.0,406.0 525.0,440.0" fill="none" stroke="#13232f" stroke-width="1.3"/>
+<polyline points="1030.0,187.2 1064.0,187.2 1136.0,167.0 1170.0,167.0" fill="none" stroke="#13232f" stroke-width="1.3"/>
+<polyline points="1030.0,281.8 1064.0,281.8 1136.0,387.0 1170.0,387.0" fill="none" stroke="#13232f" stroke-width="1.3"/>
+<polyline points="1030.0,376.2 1064.0,376.2 1136.0,577.0 1170.0,577.0" fill="none" stroke="#13232f" stroke-width="1.3"/>
+<polyline points="1030.0,470.8 1064.0,470.8 1136.0,797.0 1170.0,797.0" fill="none" stroke="#13232f" stroke-width="1.3"/>
+<polyline points="1530.0,815.0 1496.0,815.0 1454.0,815.0 1420.0,815.0" fill="none" stroke="#13232f" stroke-width="1.3"/>
+<rect x="40" y="330" width="220" height="210" rx="6" fill="#ffffff" stroke="#9fb9bd" stroke-width="1.2"/><path d="M40,360 V336 Q40,330 46,330 H254 Q260,330 260,336 V360 Z" fill="#0f7f78"/>
+<text x="52.0" y="350.0" class="tn" text-anchor="start">users</text>
+<text x="50" y="373" class="tag" fill="#0f7f78" style="fill:#0f7f78">PK</text>
+<text x="98" y="373" class="col" font-weight="bold">id</text>
+<line x1="48" y1="378" x2="252" y2="378" stroke="#e3ecee"/>
+<text x="50" y="391" class="tag" fill="#7a4fa3" style="fill:#7a4fa3">UK</text>
+<text x="98" y="391" class="col">email</text>
+<line x1="48" y1="396" x2="252" y2="396" stroke="#e3ecee"/>
+<text x="98" y="409" class="col">password_hash</text>
+<line x1="48" y1="414" x2="252" y2="414" stroke="#e3ecee"/>
+<text x="98" y="427" class="col">role</text>
+<line x1="48" y1="432" x2="252" y2="432" stroke="#e3ecee"/>
+<text x="98" y="445" class="col">status</text>
+<line x1="48" y1="450" x2="252" y2="450" stroke="#e3ecee"/>
+<text x="98" y="463" class="col">status_reason</text>
+<line x1="48" y1="468" x2="252" y2="468" stroke="#e3ecee"/>
+<text x="98" y="481" class="col">display_name</text>
+<line x1="48" y1="486" x2="252" y2="486" stroke="#e3ecee"/>
+<text x="98" y="499" class="col">phone</text>
+<line x1="48" y1="504" x2="252" y2="504" stroke="#e3ecee"/>
+<text x="98" y="517" class="col">created_at</text>
+<line x1="48" y1="522" x2="252" y2="522" stroke="#e3ecee"/>
+<text x="98" y="535" class="col">last_login_at</text>
+<rect x="400" y="110" width="250" height="102" rx="6" fill="#ffffff" stroke="#9fb9bd" stroke-width="1.2"/><path d="M400,140 V116 Q400,110 406,110 H644 Q650,110 650,116 V140 Z" fill="#0f7f78"/>
+<text x="412.0" y="130.0" class="tn" text-anchor="start">saved_listings</text>
+<text x="410" y="153" class="tag" fill="#0f7f78" style="fill:#0f7f78">PK</text>
+<text x="458" y="153" class="col" font-weight="bold">id</text>
+<line x1="408" y1="158" x2="642" y2="158" stroke="#e3ecee"/>
+<text x="410" y="171" class="tag" fill="#2f5d9c" style="fill:#2f5d9c">FK UK</text>
+<text x="458" y="171" class="col">student_id</text>
+<line x1="408" y1="176" x2="642" y2="176" stroke="#e3ecee"/>
+<text x="410" y="189" class="tag" fill="#2f5d9c" style="fill:#2f5d9c">FK UK</text>
+<text x="458" y="189" class="col">listing_id</text>
+<line x1="408" y1="194" x2="642" y2="194" stroke="#e3ecee"/>
+<text x="458" y="207" class="col">created_at</text>
+<rect x="400" y="230" width="250" height="156" rx="6" fill="#ffffff" stroke="#9fb9bd" stroke-width="1.2"/><path d="M400,260 V236 Q400,230 406,230 H644 Q650,230 650,236 V260 Z" fill="#0f7f78"/>
+<text x="412.0" y="250.0" class="tn" text-anchor="start">enquiries</text>
+<text x="410" y="273" class="tag" fill="#0f7f78" style="fill:#0f7f78">PK</text>
+<text x="458" y="273" class="col" font-weight="bold">id</text>
+<line x1="408" y1="278" x2="642" y2="278" stroke="#e3ecee"/>
+<text x="410" y="291" class="tag" fill="#2f5d9c" style="fill:#2f5d9c">FK UK</text>
+<text x="458" y="291" class="col">listing_id</text>
+<line x1="408" y1="296" x2="642" y2="296" stroke="#e3ecee"/>
+<text x="410" y="309" class="tag" fill="#2f5d9c" style="fill:#2f5d9c">FK UK</text>
+<text x="458" y="309" class="col">student_id</text>
+<line x1="408" y1="314" x2="642" y2="314" stroke="#e3ecee"/>
+<text x="458" y="327" class="col">student_shares_contact</text>
+<line x1="408" y1="332" x2="642" y2="332" stroke="#e3ecee"/>
+<text x="458" y="345" class="col">owner_shares_contact</text>
+<line x1="408" y1="350" x2="642" y2="350" stroke="#e3ecee"/>
+<text x="458" y="363" class="col">created_at</text>
+<line x1="408" y1="368" x2="642" y2="368" stroke="#e3ecee"/>
+<text x="458" y="381" class="col">last_message_at</text>
+<rect x="400" y="440" width="250" height="120" rx="6" fill="#ffffff" stroke="#9fb9bd" stroke-width="1.2"/><path d="M400,470 V446 Q400,440 406,440 H644 Q650,440 650,446 V470 Z" fill="#0f7f78"/>
+<text x="412.0" y="460.0" class="tn" text-anchor="start">enquiry_messages</text>
+<text x="410" y="483" class="tag" fill="#0f7f78" style="fill:#0f7f78">PK</text>
+<text x="458" y="483" class="col" font-weight="bold">id</text>
+<line x1="408" y1="488" x2="642" y2="488" stroke="#e3ecee"/>
+<text x="410" y="501" class="tag" fill="#2f5d9c" style="fill:#2f5d9c">FK</text>
+<text x="458" y="501" class="col">enquiry_id</text>
+<line x1="408" y1="506" x2="642" y2="506" stroke="#e3ecee"/>
+<text x="410" y="519" class="tag" fill="#2f5d9c" style="fill:#2f5d9c">FK</text>
+<text x="458" y="519" class="col">sender_id</text>
+<line x1="408" y1="524" x2="642" y2="524" stroke="#e3ecee"/>
+<text x="458" y="537" class="col">body</text>
+<line x1="408" y1="542" x2="642" y2="542" stroke="#e3ecee"/>
+<text x="458" y="555" class="col">created_at</text>
+<rect x="400" y="600" width="250" height="192" rx="6" fill="#ffffff" stroke="#9fb9bd" stroke-width="1.2"/><path d="M400,630 V606 Q400,600 406,600 H644 Q650,600 650,606 V630 Z" fill="#0f7f78"/>
+<text x="412.0" y="620.0" class="tn" text-anchor="start">reviews</text>
+<text x="410" y="643" class="tag" fill="#0f7f78" style="fill:#0f7f78">PK</text>
+<text x="458" y="643" class="col" font-weight="bold">id</text>
+<line x1="408" y1="648" x2="642" y2="648" stroke="#e3ecee"/>
+<text x="410" y="661" class="tag" fill="#2f5d9c" style="fill:#2f5d9c">FK UK</text>
+<text x="458" y="661" class="col">listing_id</text>
+<line x1="408" y1="666" x2="642" y2="666" stroke="#e3ecee"/>
+<text x="410" y="679" class="tag" fill="#2f5d9c" style="fill:#2f5d9c">FK UK</text>
+<text x="458" y="679" class="col">student_id</text>
+<line x1="408" y1="684" x2="642" y2="684" stroke="#e3ecee"/>
+<text x="458" y="697" class="col">rating</text>
+<line x1="408" y1="702" x2="642" y2="702" stroke="#e3ecee"/>
+<text x="458" y="715" class="col">comment</text>
+<line x1="408" y1="720" x2="642" y2="720" stroke="#e3ecee"/>
+<text x="458" y="733" class="col">status</text>
+<line x1="408" y1="738" x2="642" y2="738" stroke="#e3ecee"/>
+<text x="458" y="751" class="col">hidden_reason</text>
+<line x1="408" y1="756" x2="642" y2="756" stroke="#e3ecee"/>
+<text x="458" y="769" class="col">created_at</text>
+<line x1="408" y1="774" x2="642" y2="774" stroke="#e3ecee"/>
+<text x="458" y="787" class="col">updated_at</text>
+<rect x="400" y="830" width="250" height="156" rx="6" fill="#ffffff" stroke="#9fb9bd" stroke-width="1.2"/><path d="M400,860 V836 Q400,830 406,830 H644 Q650,830 650,836 V860 Z" fill="#0f7f78"/>
+<text x="412.0" y="850.0" class="tn" text-anchor="start">listing_status_history</text>
+<text x="410" y="873" class="tag" fill="#0f7f78" style="fill:#0f7f78">PK</text>
+<text x="458" y="873" class="col" font-weight="bold">id</text>
+<line x1="408" y1="878" x2="642" y2="878" stroke="#e3ecee"/>
+<text x="410" y="891" class="tag" fill="#2f5d9c" style="fill:#2f5d9c">FK</text>
+<text x="458" y="891" class="col">listing_id</text>
+<line x1="408" y1="896" x2="642" y2="896" stroke="#e3ecee"/>
+<text x="458" y="909" class="col">from_status</text>
+<line x1="408" y1="914" x2="642" y2="914" stroke="#e3ecee"/>
+<text x="458" y="927" class="col">to_status</text>
+<line x1="408" y1="932" x2="642" y2="932" stroke="#e3ecee"/>
+<text x="410" y="945" class="tag" fill="#2f5d9c" style="fill:#2f5d9c">FK</text>
+<text x="458" y="945" class="col">actor_id</text>
+<line x1="408" y1="950" x2="642" y2="950" stroke="#e3ecee"/>
+<text x="458" y="963" class="col">reason</text>
+<line x1="408" y1="968" x2="642" y2="968" stroke="#e3ecee"/>
+<text x="458" y="981" class="col">created_at</text>
+<rect x="790" y="110" width="240" height="408" rx="6" fill="#ffffff" stroke="#9fb9bd" stroke-width="1.2"/><path d="M790,140 V116 Q790,110 796,110 H1024 Q1030,110 1030,116 V140 Z" fill="#0f7f78"/>
+<text x="802.0" y="130.0" class="tn" text-anchor="start">listings</text>
+<text x="800" y="153" class="tag" fill="#0f7f78" style="fill:#0f7f78">PK</text>
+<text x="848" y="153" class="col" font-weight="bold">id</text>
+<line x1="798" y1="158" x2="1022" y2="158" stroke="#e3ecee"/>
+<text x="800" y="171" class="tag" fill="#2f5d9c" style="fill:#2f5d9c">FK</text>
+<text x="848" y="171" class="col">owner_id</text>
+<line x1="798" y1="176" x2="1022" y2="176" stroke="#e3ecee"/>
+<text x="848" y="189" class="col">title</text>
+<line x1="798" y1="194" x2="1022" y2="194" stroke="#e3ecee"/>
+<text x="848" y="207" class="col">description</text>
+<line x1="798" y1="212" x2="1022" y2="212" stroke="#e3ecee"/>
+<text x="848" y="225" class="col">property_type</text>
+<line x1="798" y1="230" x2="1022" y2="230" stroke="#e3ecee"/>
+<text x="848" y="243" class="col">gender_policy</text>
+<line x1="798" y1="248" x2="1022" y2="248" stroke="#e3ecee"/>
+<text x="848" y="261" class="col">address_line</text>
+<line x1="798" y1="266" x2="1022" y2="266" stroke="#e3ecee"/>
+<text x="848" y="279" class="col">locality</text>
+<line x1="798" y1="284" x2="1022" y2="284" stroke="#e3ecee"/>
+<text x="848" y="297" class="col">city</text>
+<line x1="798" y1="302" x2="1022" y2="302" stroke="#e3ecee"/>
+<text x="848" y="315" class="col">pincode</text>
+<line x1="798" y1="320" x2="1022" y2="320" stroke="#e3ecee"/>
+<text x="848" y="333" class="col">latitude</text>
+<line x1="798" y1="338" x2="1022" y2="338" stroke="#e3ecee"/>
+<text x="848" y="351" class="col">longitude</text>
+<line x1="798" y1="356" x2="1022" y2="356" stroke="#e3ecee"/>
+<text x="848" y="369" class="col">status</text>
+<line x1="798" y1="374" x2="1022" y2="374" stroke="#e3ecee"/>
+<text x="848" y="387" class="col">status_reason</text>
+<line x1="798" y1="392" x2="1022" y2="392" stroke="#e3ecee"/>
+<text x="848" y="405" class="col">submitted_at</text>
+<line x1="798" y1="410" x2="1022" y2="410" stroke="#e3ecee"/>
+<text x="848" y="423" class="col">published_at</text>
+<line x1="798" y1="428" x2="1022" y2="428" stroke="#e3ecee"/>
+<text x="848" y="441" class="col">last_confirmed_at</text>
+<line x1="798" y1="446" x2="1022" y2="446" stroke="#e3ecee"/>
+<text x="848" y="459" class="col">is_sample_data</text>
+<line x1="798" y1="464" x2="1022" y2="464" stroke="#e3ecee"/>
+<text x="848" y="477" class="col">created_at</text>
+<line x1="798" y1="482" x2="1022" y2="482" stroke="#e3ecee"/>
+<text x="848" y="495" class="col">updated_at</text>
+<line x1="798" y1="500" x2="1022" y2="500" stroke="#e3ecee"/>
+<text x="848" y="513" class="col">version</text>
+<rect x="1170" y="110" width="250" height="192" rx="6" fill="#ffffff" stroke="#9fb9bd" stroke-width="1.2"/><path d="M1170,140 V116 Q1170,110 1176,110 H1414 Q1420,110 1420,116 V140 Z" fill="#0f7f78"/>
+<text x="1182.0" y="130.0" class="tn" text-anchor="start">room_options</text>
+<text x="1180" y="153" class="tag" fill="#0f7f78" style="fill:#0f7f78">PK</text>
+<text x="1228" y="153" class="col" font-weight="bold">id</text>
+<line x1="1178" y1="158" x2="1412" y2="158" stroke="#e3ecee"/>
+<text x="1180" y="171" class="tag" fill="#2f5d9c" style="fill:#2f5d9c">FK</text>
+<text x="1228" y="171" class="col">listing_id</text>
+<line x1="1178" y1="176" x2="1412" y2="176" stroke="#e3ecee"/>
+<text x="1228" y="189" class="col">room_type</text>
+<line x1="1178" y1="194" x2="1412" y2="194" stroke="#e3ecee"/>
+<text x="1228" y="207" class="col">sharing_capacity</text>
+<line x1="1178" y1="212" x2="1412" y2="212" stroke="#e3ecee"/>
+<text x="1228" y="225" class="col">monthly_rent</text>
+<line x1="1178" y1="230" x2="1412" y2="230" stroke="#e3ecee"/>
+<text x="1228" y="243" class="col">security_deposit</text>
+<line x1="1178" y1="248" x2="1412" y2="248" stroke="#e3ecee"/>
+<text x="1228" y="261" class="col">beds_total</text>
+<line x1="1178" y1="266" x2="1412" y2="266" stroke="#e3ecee"/>
+<text x="1228" y="279" class="col">beds_available</text>
+<line x1="1178" y1="284" x2="1412" y2="284" stroke="#e3ecee"/>
+<text x="1228" y="297" class="col">availability_updated_at</text>
+<rect x="1170" y="330" width="250" height="156" rx="6" fill="#ffffff" stroke="#9fb9bd" stroke-width="1.2"/><path d="M1170,360 V336 Q1170,330 1176,330 H1414 Q1420,330 1420,336 V360 Z" fill="#0f7f78"/>
+<text x="1182.0" y="350.0" class="tn" text-anchor="start">listing_charges</text>
+<text x="1180" y="373" class="tag" fill="#0f7f78" style="fill:#0f7f78">PK</text>
+<text x="1228" y="373" class="col" font-weight="bold">id</text>
+<line x1="1178" y1="378" x2="1412" y2="378" stroke="#e3ecee"/>
+<text x="1180" y="391" class="tag" fill="#2f5d9c" style="fill:#2f5d9c">FK</text>
+<text x="1228" y="391" class="col">listing_id</text>
+<line x1="1178" y1="396" x2="1412" y2="396" stroke="#e3ecee"/>
+<text x="1228" y="409" class="col">charge_type</text>
+<line x1="1178" y1="414" x2="1412" y2="414" stroke="#e3ecee"/>
+<text x="1228" y="427" class="col">description</text>
+<line x1="1178" y1="432" x2="1412" y2="432" stroke="#e3ecee"/>
+<text x="1228" y="445" class="col">amount</text>
+<line x1="1178" y1="450" x2="1412" y2="450" stroke="#e3ecee"/>
+<text x="1228" y="463" class="col">frequency</text>
+<line x1="1178" y1="468" x2="1412" y2="468" stroke="#e3ecee"/>
+<text x="1228" y="481" class="col">mandatory</text>
+<rect x="1170" y="520" width="250" height="174" rx="6" fill="#ffffff" stroke="#9fb9bd" stroke-width="1.2"/><path d="M1170,550 V526 Q1170,520 1176,520 H1414 Q1420,520 1420,526 V550 Z" fill="#0f7f78"/>
+<text x="1182.0" y="540.0" class="tn" text-anchor="start">listing_images</text>
+<text x="1180" y="563" class="tag" fill="#0f7f78" style="fill:#0f7f78">PK</text>
+<text x="1228" y="563" class="col" font-weight="bold">id</text>
+<line x1="1178" y1="568" x2="1412" y2="568" stroke="#e3ecee"/>
+<text x="1180" y="581" class="tag" fill="#2f5d9c" style="fill:#2f5d9c">FK</text>
+<text x="1228" y="581" class="col">listing_id</text>
+<line x1="1178" y1="586" x2="1412" y2="586" stroke="#e3ecee"/>
+<text x="1180" y="599" class="tag" fill="#7a4fa3" style="fill:#7a4fa3">UK</text>
+<text x="1228" y="599" class="col">storage_key</text>
+<line x1="1178" y1="604" x2="1412" y2="604" stroke="#e3ecee"/>
+<text x="1228" y="617" class="col">content_type</text>
+<line x1="1178" y1="622" x2="1412" y2="622" stroke="#e3ecee"/>
+<text x="1228" y="635" class="col">size_bytes</text>
+<line x1="1178" y1="640" x2="1412" y2="640" stroke="#e3ecee"/>
+<text x="1228" y="653" class="col">width</text>
+<line x1="1178" y1="658" x2="1412" y2="658" stroke="#e3ecee"/>
+<text x="1228" y="671" class="col">height</text>
+<line x1="1178" y1="676" x2="1412" y2="676" stroke="#e3ecee"/>
+<text x="1228" y="689" class="col">uploaded_at</text>
+<rect x="1170" y="740" width="250" height="102" rx="6" fill="#ffffff" stroke="#9fb9bd" stroke-width="1.2"/><path d="M1170,770 V746 Q1170,740 1176,740 H1414 Q1420,740 1420,746 V770 Z" fill="#0f7f78"/>
+<text x="1182.0" y="760.0" class="tn" text-anchor="start">listing_amenities</text>
+<text x="1180" y="783" class="tag" fill="#0f7f78" style="fill:#0f7f78">PK</text>
+<text x="1228" y="783" class="col" font-weight="bold">id</text>
+<line x1="1178" y1="788" x2="1412" y2="788" stroke="#e3ecee"/>
+<text x="1180" y="801" class="tag" fill="#2f5d9c" style="fill:#2f5d9c">FK UK</text>
+<text x="1228" y="801" class="col">listing_id</text>
+<line x1="1178" y1="806" x2="1412" y2="806" stroke="#e3ecee"/>
+<text x="1180" y="819" class="tag" fill="#2f5d9c" style="fill:#2f5d9c">FK UK</text>
+<text x="1228" y="819" class="col">amenity_id</text>
+<line x1="1178" y1="824" x2="1412" y2="824" stroke="#e3ecee"/>
+<text x="1228" y="837" class="col">available</text>
+<rect x="1530" y="740" width="210" height="120" rx="6" fill="#ffffff" stroke="#9fb9bd" stroke-width="1.2"/><path d="M1530,770 V746 Q1530,740 1536,740 H1734 Q1740,740 1740,746 V770 Z" fill="#0f7f78"/>
+<text x="1542.0" y="760.0" class="tn" text-anchor="start">amenities</text>
+<text x="1540" y="783" class="tag" fill="#0f7f78" style="fill:#0f7f78">PK</text>
+<text x="1588" y="783" class="col" font-weight="bold">id</text>
+<line x1="1538" y1="788" x2="1732" y2="788" stroke="#e3ecee"/>
+<text x="1540" y="801" class="tag" fill="#7a4fa3" style="fill:#7a4fa3">UK</text>
+<text x="1588" y="801" class="col">code</text>
+<line x1="1538" y1="806" x2="1732" y2="806" stroke="#e3ecee"/>
+<text x="1588" y="819" class="col">name</text>
+<line x1="1538" y1="824" x2="1732" y2="824" stroke="#e3ecee"/>
+<text x="1588" y="837" class="col">is_core</text>
+<line x1="1538" y1="842" x2="1732" y2="842" stroke="#e3ecee"/>
+<text x="1588" y="855" class="col">sort_order</text>
+<rect x="1500" y="110" width="240" height="196" rx="6" fill="#ffffff" stroke="#b9c9cf"/>
+<line x1="1514" y1="156" x2="1570" y2="156" stroke="#13232f" stroke-width="1.3"/><rect x="1570" y="147" width="10" height="18" fill="#eef5f5" stroke="#0f7f78"/>
+<line x1="1514" y1="182" x2="1570" y2="182" stroke="#13232f" stroke-width="1.3"/><rect x="1570" y="173" width="10" height="18" fill="#eef5f5" stroke="#0f7f78"/>
+<line x1="1514" y1="208" x2="1570" y2="208" stroke="#13232f" stroke-width="1.3"/><rect x="1570" y="199" width="10" height="18" fill="#eef5f5" stroke="#0f7f78"/>
+<line x1="1514" y1="234" x2="1570" y2="234" stroke="#13232f" stroke-width="1.3"/><rect x="1570" y="225" width="10" height="18" fill="#eef5f5" stroke="#0f7f78"/>
+<path d="M1500,330 H1726 L1740,344 V552 H1500 Z" fill="#fffef2" stroke="#999" stroke-width="1"/><path d="M1726,330 V344 H1740" fill="none" stroke="#999" stroke-width="1"/>
+<line x1="142.0" y1="322.0" x2="158.0" y2="322.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="142.0" y1="315.0" x2="158.0" y2="315.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="910.0" y1="96.0" x2="902.0" y2="110.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="910.0" y1="96.0" x2="918.0" y2="110.0" stroke="#0f7f78" stroke-width="1.7"/>
+<circle cx="910.0" cy="86.0" r="5" fill="#ffffff" stroke="#0f7f78" stroke-width="1.6"/>
+<rect x="514.8" y="77.0" width="30.4" height="15" fill="#ffffff" opacity="0.92"/>
+<text x="530.0" y="88.0" class="lbl" text-anchor="middle">owns</text>
+<line x1="268.0" y1="370.0" x2="268.0" y2="386.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="275.0" y1="370.0" x2="275.0" y2="386.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="386.0" y1="167.0" x2="400.0" y2="175.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="386.0" y1="167.0" x2="400.0" y2="159.0" stroke="#0f7f78" stroke-width="1.7"/>
+<circle cx="376.0" cy="167.0" r="5" fill="#ffffff" stroke="#0f7f78" stroke-width="1.6"/>
+<rect x="312.0" y="265.5" width="36.0" height="15" fill="#ffffff" opacity="0.92"/>
+<text x="330.0" y="276.5" class="lbl" text-anchor="middle">saves</text>
+<line x1="268.0" y1="406.0" x2="268.0" y2="422.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="275.0" y1="406.0" x2="275.0" y2="422.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="386.0" y1="305.0" x2="400.0" y2="313.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="386.0" y1="305.0" x2="400.0" y2="297.0" stroke="#0f7f78" stroke-width="1.7"/>
+<circle cx="376.0" cy="305.0" r="5" fill="#ffffff" stroke="#0f7f78" stroke-width="1.6"/>
+<rect x="309.2" y="352.5" width="41.6" height="15" fill="#ffffff" opacity="0.92"/>
+<text x="330.0" y="363.5" class="lbl" text-anchor="middle">starts</text>
+<line x1="268.0" y1="442.0" x2="268.0" y2="458.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="275.0" y1="442.0" x2="275.0" y2="458.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="386.0" y1="515.0" x2="400.0" y2="523.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="386.0" y1="515.0" x2="400.0" y2="507.0" stroke="#0f7f78" stroke-width="1.7"/>
+<circle cx="376.0" cy="515.0" r="5" fill="#ffffff" stroke="#0f7f78" stroke-width="1.6"/>
+<rect x="312.0" y="475.5" width="36.0" height="15" fill="#ffffff" opacity="0.92"/>
+<text x="330.0" y="486.5" class="lbl" text-anchor="middle">sends</text>
+<line x1="268.0" y1="478.0" x2="268.0" y2="494.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="275.0" y1="478.0" x2="275.0" y2="494.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="386.0" y1="675.0" x2="400.0" y2="683.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="386.0" y1="675.0" x2="400.0" y2="667.0" stroke="#0f7f78" stroke-width="1.7"/>
+<circle cx="376.0" cy="675.0" r="5" fill="#ffffff" stroke="#0f7f78" stroke-width="1.6"/>
+<rect x="309.2" y="573.5" width="41.6" height="15" fill="#ffffff" opacity="0.92"/>
+<text x="330.0" y="584.5" class="lbl" text-anchor="middle">writes</text>
+<line x1="269.0" y1="514.0" x2="269.0" y2="530.0" stroke="#0f7f78" stroke-width="1.7"/>
+<circle cx="281.0" cy="522.0" r="5" fill="#ffffff" stroke="#0f7f78" stroke-width="1.6"/>
+<line x1="386.0" y1="941.0" x2="400.0" y2="949.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="386.0" y1="941.0" x2="400.0" y2="933.0" stroke="#0f7f78" stroke-width="1.7"/>
+<circle cx="376.0" cy="941.0" r="5" fill="#ffffff" stroke="#0f7f78" stroke-width="1.6"/>
+<rect x="306.4" y="724.5" width="47.2" height="15" fill="#ffffff" opacity="0.92"/>
+<text x="330.0" y="735.5" class="lbl" text-anchor="middle">changes</text>
+<line x1="782.0" y1="195.2" x2="782.0" y2="179.2" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="775.0" y1="195.2" x2="775.0" y2="179.2" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="664.0" y1="185.0" x2="650.0" y2="177.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="664.0" y1="185.0" x2="650.0" y2="193.0" stroke="#0f7f78" stroke-width="1.7"/>
+<circle cx="674.0" cy="185.0" r="5" fill="#ffffff" stroke="#0f7f78" stroke-width="1.6"/>
+<rect x="685.2" y="179.1" width="69.6" height="15" fill="#ffffff" opacity="0.92"/>
+<text x="720.0" y="190.1" class="lbl" text-anchor="middle">is saved in</text>
+<line x1="782.0" y1="289.8" x2="782.0" y2="273.8" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="775.0" y1="289.8" x2="775.0" y2="273.8" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="664.0" y1="287.0" x2="650.0" y2="279.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="664.0" y1="287.0" x2="650.0" y2="295.0" stroke="#0f7f78" stroke-width="1.7"/>
+<circle cx="674.0" cy="287.0" r="5" fill="#ffffff" stroke="#0f7f78" stroke-width="1.6"/>
+<rect x="693.6" y="277.4" width="52.8" height="15" fill="#ffffff" opacity="0.92"/>
+<text x="720.0" y="288.4" class="lbl" text-anchor="middle">receives</text>
+<line x1="782.0" y1="384.2" x2="782.0" y2="368.2" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="775.0" y1="384.2" x2="775.0" y2="368.2" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="664.0" y1="657.0" x2="650.0" y2="649.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="664.0" y1="657.0" x2="650.0" y2="665.0" stroke="#0f7f78" stroke-width="1.7"/>
+<circle cx="674.0" cy="657.0" r="5" fill="#ffffff" stroke="#0f7f78" stroke-width="1.6"/>
+<rect x="676.8" y="509.6" width="86.4" height="15" fill="#ffffff" opacity="0.92"/>
+<text x="720.0" y="520.6" class="lbl" text-anchor="middle">is reviewed in</text>
+<line x1="782.0" y1="478.8" x2="782.0" y2="462.8" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="775.0" y1="478.8" x2="775.0" y2="462.8" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="664.0" y1="887.0" x2="650.0" y2="879.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="664.0" y1="887.0" x2="650.0" y2="895.0" stroke="#0f7f78" stroke-width="1.7"/>
+<circle cx="674.0" cy="887.0" r="5" fill="#ffffff" stroke="#0f7f78" stroke-width="1.6"/>
+<rect x="704.8" y="671.9" width="30.4" height="15" fill="#ffffff" opacity="0.92"/>
+<text x="720.0" y="682.9" class="lbl" text-anchor="middle">logs</text>
+<line x1="533.0" y1="394.0" x2="517.0" y2="394.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="533.0" y1="401.0" x2="517.0" y2="401.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="525.0" y1="426.0" x2="517.0" y2="440.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="525.0" y1="426.0" x2="533.0" y2="440.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="517.0" y1="419.0" x2="533.0" y2="419.0" stroke="#0f7f78" stroke-width="1.7"/>
+<rect x="541.6" y="407.0" width="52.8" height="15" fill="#ffffff" opacity="0.92"/>
+<text x="568.0" y="418.0" class="lbl" text-anchor="middle">contains</text>
+<line x1="1038.0" y1="179.2" x2="1038.0" y2="195.2" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="1045.0" y1="179.2" x2="1045.0" y2="195.2" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="1156.0" y1="167.0" x2="1170.0" y2="175.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="1156.0" y1="167.0" x2="1170.0" y2="159.0" stroke="#0f7f78" stroke-width="1.7"/>
+<circle cx="1146.0" cy="167.0" r="5" fill="#ffffff" stroke="#0f7f78" stroke-width="1.6"/>
+<rect x="1079.2" y="170.1" width="41.6" height="15" fill="#ffffff" opacity="0.92"/>
+<text x="1100.0" y="181.1" class="lbl" text-anchor="middle">offers</text>
+<line x1="1038.0" y1="273.8" x2="1038.0" y2="289.8" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="1045.0" y1="273.8" x2="1045.0" y2="289.8" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="1156.0" y1="387.0" x2="1170.0" y2="395.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="1156.0" y1="387.0" x2="1170.0" y2="379.0" stroke="#0f7f78" stroke-width="1.7"/>
+<circle cx="1146.0" cy="387.0" r="5" fill="#ffffff" stroke="#0f7f78" stroke-width="1.6"/>
+<rect x="1079.2" y="327.4" width="41.6" height="15" fill="#ffffff" opacity="0.92"/>
+<text x="1100.0" y="338.4" class="lbl" text-anchor="middle">levies</text>
+<line x1="1038.0" y1="368.2" x2="1038.0" y2="384.2" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="1045.0" y1="368.2" x2="1045.0" y2="384.2" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="1156.0" y1="577.0" x2="1170.0" y2="585.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="1156.0" y1="577.0" x2="1170.0" y2="569.0" stroke="#0f7f78" stroke-width="1.7"/>
+<circle cx="1146.0" cy="577.0" r="5" fill="#ffffff" stroke="#0f7f78" stroke-width="1.6"/>
+<rect x="1082.0" y="469.6" width="36.0" height="15" fill="#ffffff" opacity="0.92"/>
+<text x="1100.0" y="480.6" class="lbl" text-anchor="middle">shows</text>
+<line x1="1038.0" y1="462.8" x2="1038.0" y2="478.8" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="1045.0" y1="462.8" x2="1045.0" y2="478.8" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="1156.0" y1="797.0" x2="1170.0" y2="805.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="1156.0" y1="797.0" x2="1170.0" y2="789.0" stroke="#0f7f78" stroke-width="1.7"/>
+<circle cx="1146.0" cy="797.0" r="5" fill="#ffffff" stroke="#0f7f78" stroke-width="1.6"/>
+<rect x="1073.6" y="626.9" width="52.8" height="15" fill="#ffffff" opacity="0.92"/>
+<text x="1100.0" y="637.9" class="lbl" text-anchor="middle">declares</text>
+<line x1="1522.0" y1="823.0" x2="1522.0" y2="807.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="1515.0" y1="823.0" x2="1515.0" y2="807.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="1434.0" y1="815.0" x2="1420.0" y2="807.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="1434.0" y1="815.0" x2="1420.0" y2="823.0" stroke="#0f7f78" stroke-width="1.7"/>
+<circle cx="1444.0" cy="815.0" r="5" fill="#ffffff" stroke="#0f7f78" stroke-width="1.6"/>
+<rect x="1431.8" y="808.0" width="86.4" height="15" fill="#ffffff" opacity="0.92"/>
+<text x="1475.0" y="819.0" class="lbl" text-anchor="middle">is declared in</text>
+<text x="1512.0" y="132.0" class="nb" text-anchor="start">Legend (Crow's Foot)</text>
+<line x1="1562.0" y1="164.0" x2="1562.0" y2="148.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="1555.0" y1="164.0" x2="1555.0" y2="148.0" stroke="#0f7f78" stroke-width="1.7"/>
+<text x="1592.0" y="160.0" class="note" text-anchor="start">exactly one</text>
+<line x1="1561.0" y1="190.0" x2="1561.0" y2="174.0" stroke="#0f7f78" stroke-width="1.7"/>
+<circle cx="1549.0" cy="182.0" r="5" fill="#ffffff" stroke="#0f7f78" stroke-width="1.6"/>
+<text x="1592.0" y="186.0" class="note" text-anchor="start">zero or one</text>
+<line x1="1556.0" y1="208.0" x2="1570.0" y2="216.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="1556.0" y1="208.0" x2="1570.0" y2="200.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="1549.0" y1="216.0" x2="1549.0" y2="200.0" stroke="#0f7f78" stroke-width="1.7"/>
+<text x="1592.0" y="212.0" class="note" text-anchor="start">one or many</text>
+<line x1="1556.0" y1="234.0" x2="1570.0" y2="242.0" stroke="#0f7f78" stroke-width="1.7"/>
+<line x1="1556.0" y1="234.0" x2="1570.0" y2="226.0" stroke="#0f7f78" stroke-width="1.7"/>
+<circle cx="1546.0" cy="234.0" r="5" fill="#ffffff" stroke="#0f7f78" stroke-width="1.6"/>
+<text x="1592.0" y="238.0" class="note" text-anchor="start">zero or many</text>
+<text x="1512.0" y="274.0" class="note" text-anchor="start">PK primary key · FK foreign key</text>
+<text x="1512.0" y="292.0" class="note" text-anchor="start">UK part of a unique constraint</text>
+<text x="1512.0" y="350.0" class="nb" text-anchor="start">Rules the diagram relies on</text>
+<text x="1512.0" y="370.0" class="note" text-anchor="start">• An enquiry is always created</text>
+<text x="1512.0" y="386.0" class="note" text-anchor="start">  with its first message (1..N).</text>
+<text x="1512.0" y="402.0" class="note" text-anchor="start">• A listing needs ≥ 1 room option</text>
+<text x="1512.0" y="418.0" class="note" text-anchor="start">  before it can be submitted</text>
+<text x="1512.0" y="434.0" class="note" text-anchor="start">  (checked by the application).</text>
+<text x="1512.0" y="450.0" class="note" text-anchor="start">• UK on two columns = the pair is</text>
+<text x="1512.0" y="466.0" class="note" text-anchor="start">  unique, e.g. one review per</text>
+<text x="1512.0" y="482.0" class="note" text-anchor="start">  (listing, student).</text>
+<text x="1512.0" y="498.0" class="note" text-anchor="start">• listing_amenities and</text>
+<text x="1512.0" y="514.0" class="note" text-anchor="start">  saved_listings resolve M:N.</text>
+<text x="1512.0" y="530.0" class="note" text-anchor="start">• users plays owner, student or</text>
+<text x="1512.0" y="546.0" class="note" text-anchor="start">  admin (column role).</text>
+</svg>

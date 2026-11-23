@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="950" viewBox="0 0 1500 950">
+<title>CampusNest — Conceptual ERD (Chen) · Part A</title><style>
+text{font-family:Arial,Helvetica,sans-serif;fill:#13232f}
+.h1{font-size:22px;font-weight:bold}.h2{font-size:13px;fill:#555}
+.en{font-size:13px;font-weight:bold}.rel{font-size:11px;font-weight:bold}
+.role{font-size:10px;fill:#555;font-style:italic}.at{font-size:11.5px}
+.card{font-size:13px;font-weight:bold;fill:#0f7f78}
+.tn{font-size:13px;font-weight:bold;fill:#ffffff}.col{font-size:11.5px}
+.tag{font-size:9.5px;font-weight:bold}.lbl{font-size:11px;font-style:italic;fill:#2b3a44}
+.note{font-size:11.5px;fill:#2b3a44}.nb{font-size:12px;font-weight:bold;fill:#13232f}
+.cap{font-size:12px;fill:#555;font-style:italic}
+</style>
+<rect width="1500" height="950" fill="#ffffff"/>
+<text x="750.0" y="34" class="h1" text-anchor="middle">CampusNest — Conceptual ERD (Chen) · Part A</text>
+<text x="750.0" y="56" class="h2" text-anchor="middle">Listings and student engagement · 1 / N / M on each line = maximum cardinality (minimums are in the business rules)</text>
+<line x1="1000" y1="809" x2="1000" y2="847" stroke="#13232f" stroke-width="1.3"/>
+<line x1="470" y1="395" x2="470" y2="411" stroke="#13232f" stroke-width="1.3"/>
+<line x1="470" y1="140" x2="470" y2="220" stroke="#13232f" stroke-width="1.3"/>
+<line x1="470" y1="300" x2="470" y2="220" stroke="#13232f" stroke-width="1.3"/>
+<line x1="140" y1="520" x2="250" y2="140" stroke="#13232f" stroke-width="1.3"/>
+<line x1="470" y1="140" x2="250" y2="140" stroke="#13232f" stroke-width="1.3"/>
+<line x1="140" y1="520" x2="290" y2="385" stroke="#13232f" stroke-width="1.3"/>
+<line x1="470" y1="300" x2="290" y2="385" stroke="#13232f" stroke-width="1.3"/>
+<line x1="470" y1="300" x2="650" y2="385" stroke="#13232f" stroke-width="1.3"/>
+<line x1="800" y1="520" x2="650" y2="385" stroke="#13232f" stroke-width="1.3"/>
+<line x1="140" y1="520" x2="470" y2="440" stroke="#13232f" stroke-width="1.3"/>
+<line x1="800" y1="520" x2="470" y2="440" stroke="#13232f" stroke-width="1.3"/>
+<line x1="140" y1="520" x2="470" y2="540" stroke="#13232f" stroke-width="1.3"/>
+<line x1="800" y1="520" x2="470" y2="540" stroke="#13232f" stroke-width="1.3"/>
+<line x1="140" y1="520" x2="290" y2="650" stroke="#13232f" stroke-width="1.3"/>
+<line x1="470" y1="700" x2="290" y2="650" stroke="#13232f" stroke-width="1.3"/>
+<line x1="470" y1="700" x2="650" y2="650" stroke="#13232f" stroke-width="1.3"/>
+<line x1="800" y1="520" x2="650" y2="650" stroke="#13232f" stroke-width="1.3"/>
+<line x1="140" y1="520" x2="290" y2="810" stroke="#13232f" stroke-width="1.3"/>
+<line x1="470" y1="860" x2="290" y2="810" stroke="#13232f" stroke-width="1.3"/>
+<line x1="470" y1="860" x2="650" y2="810" stroke="#13232f" stroke-width="1.3"/>
+<line x1="800" y1="520" x2="650" y2="810" stroke="#13232f" stroke-width="1.3"/>
+<line x1="800" y1="520" x2="1000" y2="290" stroke="#13232f" stroke-width="1.3"/>
+<line x1="1190" y1="290" x2="1000" y2="290" stroke="#13232f" stroke-width="1.3"/>
+<line x1="800" y1="520" x2="1000" y2="440" stroke="#13232f" stroke-width="1.3"/>
+<line x1="1190" y1="440" x2="1000" y2="440" stroke="#13232f" stroke-width="1.3"/>
+<line x1="800" y1="520" x2="1000" y2="600" stroke="#13232f" stroke-width="1.3"/>
+<line x1="1190" y1="600" x2="1000" y2="600" stroke="#13232f" stroke-width="1.3"/>
+<line x1="800" y1="520" x2="1000" y2="780" stroke="#13232f" stroke-width="1.3"/>
+<line x1="1190" y1="780" x2="1000" y2="780" stroke="#13232f" stroke-width="1.3"/>
+<rect x="75.0" y="497.0" width="130" height="46" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="140.0" y="524.5" class="en" text-anchor="middle">USER</text>
+<rect x="730.0" y="497.0" width="140" height="46" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="800.0" y="524.5" class="en" text-anchor="middle">LISTING</text>
+<rect x="395.0" y="117.0" width="150" height="46" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="470.0" y="144.5" class="en" text-anchor="middle">MESSAGE</text>
+<rect x="395.0" y="277.0" width="150" height="46" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="470.0" y="304.5" class="en" text-anchor="middle">ENQUIRY</text>
+<rect x="395.0" y="677.0" width="150" height="46" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="470.0" y="704.5" class="en" text-anchor="middle">REVIEW</text>
+<rect x="385.0" y="837.0" width="170" height="46" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="470.0" y="864.5" class="en" text-anchor="middle">STATUS_CHANGE</text>
+<rect x="1110.0" y="267.0" width="160" height="46" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="1190.0" y="294.5" class="en" text-anchor="middle">ROOM_OPTION</text>
+<rect x="1115.0" y="417.0" width="150" height="46" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="1190.0" y="444.5" class="en" text-anchor="middle">CHARGE</text>
+<rect x="1105.0" y="577.0" width="170" height="46" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="1190.0" y="604.5" class="en" text-anchor="middle">LISTING_IMAGE</text>
+<rect x="1115.0" y="757.0" width="150" height="46" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="1190.0" y="784.5" class="en" text-anchor="middle">AMENITY</text>
+<polygon points="470,191.0 532.0,220 470,249.0 408.0,220" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="470.0" y="224.0" class="rel" text-anchor="middle">CONTAINS</text>
+<polygon points="250,111.0 312.0,140 250,169.0 188.0,140" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="250.0" y="144.0" class="rel" text-anchor="middle">SENDS</text>
+<polygon points="290,356.0 352.0,385 290,414.0 228.0,385" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="290.0" y="385.0" class="rel" text-anchor="middle">STARTS</text>
+<text x="290.0" y="397.0" class="role" text-anchor="middle">(student)</text>
+<polygon points="650,356.0 712.0,385 650,414.0 588.0,385" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="650.0" y="389.0" class="rel" text-anchor="middle">IS ABOUT</text>
+<polygon points="470,411.0 532.0,440 470,469.0 408.0,440" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="470.0" y="440.0" class="rel" text-anchor="middle">SAVES</text>
+<text x="470.0" y="452.0" class="role" text-anchor="middle">(student)</text>
+<ellipse cx="470" cy="382" rx="40" ry="13" fill="#ffffff" stroke="#0f7f78" stroke-width="1.5"/>
+<text x="470" y="386" class="at" text-anchor="middle">saved_at</text>
+<polygon points="470,511.0 532.0,540 470,569.0 408.0,540" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="470.0" y="540.0" class="rel" text-anchor="middle">OWNS</text>
+<text x="470.0" y="552.0" class="role" text-anchor="middle">(owner)</text>
+<polygon points="290,621.0 352.0,650 290,679.0 228.0,650" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="290.0" y="650.0" class="rel" text-anchor="middle">WRITES</text>
+<text x="290.0" y="662.0" class="role" text-anchor="middle">(student)</text>
+<polygon points="650,621.0 712.0,650 650,679.0 588.0,650" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="650.0" y="654.0" class="rel" text-anchor="middle">RECEIVES</text>
+<polygon points="290,781.0 352.0,810 290,839.0 228.0,810" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="290.0" y="810.0" class="rel" text-anchor="middle">MAKES</text>
+<text x="290.0" y="822.0" class="role" text-anchor="middle">(owner / admin)</text>
+<polygon points="650,781.0 712.0,810 650,839.0 588.0,810" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="650.0" y="814.0" class="rel" text-anchor="middle">LOGS</text>
+<polygon points="1000,261.0 1062.0,290 1000,319.0 938.0,290" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="1000.0" y="294.0" class="rel" text-anchor="middle">OFFERS</text>
+<polygon points="1000,411.0 1062.0,440 1000,469.0 938.0,440" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="1000.0" y="444.0" class="rel" text-anchor="middle">LEVIES</text>
+<polygon points="1000,571.0 1062.0,600 1000,629.0 938.0,600" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="1000.0" y="604.0" class="rel" text-anchor="middle">SHOWS</text>
+<polygon points="1000,751.0 1062.0,780 1000,809.0 938.0,780" fill="#ffffff" stroke="#0f7f78" stroke-width="1.8"/>
+<text x="1000.0" y="784.0" class="rel" text-anchor="middle">PROVIDES</text>
+<ellipse cx="1000" cy="860" rx="42" ry="13" fill="#ffffff" stroke="#0f7f78" stroke-width="1.5"/>
+<text x="1000" y="864" class="at" text-anchor="middle">available</text>
+<path d="M1300,90 H1471 L1485,104 V312 H1300 Z" fill="#fffef2" stroke="#999" stroke-width="1"/><path d="M1471,90 V104 H1485" fill="none" stroke="#999" stroke-width="1"/>
+<path d="M1300,330 H1471 L1485,344 V440 H1300 Z" fill="#fffef2" stroke="#999" stroke-width="1"/><path d="M1471,330 V344 H1485" fill="none" stroke="#999" stroke-width="1"/>
+<text x="459.0" y="181.5" class="card" text-anchor="middle">N</text>
+<text x="481.0" y="267.5" class="card" text-anchor="middle">1</text>
+<text x="195.6" y="372.0" class="card" text-anchor="middle">1</text>
+<text x="361.8" y="133.5" class="card" text-anchor="middle">N</text>
+<text x="214.2" y="472.5" class="card" text-anchor="middle">1</text>
+<text x="376.4" y="336.5" class="card" text-anchor="middle">N</text>
+<text x="554.2" y="356.4" class="card" text-anchor="middle">N</text>
+<text x="725.8" y="472.5" class="card" text-anchor="middle">1</text>
+<text x="297.3" y="497.7" class="card" text-anchor="middle">M</text>
+<text x="639.7" y="497.0" class="card" text-anchor="middle">N</text>
+<text x="289.7" y="522.6" class="card" text-anchor="middle">1</text>
+<text x="647.3" y="522.7" class="card" text-anchor="middle">N</text>
+<text x="214.4" y="574.5" class="card" text-anchor="middle">1</text>
+<text x="364.9" y="663.9" class="card" text-anchor="middle">N</text>
+<text x="575.1" y="663.9" class="card" text-anchor="middle">N</text>
+<text x="725.6" y="574.5" class="card" text-anchor="middle">1</text>
+<text x="212.1" y="639.9" class="card" text-anchor="middle">1</text>
+<text x="361.0" y="822.8" class="card" text-anchor="middle">N</text>
+<text x="579.0" y="822.8" class="card" text-anchor="middle">N</text>
+<text x="727.9" y="639.9" class="card" text-anchor="middle">1</text>
+<text x="876.5" y="419.7" class="card" text-anchor="middle">1</text>
+<text x="1086.0" y="283.5" class="card" text-anchor="middle">N</text>
+<text x="897.0" y="473.8" class="card" text-anchor="middle">1</text>
+<text x="1088.5" y="433.5" class="card" text-anchor="middle">N</text>
+<text x="897.0" y="575.2" class="card" text-anchor="middle">1</text>
+<text x="1083.5" y="593.5" class="card" text-anchor="middle">N</text>
+<text x="875.3" y="640.5" class="card" text-anchor="middle">M</text>
+<text x="1088.5" y="773.5" class="card" text-anchor="middle">N</text>
+<text x="1312.0" y="110.0" class="nb" text-anchor="start">Legend</text>
+<text x="1312.0" y="130.0" class="note" text-anchor="start"></text>
+<text x="1312.0" y="146.0" class="note" text-anchor="start"></text>
+<text x="1312.0" y="162.0" class="note" text-anchor="start"></text>
+<text x="1312.0" y="178.0" class="note" text-anchor="start"></text>
+<text x="1312.0" y="194.0" class="note" text-anchor="start"></text>
+<text x="1312.0" y="210.0" class="note" text-anchor="start"></text>
+<text x="1312.0" y="226.0" class="note" text-anchor="start"></text>
+<text x="1312.0" y="242.0" class="note" text-anchor="start"></text>
+<text x="1312.0" y="258.0" class="note" text-anchor="start"></text>
+<text x="1312.0" y="274.0" class="note" text-anchor="start"></text>
+<text x="1312.0" y="290.0" class="note" text-anchor="start"></text>
+<text x="1312.0" y="306.0" class="note" text-anchor="start"></text>
+<rect x="1312" y="122" width="56" height="22" fill="#fff" stroke="#0f7f78" stroke-width="1.6"/>
+<text x="1380.0" y="137.0" class="note" text-anchor="start">entity</text>
+<rect x="1312" y="150" width="56" height="22" fill="#fff" stroke="#0f7f78" stroke-width="1.6"/><rect x="1316" y="154" width="48" height="14" fill="none" stroke="#0f7f78"/>
+<text x="1380.0" y="165.0" class="note" text-anchor="start">weak entity</text>
+<polygon points="1340,180 1368,192 1340,204 1312,192" fill="#fff" stroke="#0f7f78" stroke-width="1.6"/>
+<text x="1380.0" y="194.0" class="note" text-anchor="start">relationship</text>
+<ellipse cx="1340" cy="222" rx="27" ry="10" fill="#fff" stroke="#0f7f78" stroke-width="1.4"/>
+<text x="1380.0" y="221.0" class="note" text-anchor="start">attribute</text>
+<text x="1312.0" y="262.0" class="note" text-anchor="start">1 = one, N / M = many</text>
+<text x="1312.0" y="280.0" class="note" text-anchor="start">(role) = which kind of USER</text>
+<text x="1312.0" y="350.0" class="nb" text-anchor="start">Not shown here</text>
+<text x="1312.0" y="370.0" class="note" text-anchor="start">Accounts, profiles,</text>
+<text x="1312.0" y="386.0" class="note" text-anchor="start">trust and roommates:</text>
+<text x="1312.0" y="402.0" class="note" text-anchor="start">see Part B.</text>
+<text x="1312.0" y="418.0" class="note" text-anchor="start">USER is the same</text>
+<text x="1312.0" y="434.0" class="note" text-anchor="start">entity in both parts.</text>
+</svg>
